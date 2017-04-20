@@ -42,9 +42,7 @@
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="{{ asset('assets/vendor/AdminLTE/bootstrap/js/bootstrap.min.js') }}"></script>
-<!-- DataTables -->
-<script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+
 
 <!-- SlimScroll -->
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
@@ -53,21 +51,7 @@
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/vendor/AdminLTE/dist/js/app.min.js') }}"></script>
 
-<!-- page script -->
-<script>
-    $(document).ready(function () {
-        $('#example1').DataTable({
-            "paging": false,
 
-            columnDefs: [{
-                targets: [5],
-                "orderable": false
-            }]
-
-        });
-    });
-
-</script>
 {% block javascripts %}{% endblock %}
 </body>
 </html>

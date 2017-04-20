@@ -1,47 +1,97 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
+    {% endblock %}
 {% block body %}
-    <h1>Users list</h1>
+    <!-- Full Width Column -->
+    <div class="content-wrapper">
+        <div class="container">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Createdat</th>
-                <th>Activeat</th>
-                <th>Activeuntil</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td><a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.id }}</a></td>
-                <td>{{ user.nom }}</td>
-                <td>{{ user.prenom }}</td>
-                <td>{% if user.createdAt %}{{ user.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if user.activeAt %}{{ user.activeAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if user.activeUntil %}{{ user.activeUntil|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('user_show', { 'id': user.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('user_edit', { 'id': user.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                <a class="btn btn-default" href="{{ path('user_new') }}">
+                    <i class="fa fa-plus"></i> Ajouter un utilisateur</a>
 
-    <ul>
-        <li>
-            <a href="{{ path('user_new') }}">Create a new user</a>
-        </li>
-    </ul>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Liste des utilisateurs</h3>
+                    </div>
+                    <div class="box-body">
+                        <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="example1" class="table table-bordered table-striped dataTable">
+                                        <thead>
+                                        <tr>
+
+                                            <th>Nom</th>
+                                            <th>Prenom</th>
+                                            <th>Createdat</th>
+                                            <th>Activeat</th>
+                                            <th>Activeuntil</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        {% for user in users %}
+                                            <tr>
+
+                                                <td>{{ user.nom }}</td>
+                                                <td>{{ user.prenom }}</td>
+                                                <td>{% if user.createdAt %}{{ user.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                                <td>{% if user.activeAt %}{{ user.activeAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                                <td>{% if user.activeUntil %}{{ user.activeUntil|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                                <td style="width: 162px">
+                                                    <a href="{{ path('user_show', {'id': user.id }) }}" class="btn btn-default"><i class="fa fa-eye"></i></a>
+                                                    <a href="{{ path('user_edit', {'id': user.id }) }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+                                                    <a href="#" class="btn btn-default"><i class="fa fa-lock"></i></a>
+                                                    <a href="#" class="btn btn-default"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.content-wrapper -->
+{% endblock %}
+{% block javascripts %}
+<!-- DataTables -->
+<script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+
+    <!-- page script -->
+    <script>
+        $(document).ready(function () {
+            $('#example1').DataTable({
+                "paging": false,
+
+                columnDefs: [{
+                    targets: [5],
+                    "orderable": false
+                }]
+
+            });
+        });
+
+    </script>
 {% endblock %}
