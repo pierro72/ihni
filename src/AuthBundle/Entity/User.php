@@ -33,6 +33,12 @@ class User extends BaseUser
      */
     protected $createdAt;
     /**
+     * Référence le compte USER qui a créé le compte
+     * @var User
+     * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\User")
+     */
+    protected $createdBy;
+    /**
      * @var \DateTime
      * @ORM\Column(type="datetime", nullable=true)
      */
