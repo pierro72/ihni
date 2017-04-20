@@ -15,7 +15,21 @@ class UserType extends AbstractType
     {
         $builder->add('nom')->add('prenom')->add('createdAt')->add('activeAt')->add('activeUntil')->add('createdBy');
     }
-    
+
+    /**
+     * Herite du formulaire FOS
+     * @return string
+     */
+    public function getParent()
+    {
+        return 'FOS\UserBundle\Form\Type\RegistrationFormType';
+    }
+
+    public function getBlockPrefix()
+    {
+        return 'app_user_registration';
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -26,13 +40,13 @@ class UserType extends AbstractType
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'authbundle_user';
-    }
+//    /**
+//     * {@inheritdoc}
+//     */
+//    public function getBlockPrefix()
+//    {
+//        return 'authbundle_user';
+//    }
 
 
 }

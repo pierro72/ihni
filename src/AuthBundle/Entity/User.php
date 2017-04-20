@@ -5,6 +5,8 @@ namespace AuthBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="ihni_user")
@@ -20,12 +22,28 @@ class User extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column(type="string",length=50,nullable=true)
+     * @ORM\Column(type="string",length=50,nullable=false)
+     * @Assert\NotBlank(message="Entrez le nom du nouvel utilisateur.",groups={"Registration", "Profile"})
+     * @Assert\Length(
+     *     min = 3,
+     *     max = 50,
+     *     minMessage="Le nom doit comporter au moins 3 caractères",
+     *     maxMessage="Le nom doit comporter moins de 50 caractères",
+     *     groups={"Registration", "Profile"}
+     * )
      */
     protected $nom;
     /**
      * @var string
-     * @ORM\Column(type="string",length=50,nullable=true)
+     * @ORM\Column(type="string",length=50,nullable=false)
+     * @Assert\NotBlank(message="Entrez le prénom du nouvel utilisateur.",groups={"Registration", "Profile"})
+     * @Assert\Length(
+     *     min = 3,
+     *     max = 50,
+     *     minMessage="Le prénom doit comporter au moins 3 caractères",
+     *     maxMessage="Le prénom doit comporter moins de 50 caractères",
+     *     groups={"Registration", "Profile"}
+     * )
      */
     protected $prenom;
     /**
@@ -37,6 +55,7 @@ class User extends BaseUser
      * Référence le compte USER qui a créé le compte
      * @var User
      * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\User")
+     * @ORM\Column(nullable=true)
      */
     protected $createdBy;
     /**
@@ -52,6 +71,7 @@ class User extends BaseUser
     /**
      * @var ArrayCollection|TeamRole
      * @ORM\OneToMany(targetEntity="AuthBundle\Entity\TeamRole", mappedBy="user")
+     * @ORM\Column(nullable=true)
      */
     private $teamRoles;
     /**
@@ -62,6 +82,7 @@ class User extends BaseUser
     {
         parent::__construct();
         $this->teamRoles = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     /**

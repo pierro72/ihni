@@ -29,8 +29,10 @@
 </head>
 <body class="hold-transition skin-blue layout-top-nav">
 <div class="wrapper">
-{% include "header.html.twig" %}
-{% block body %}{% endblock %}
+    {% include "header.html.twig" %}
+
+    {% block body %}{% endblock %}
+
     {% include "footer.html.twig" %}
 
 
@@ -53,7 +55,7 @@
 
 <!-- page script -->
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#example1').DataTable({
             "paging": false,
 
