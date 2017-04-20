@@ -68,45 +68,5 @@ class Module
     {
         return $this->nom;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->equipes = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add equipe
-     *
-     * @param \AuthBundle\Entity\Equipe $equipe
-     *
-     * @return Module
-     */
-    public function addEquipe(\AuthBundle\Entity\Equipe $equipe)
-    {
-        $this->equipes[] = $equipe;
-
-        return $this;
-    }
-
-    /**
-     * Remove equipe
-     *
-     * @param \AuthBundle\Entity\Equipe $equipe
-     */
-    public function removeEquipe(\AuthBundle\Entity\Equipe $equipe)
-    {
-        $this->equipes->removeElement($equipe);
-    }
-
-    /**
-     * Get equipes
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEquipes()
-    {
-        return $this->equipes;
-    }
 }
+
