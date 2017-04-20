@@ -13,17 +13,10 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom')->add('prenom')->add('createdAt')->add('activeAt')->add('activeUntil')->add('createdBy');
+        $builder->add('prenom')->add('nom')->add('email')->add('username')->add('plainPassword')->add('activeAt')->add('activeUntil');
     }
 
-    /**
-     * Herite du formulaire FOS
-     * @return string
-     */
-    public function getParent()
-    {
-        return 'FOS\UserBundle\Form\Type\RegistrationFormType';
-    }
+
 
     public function getBlockPrefix()
     {
