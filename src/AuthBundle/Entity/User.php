@@ -17,6 +17,30 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\Column(type="string",length=50,nullable=true)
+     */
+    protected $nom;
+    /**
+     * @ORM\Column(type="string",length=50,nullable=true)
+     */
+    protected $prenom;
+    /**
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $createdAt;
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $activeAt;
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $activeUntil;
+    /**
+     * User constructor.
+     */
+
     public function __construct()
     {
         parent::__construct();
