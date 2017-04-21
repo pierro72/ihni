@@ -94,11 +94,11 @@
             </div>
 
             {% if attr.class is defined %}
-                {% set class = attr.class ~ ' timepicker' %}
+                {% set class = attr.class ~ ' datepicker' %}
             {% else %}
-                {% set class = ' timepicker' %}
+                {% set class = ' datepicker' %}
             {% endif %}
-            {% set attr = attr|merge({'class' : class, 'data-datepicker':'on'}) %}
+            {#{% set attr = attr|merge({'class' : class, 'data-provide':'datepicker'}) %}#}
 
             {{ block('form_widget_simple') }}
         </div>

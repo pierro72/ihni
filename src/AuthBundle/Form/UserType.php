@@ -2,7 +2,10 @@
 
 namespace AuthBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -18,23 +21,36 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+
             ->add('prenom')
             ->add('nom')
             ->add('email', EmailType::class)
             ->add('username')
             ->add('plainPassword', PasswordType::class)
-            ->add('activeAt', DateTimeType::class, [
-                'date_widget' => 'single_text',
-                'time_widget' => 'single_text',
+            ->add('teamRoles', TeamRoleType::class)
+            ->add('activeAt', DateType::class, [
+                'widget' => 'single_text',
+
+                'html5' => false,
+                'label' => "Actif à partir du : ",
+                'required' => false,
+                'attr' => [
+                    'class' => 'datepicker',
+                    'placeholder' => "Laissez vide pour activer immédiatement"
+                    ]
+            ])
+            ->add('activeUntil', DateType::class, [
                 'widget' => 'single_text',
                 'html5' => false,
+                'label' => "Actif jusqu'au : ",
+                'required' => false,
                 'attr' => [
-                    'data-provide' => 'datepicker'
-                    ]
-
-
+                    'placeholder' => "Laissez vide pour activer indéfiniment",
+                    'class' => "datepicker"
+                ]
             ])
-            ->add('activeUntil', DateTimeType::class);
+
+        ;
     }
 
 
