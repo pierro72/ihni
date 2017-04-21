@@ -22,7 +22,8 @@ class TeamRole
      */
     private $id;
     /**
-     * @Assert\Choice({"pilote","utilisateur confirmé","utilisateur novice"})
+     * @var Role
+     * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\Role")
      */
     private $role;
     /**
@@ -46,5 +47,52 @@ class TeamRole
     {
         return $this->id;
     }
-}
 
+    /**
+     * Set user
+     *
+     * @param \AuthBundle\Entity\User $user
+     *
+     * @return TeamRole
+     */
+    public function setUser(\AuthBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AuthBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set equipe
+     *
+     * @param \AuthBundle\Entity\Equipe $equipe
+     *
+     * @return TeamRole
+     */
+    public function setEquipe(\AuthBundle\Entity\Equipe $equipe = null)
+    {
+        $this->equipe = $equipe;
+
+        return $this;
+    }
+
+    /**
+     * Get equipe
+     *
+     * @return \AuthBundle\Entity\Equipe
+     */
+    public function getEquipe()
+    {
+        return $this->equipe;
+    }
+}
