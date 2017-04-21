@@ -52,9 +52,10 @@
                                                 {% endif %}
                                             </td>
                                             <td>
-                                            {% for user.teamRoles in teamRole %}
-                                                <div>{{ teamRole.equipe.nom }}</div>
-                                                <div>{{ teamRole.role }}</div>
+                                            {% for teamRole in user.teamRoles %}
+                                                <div>
+                                                {{ teamRole.equipe.nom }} / {{ teamRole.role.nom }}
+                                                </div>
                                             {% endfor %}
                                             </td>
                                             <td style="width: 162px">

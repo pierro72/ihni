@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/datepicker3.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/timepicker/bootstrap-timepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/iCheck/all.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.min.css') }}">
+{% endblock %}
 {% block body %}
     <!-- Full Width Column -->
     <div class="content-wrapper">
@@ -36,4 +42,25 @@
 
     </div>
 
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('assets/vendor/AdminLTE/plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/AdminLTE/plugins/iCheck/icheck.min.js') }}"></script>
+
+    <script>
+
+        $(function () {
+            //Initialize Select2 Elements
+            $(".select2").select2();
+            //Date picker
+            $('.datepicker').datepicker("show");
+            $('.datepicker').datepicker({
+                autoclose: true
+
+            });
+
+        })
+    </script>
 {% endblock %}
