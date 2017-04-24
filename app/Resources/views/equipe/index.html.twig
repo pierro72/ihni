@@ -1,41 +1,37 @@
-{% extends 'base.html.twig' %}
+{% extends 'tabindex.html.twig' %}
 
-{% block body %}
-    <h1>Equipes list</h1>
 
-    <table>
+    {% block addlink %}{{ path('equipe_new') }}{% endblock %}
+    {% block addtitre %}Ajouter une nouvelle équipe{% endblock %}
+    {% block indextitre %}Liste des équipes{% endblock %}
+
+
+        {% block innertable %}
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Createdat</th>
-                <th>Actions</th>
+
+                <th>Equipe</th>
+                <th>Pilote</th>
+                <th>Nb d'utilisateurs</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
         {% for equipe in equipes %}
             <tr>
-                <td><a href="{{ path('equipe_show', { 'id': equipe.id }) }}">{{ equipe.id }}</a></td>
+
                 <td>{{ equipe.nom }}</td>
-                <td>{% if equipe.createdAt %}{{ equipe.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('equipe_show', { 'id': equipe.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('equipe_edit', { 'id': equipe.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                <td>{% for teamrole in equipe.teamRoles %}{% if teamrole.role == 'pilote' %}{{ teamrole.user.name }}{% endif %}{% endfor %}</td>
+                <td>{{ equipe.teamRoles|length }}</td>
+                <td style="width: 162px">
+                    <a href="{{ path('equipe_show', {'id': equipe.id}) }}"
+                       class="btn btn-default"><i class="fa fa-info"></i></a>
+                    <a href="{{ path('equipe_edit', {'id': equipe.id}) }}"
+                       class="btn btn-default"><i class="fa fa-pencil"></i></a>
+                    <a href="#" class="btn btn-default"><i class="fa fa-lock"></i></a>
+                    <a href="#" class="btn btn-default"><i class="fa fa-trash"></i></a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('equipe_new') }}">Create a new equipe</a>
-        </li>
-    </ul>
-{% endblock %}
+        {% endblock %}

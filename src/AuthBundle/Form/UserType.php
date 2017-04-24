@@ -2,7 +2,15 @@
 
 namespace AuthBundle\Form;
 
+use AuthBundle\Entity\TeamRole;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,17 +21,45 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom')->add('prenom')->add('createdAt')->add('activeAt')->add('activeUntil')->add('createdBy');
+        $builder
+
+            ->add('prenom')
+            ->add('nom')
+            ->add('email', EmailType::class)
+            ->add('username')
+            ->add('plainPassword', PasswordType::class)
+            ->add('teamRoles', CollectionType::class, array(
+                'entry_type' => new TeamRoleType(),
+//                'allow_add' => true,
+//                'allow_delete' => true,
+                'by_reference' => false
+            ))
+            ->add('activeAt', DateType::class, [
+                'widget' => 'single_text',
+
+                'html5' => false,
+                'label' => "Actif à partir du : ",
+                'required' => false,
+                'attr' => [
+                    'class' => 'datepicker',
+                    'placeholder' => "Laissez vide pour activer immédiatement"
+                    ]
+            ])
+            ->add('activeUntil', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'label' => "Actif jusqu'au : ",
+                'required' => false,
+                'attr' => [
+                    'placeholder' => "Laissez vide pour activer indéfiniment",
+                    'class' => "datepicker"
+                ]
+            ])
+
+        ;
     }
 
-    /**
-     * Herite du formulaire FOS
-     * @return string
-     */
-    public function getParent()
-    {
-        return 'FOS\UserBundle\Form\Type\RegistrationFormType';
-    }
+
 
     public function getBlockPrefix()
     {

@@ -4,6 +4,8 @@ namespace AuthBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Equipe
@@ -30,7 +32,7 @@ class Equipe
     private $nom;
 
     /**
-     * @var \DateTime
+     * @var Date
      *
      * @ORM\Column(name="createdAt", type="datetime")
      */
@@ -84,7 +86,7 @@ class Equipe
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param Date $createdAt
      *
      * @return Equipe
      */
@@ -98,7 +100,7 @@ class Equipe
     /**
      * Get createdAt
      *
-     * @return \DateTime
+     * @return Date
      */
     public function getCreatedAt()
     {
@@ -111,6 +113,7 @@ class Equipe
     {
         $this->teamRoles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->modules = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     /**
@@ -122,6 +125,7 @@ class Equipe
      */
     public function addTeamRole(\AuthBundle\Entity\TeamRole $teamRole)
     {
+        $teamRole->setEquipe($this);
         $this->teamRoles[] = $teamRole;
 
         return $this;
@@ -134,6 +138,7 @@ class Equipe
      */
     public function removeTeamRole(\AuthBundle\Entity\TeamRole $teamRole)
     {
+
         $this->teamRoles->removeElement($teamRole);
     }
 
@@ -156,6 +161,7 @@ class Equipe
      */
     public function addModule(\AuthBundle\Entity\Module $module)
     {
+        $module->addEquipe($this);
         $this->modules[] = $module;
 
         return $this;
@@ -168,6 +174,7 @@ class Equipe
      */
     public function removeModule(\AuthBundle\Entity\Module $module)
     {
+        $module->removeEquipe($this);
         $this->modules->removeElement($module);
     }
 

@@ -59,21 +59,21 @@ class User extends BaseUser
      */
     protected $createdBy;
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var Assert\Date
+     * @ORM\Column(type="date", nullable=true)
      */
     protected $activeAt;
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var Assert\Date
+     * @ORM\Column(type="date", nullable=true)
      */
     protected $activeUntil;
     /**
      * @var ArrayCollection|TeamRole
      * @ORM\OneToMany(targetEntity="AuthBundle\Entity\TeamRole", mappedBy="user")
-     * @ORM\Column(nullable=true)
+
      */
-    private $teamRoles;
+    protected $teamRoles;
     /**
      * User constructor.
      */
@@ -94,7 +94,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return \DateTime
+     * @return Assert\Date
      */
     public function getActiveAt()
     {
@@ -102,7 +102,7 @@ class User extends BaseUser
     }
 
     /**
-     * @param \DateTime $activeAt
+     * @param Assert\Date $activeAt
      */
     public function setActiveAt($activeAt)
     {
@@ -110,7 +110,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return \DateTime
+     * @return Assert\Date
      */
     public function getActiveUntil()
     {
@@ -118,7 +118,7 @@ class User extends BaseUser
     }
 
     /**
-     * @param \DateTime $activeUntil
+     * @param Assert\Date $activeUntil
      */
     public function setActiveUntil($activeUntil)
     {
@@ -210,6 +210,7 @@ class User extends BaseUser
     public function addTeamRole(\AuthBundle\Entity\TeamRole $teamRole)
     {
         $this->teamRoles[] = $teamRole;
+        $teamRole->setUser($this);
 
         return $this;
     }
@@ -227,10 +228,24 @@ class User extends BaseUser
     /**
      * Get teamRoles
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection|TeamRole
      */
     public function getTeamRoles()
     {
         return $this->teamRoles;
+    }
+
+    /**
+     * Set teamRoles
+     *
+     * @param ArrayCollection|TeamRole $teamRoles
+     *
+     * @return User
+     */
+    public function setTeamRoles($teamRoles)
+    {
+        $this->teamRoles = $teamRoles;
+
+        return $this;
     }
 }

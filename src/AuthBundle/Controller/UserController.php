@@ -2,6 +2,7 @@
 
 namespace AuthBundle\Controller;
 
+use AuthBundle\Entity\TeamRole;
 use AuthBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -40,12 +41,21 @@ class UserController extends Controller
     public function newAction(Request $request)
     {
         $user = new User();
+        $teamRole = new TeamRole();
+
+
         $form = $this->createForm('AuthBundle\Form\UserType', $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+//            $teamRole->setEquipe($form->get('app_user_registration[teamRoles][equipe]'));
+//            $teamRole->setRole($form->get('app_user_registration[teamRoles][role]'));
+//            $teamRole->setUser($user);
+//            $user->addTeamRole($teamRole);
             $em = $this->getDoctrine()->getManager();
+            $em->persist($teamRole);
             $em->persist($user);
+
             $em->flush();
 
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
