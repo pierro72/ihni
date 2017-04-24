@@ -248,4 +248,11 @@ class User extends BaseUser
 
         return $this;
     }
+
+    function __toString()
+    {
+        return $this->nom.' '.$this->prenom;
+    }
+
+
 }

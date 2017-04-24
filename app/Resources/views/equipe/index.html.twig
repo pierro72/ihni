@@ -21,7 +21,7 @@
             <tr>
 
                 <td>{{ equipe.nom }}</td>
-                <td>{% for teamrole in equipe.teamRoles %}{% if teamrole.role == 'pilote' %}{{ teamrole.user.name }}{% endif %}{% endfor %}</td>
+                <td>{% for teamrole in equipe.teamRoles %}{% if teamrole.role.nom == "pilote" %}{{ teamrole.user }}{% endif %}{% endfor %}</td>
                 <td>{{ equipe.teamRoles|length }}</td>
                 <td style="width: 162px">
                     <a href="{{ path('equipe_show', {'id': equipe.id}) }}"
