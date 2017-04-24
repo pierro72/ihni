@@ -2,6 +2,7 @@
 
 namespace AuthBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,6 +28,12 @@ class Role
      * @ORM\Column(name="nom", type="string", length=50)
      */
     private $nom;
+
+    /**
+     * @var ArrayCollection|TeamRole
+     * @ORM\OneToMany(targetEntity="AuthBundle\Entity\TeamRole", mappedBy="role")
+     */
+    private  $teamRoles;
 
 
 

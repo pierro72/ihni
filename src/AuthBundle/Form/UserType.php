@@ -2,6 +2,7 @@
 
 namespace AuthBundle\Form;
 
+use AuthBundle\Entity\TeamRole;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -27,7 +28,12 @@ class UserType extends AbstractType
             ->add('email', EmailType::class)
             ->add('username')
             ->add('plainPassword', PasswordType::class)
-            ->add('teamRoles', TeamRoleType::class)
+            ->add('teamRoles', CollectionType::class, array(
+                'entry_type' => new TeamRoleType(),
+//                'allow_add' => true,
+//                'allow_delete' => true,
+                'by_reference' => false
+            ))
             ->add('activeAt', DateType::class, [
                 'widget' => 'single_text',
 

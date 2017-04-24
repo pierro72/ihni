@@ -1,16 +1,96 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Equipe creation</h1>
+    <!-- Full Width Column -->
+    <div class="content-wrapper">
+        <div class="container">
+            <!-- Content Header (Page header) -->
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+            <!-- Main content -->
+            <section class="content">
 
-    <ul>
-        <li>
-            <a href="{{ path('equipe_index') }}">Back to the list</a>
-        </li>
-    </ul>
+                <div class="row">
+
+                    <div class="box box-primary">
+
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Ajouter une équipe</h3>
+                        </div>
+
+                        <div class="box-body">
+                            <!-- /.box-header -->
+                            <!-- form start -->
+
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
+                            <ul class="userRoles"
+                                data-prototype="{{ form_widget(form.teamRoles.vars.prototype)|e('html_attr') }}">
+                                {% for userRole in form.teamRoles %}
+                                    <li>{{ form_row(userRole.nom) }}</li>
+                                {% endfor %}
+                            </ul>
+                            <input type="submit" value="Create"/>
+                            {{ form_end(form) }}
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        var $collectionHolder;
+
+        //setup an "add a user" link
+        var $addUserLink = $('<a href="#" class="add_user_link">Ajouter un utilisateur</a>');
+        var $newLinkLi = $('<li></li>').append($addUserLink);
+
+        $(document).ready(function () {
+            //Get the ul that holds the collection of users
+            $collectionHolder = $('ul.userRoles');
+
+            //add "add a user" anchor and li to the users ul
+            $collectionHolder.append($newLinkLi);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+            $addUserLink.on('click', function (e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // add a new tag form (see next code block)
+                addUserForm($collectionHolder, $newLinkLi);
+            })
+
+        });
+        function addUserForm($collectionHolder, $newLinkLi) {
+            //Get the data prototype
+            var prototype = $collectionHolder.data('prototype');
+
+            //Get thenew index
+            var index = $collectionHolder.data('index');
+
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<li></li>').append(newForm);
+            $newLinkLi.before($newFormLi);
+        }
+    </script>
+
 {% endblock %}

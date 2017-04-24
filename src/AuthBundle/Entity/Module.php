@@ -30,7 +30,7 @@ class Module
     private $nom;
     /**
      * @var ArrayCollection|Equipe
-     * @ORM\ManyToMany(targetEntity="AuthBundle\Entity\Equipe",inversedBy="modules")
+     * @ORM\ManyToMany(targetEntity="AuthBundle\Entity\Equipe",inversedBy="modules", cascade={"persist"})
      */
     private $equipes;
 

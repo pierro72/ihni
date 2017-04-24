@@ -16,16 +16,22 @@ class TeamRoleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('equipe', EntityType::class, array(
-                'class' => Equipe::class,
-                'choice_label' => 'nom',
-                'multiple' => false
-            ))
-            ->add('role', EntityType::class, array(
-                'class' => Role::class,
-                'choice_label' => 'nom',
-                'multiple' => false
-            ));
+            ->add('equipe')
+//        , EntityType::class, array(
+//                'class' => Equipe::class,
+//                'choice_label' => 'nom'
+//
+//
+//
+//            ))
+//            ->add('role')
+//        , EntityType::class, array(
+//                'class' => Role::class,
+//                'choice_label' => 'nom'
+//
+//
+//            ))
+                ;
 //        $builder
 //            ->add('equipe', CollectionType::class, array(
 //                'entry_type' => Equipe::class
@@ -38,7 +44,7 @@ class TeamRoleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => null
+            'data_class' => TeamRole::class
         ));
     }
 

@@ -23,7 +23,7 @@ class TeamRole
     private $id;
     /**
      * @var Role
-     * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\Role")
+     * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\Role", inversedBy="teamRoles")
      */
     private $role;
     /**
@@ -119,4 +119,10 @@ class TeamRole
     {
         return $this->role;
     }
+
+    function __toString()
+    {
+       return 'bamboola';
+    }
+
 }
