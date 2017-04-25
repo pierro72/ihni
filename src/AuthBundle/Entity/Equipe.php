@@ -39,7 +39,7 @@ class Equipe
     private $createdAt;
     /**
      * @var ArrayCollection|TeamRole
-     * @ORM\OneToMany(targetEntity="AuthBundle\Entity\TeamRole", mappedBy="equipe", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AuthBundle\Entity\TeamRole", mappedBy="equipe", cascade={"remove"})
      */
     private  $teamRoles;
     /**

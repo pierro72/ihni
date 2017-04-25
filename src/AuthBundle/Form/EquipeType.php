@@ -30,7 +30,13 @@ class EquipeType extends AbstractType
             ->add('teamRoles', CollectionType::class, array(
                 'entry_type' => UserRoleType::class,
                 'allow_add' => true,
-                'by_reference' => false
+                'allow_delete' => true,
+                'by_reference' => false,
+                'required' => false,
+
+
+
+
 
             ))
         ;
