@@ -5,7 +5,7 @@
 
     {% if 'checkbox' in types %}
         {% set _class = ' checkbox' %}
-    {% elseif 'radio' in types%}
+    {% elseif 'radio' in types %}
         {% set _class = ' radio' %}
     {% else %}
         {% set _class = ' form-control' %}
@@ -139,11 +139,18 @@
 {% endblock %}
 
 {% block form_row %}
+    {#{{ dump() }}#}
     {% set types = form.vars.block_prefixes %}
     {% if 'checkbox' in types or 'radio' in types %}
         <div class="form-group {{ errors|length > 0 ? 'has-error has-feedback'  : '' }}">
             {{ form_widget(form) }}
             {{ form_errors(form) }}
+        </div>
+    {% elseif 'user' in name or 'role' in name %}
+
+        <div class="form-group col-xs-5">
+            {{ form_label(form) }}
+            {{ form_widget(form) }}
         </div>
     {% else %}
         <div class="form-group {{ errors|length > 0 ? 'has-error has-feedback'  : '' }}">
@@ -178,6 +185,11 @@
         {% endif %}
     {% endspaceless %}
 {% endblock form_errors %}
+
+
+
+
+
 
 {# % block form_widget_simple %}
     {{ parent() }}

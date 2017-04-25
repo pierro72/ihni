@@ -17,7 +17,7 @@ class UserRoleType extends AbstractType
         $builder
             ->add('user', EntityType::class, array(
                 'class' => User::class,
-                'choice_label' => 'nom',
+
 
             ))
             ->add('role', EntityType::class, array(

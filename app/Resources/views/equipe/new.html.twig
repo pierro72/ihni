@@ -22,13 +22,15 @@
                             <!-- form start -->
 
                             {{ form_start(form) }}
-                            {{ form_widget(form) }}
-                            <ul class="userRoles"
-                                data-prototype="{{ form_widget(form.teamRoles.vars.prototype)|e('html_attr') }}">
-                                {% for userRole in form.teamRoles %}
-                                    <li>{{ form_row(userRole.nom) }}</li>
+                            {{ form_row(form.nom) }}
+                            {{ form_row(form.modules) }}
+                            <h4>Utilisateurs</h4>
+                            <div class="userRoles" data-prototype="{{ form_widget(form.teamRoles.vars.prototype)|e('html_attr') }}">
+                                {% for user in form.teamRoles %}
+                                <div>{{ form_row(form.teamRoles) }}</div>
                                 {% endfor %}
-                            </ul>
+                            </div>
+
                             <input type="submit" value="Create"/>
                             {{ form_end(form) }}
 
@@ -47,18 +49,25 @@
 {% endblock %}
 {% block javascripts %}
     <script type="text/javascript">
+        /**
+         * Created by dmetthey.stage on 25/04/2017.
+         */
         var $collectionHolder;
 
         //setup an "add a user" link
-        var $addUserLink = $('<a href="#" class="add_user_link">Ajouter un utilisateur</a>');
-        var $newLinkLi = $('<li></li>').append($addUserLink);
+        var $addUserLink = $('<a href="#" class="add_user_link btn btn-primary">Ajouter un utilisateur</a>');
+        var $newLinkDiv = $('<div></div>').append($addUserLink);
 
         $(document).ready(function () {
             //Get the ul that holds the collection of users
-            $collectionHolder = $('ul.userRoles');
+            $collectionHolder = $('div.userRoles');
 
+            //add a delete link to all of the existing tag form div
+            $collectionHolder.find('div').each(function () {
+                addUserFormDeleteLink($(this));
+            });
             //add "add a user" anchor and li to the users ul
-            $collectionHolder.append($newLinkLi);
+            $collectionHolder.append($newLinkDiv);
 
             // count the current form inputs we have (e.g. 2), use that as the new
             // index when inserting a new item (e.g. 2)
@@ -69,11 +78,11 @@
                 e.preventDefault();
 
                 // add a new tag form (see next code block)
-                addUserForm($collectionHolder, $newLinkLi);
+                addUserForm($collectionHolder, $newLinkDiv);
             })
 
         });
-        function addUserForm($collectionHolder, $newLinkLi) {
+        function addUserForm($collectionHolder, $newLinkDiv) {
             //Get the data prototype
             var prototype = $collectionHolder.data('prototype');
 
@@ -88,8 +97,25 @@
             $collectionHolder.data('index', index + 1);
 
             // Display the form in the page in an li, before the "Add a tag" link li
-            var $newFormLi = $('<li></li>').append(newForm);
-            $newLinkLi.before($newFormLi);
+            var $newFormDiv = $('<div class="row"></div>').append(newForm);
+            $newLinkDiv.before($newFormDiv);
+
+            //add a delete link to the new form
+            addUserFormDeleteLink($newFormDiv);
+        }
+        // Add a delete link on each User
+        function addUserFormDeleteLink($tagFormDiv) {
+            var $removeFormA = $('<a href=# class="equipe_form_delete btn btn-danger">Supprimer</a>');
+            $tagFormDiv.append($removeFormA);
+
+            $removeFormA.on('click', function (e)
+            {
+                //prevent the link from creating a # on the URl
+                e.preventDefault();
+
+                //remove the User from the form
+                $tagFormDiv.remove();
+            })
         }
     </script>
 

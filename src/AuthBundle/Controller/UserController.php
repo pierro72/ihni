@@ -41,7 +41,7 @@ class UserController extends Controller
     public function newAction(Request $request)
     {
         $user = new User();
-        $teamRole = new TeamRole();
+//        $teamRole = new TeamRole();
 
 
         $form = $this->createForm('AuthBundle\Form\UserType', $user);

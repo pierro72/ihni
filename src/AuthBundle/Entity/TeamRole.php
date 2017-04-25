@@ -23,17 +23,17 @@ class TeamRole
     private $id;
     /**
      * @var Role
-     * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\Role", inversedBy="teamRoles")
+     * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\Role", inversedBy="teamRoles", cascade={"persist"})
      */
     private $role;
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\User", inversedBy="teamRoles")
+     * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\User", inversedBy="teamRoles", cascade={"persist"})
      */
     private $user;
     /**
      * @var Equipe
-     * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\Equipe", inversedBy="teamRoles")
+     * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\Equipe", inversedBy="teamRoles", cascade={"persist"})
      */
     private $equipe;
 
@@ -120,9 +120,5 @@ class TeamRole
         return $this->role;
     }
 
-    function __toString()
-    {
-       return 'bamboola';
-    }
 
 }
