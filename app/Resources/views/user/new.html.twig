@@ -49,6 +49,7 @@
     <script src="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/locales/bootstrap-datepicker.fr.js') }}"></script>
 
     <script src="{{ asset('assets/vendor/AdminLTE/plugins/iCheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('js/embed_Collection_Form.js') }}"></script>
 
     <script>
 
@@ -61,6 +62,14 @@
 
             });
 
+        });
+
+
+
+
+        $(document).ready(function () {
+            collectionFormInit('app_user_registration_teamRoles','une équipe')
         })
+
     </script>
 {% endblock %}

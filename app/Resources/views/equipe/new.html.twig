@@ -54,6 +54,12 @@
 {% endblock %}
 {% block javascripts %}
 
-    <script src="{{ asset('js/Team_roles_form.js') }}"></script>
+    <script src="{{ asset('js/embed_Collection_Form.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            collectionFormInit('authbundle_equipe_teamRoles','un utilisateur')
+        })
+
+    </script>
 
 {% endblock %}
