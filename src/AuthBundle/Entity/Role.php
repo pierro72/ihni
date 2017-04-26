@@ -70,5 +70,11 @@ class Role
     {
         return $this->nom;
     }
+
+    function __toString()
+    {
+        return $this->nom;
+    }
+
 }
 

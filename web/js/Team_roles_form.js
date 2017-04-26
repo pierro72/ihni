@@ -15,7 +15,7 @@ $(document).ready(function () {
     $collectionHolder = $('div#authbundle_equipe_teamRoles');
 
     //add a delete link to all of the existing tag form div
-    $collectionHolder.find('div').each(function () {
+    $collectionHolder.find('div.user').each(function () {
         addUserFormDeleteLink($(this));
     });
     //add "add a user" anchor and li to the users ul

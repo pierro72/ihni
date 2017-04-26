@@ -3,9 +3,12 @@
 namespace AuthBundle\Controller;
 
 use AuthBundle\Entity\Equipe;
+use AuthBundle\Entity\TeamRole;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Equipe controller.
@@ -81,19 +84,24 @@ class EquipeController extends Controller
      */
     public function editAction(Request $request, Equipe $equipe)
     {
+
+
         $deleteForm = $this->createDeleteForm($equipe);
         $editForm = $this->createForm('AuthBundle\Form\EquipeType', $equipe);
         $editForm->handleRequest($request);
 
+
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
             $this->getDoctrine()->getManager()->flush();
+
 
             return $this->redirectToRoute('equipe_edit', array('id' => $equipe->getId()));
         }
 
-        return $this->render('equipe/edit.html.twig', array(
+        return $this->render('equipe/new.html.twig', array(
             'equipe' => $equipe,
-            'edit_form' => $editForm->createView(),
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }

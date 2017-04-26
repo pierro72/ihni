@@ -39,7 +39,8 @@ class Equipe
     private $createdAt;
     /**
      * @var ArrayCollection|TeamRole
-     * @ORM\OneToMany(targetEntity="AuthBundle\Entity\TeamRole", mappedBy="equipe", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="AuthBundle\Entity\TeamRole", mappedBy="equipe", cascade={"all"}, orphanRemoval=true)
+
      */
     private  $teamRoles;
     /**
@@ -140,17 +141,29 @@ class Equipe
     {
 
         $this->teamRoles->removeElement($teamRole);
+
     }
 
     /**
      * Get teamRoles
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection|TeamRole
      */
     public function getTeamRoles()
     {
         return $this->teamRoles;
     }
+
+    /**
+     * @param TeamRole|ArrayCollection $teamRoles
+     */
+    public function setTeamRoles($teamRoles)
+    {
+
+        $this->teamRoles = $teamRoles;
+    }
+
+
 
     /**
      * Add module
@@ -187,4 +200,10 @@ class Equipe
     {
         return $this->modules;
     }
+
+    function __toString()
+    {
+        return $this->nom;
+    }
+
 }

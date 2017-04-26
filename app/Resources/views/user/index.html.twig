@@ -27,11 +27,13 @@
                                                 {% endif %}
                                             </td>
                                             <td>
+
                                             {% for teamRole in user.teamRoles %}
                                                 <div>
-                                                {{ teamRole.equipe.nom }} / {{ teamRole.role.nom }}
+                                                {{ teamRole.equipe }} / {{ teamRole.role }}
                                                 </div>
                                             {% endfor %}
+
                                             </td>
                                             <td style="width: 162px">
                                                 <a href="{{ path('user_show', {'id': user.id }) }}"

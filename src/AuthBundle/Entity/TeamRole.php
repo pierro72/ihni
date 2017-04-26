@@ -33,7 +33,7 @@ class TeamRole
     private $user;
     /**
      * @var Equipe
-     * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\Equipe", inversedBy="teamRoles", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\Equipe", inversedBy="teamRoles")
      */
     private $equipe;
 
