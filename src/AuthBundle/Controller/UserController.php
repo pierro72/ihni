@@ -41,19 +41,16 @@ class UserController extends Controller
     public function newAction(Request $request)
     {
         $user = new User();
-//        $teamRole = new TeamRole();
+
 
 
         $form = $this->createForm('AuthBundle\Form\UserType', $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-//            $teamRole->setEquipe($form->get('app_user_registration[teamRoles][equipe]'));
-//            $teamRole->setRole($form->get('app_user_registration[teamRoles][role]'));
-//            $teamRole->setUser($user);
-//            $user->addTeamRole($teamRole);
+
             $em = $this->getDoctrine()->getManager();
-            $em->persist($teamRole);
+
             $em->persist($user);
 
             $em->flush();
@@ -101,9 +98,9 @@ class UserController extends Controller
             return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
         }
 
-        return $this->render('user/edit.html.twig', array(
+        return $this->render(':user:new.html.twig', array(
             'user' => $user,
-            'edit_form' => $editForm->createView(),
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }

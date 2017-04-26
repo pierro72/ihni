@@ -15,29 +15,22 @@ class TeamRoleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-//        $builder
-//         ->add('equipe', EntityType::class, array(
-//                'class' => Equipe::class,
-//                'choice_label' => 'nom'
-//
-//
-//
-//            ))
-//            ->add('role', EntityType::class, array(
-//                'class' => Role::class,
-//                'choice_label' => 'nom'
-//
-//
-//            ))
-//                ;
-
         $builder
-            ->add('equipe', CollectionType::class, array(
-                'entry_type' => Equipe::class
+         ->add('equipe', EntityType::class, array(
+                'class' => Equipe::class,
+                'choice_label' => 'nom'
+
+
+
             ))
-            ->add('role', CollectionType::class, array(
-                'entry_type' => Role::class
-            ));
+            ->add('role', EntityType::class, array(
+                'class' => Role::class,
+                'choice_label' => 'nom'
+
+
+            ))
+                ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

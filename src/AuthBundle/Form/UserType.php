@@ -28,17 +28,14 @@ class UserType extends AbstractType
             ->add('email', EmailType::class)
             ->add('username')
             ->add('plainPassword', PasswordType::class)
-            ->add('teamRoles', TeamRoleType::class, array(
-                'data_class' => null,
+            ->add('teamRoles', CollectionType::class, array(
+                'entry_type' => TeamRoleType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
                 'by_reference' => false,
+                'required' => false,
 
             ))
-//            ->add('teamRoles', CollectionType::class, array(
-//                'entry_type' => new TeamRoleType(),
-//                'allow_add' => true,
-//                'allow_delete' => true,
-//                'by_reference' => false
-//            ))
             ->add('activeAt', DateType::class, [
                 'widget' => 'single_text',
 

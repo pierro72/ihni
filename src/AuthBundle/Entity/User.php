@@ -70,7 +70,7 @@ class User extends BaseUser
     protected $activeUntil;
     /**
      * @var ArrayCollection|TeamRole
-     * @ORM\OneToMany(targetEntity="AuthBundle\Entity\TeamRole", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="AuthBundle\Entity\TeamRole", mappedBy="user", cascade={"all"}, orphanRemoval=true)
 
      */
     protected $teamRoles;
