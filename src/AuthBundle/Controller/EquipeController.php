@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Equipe controller.
  *
- * @Route("ihni/equipe")
+ * @Route("qub/ihni/equipe")
  */
 class EquipeController extends Controller
 {

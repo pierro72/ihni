@@ -35,3 +35,24 @@
         {% endfor %}
         </tbody>
         {% endblock %}
+{% block javascripts %}
+    <!-- DataTables -->
+    <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+
+    <!-- page script -->
+    <script>
+        $(document).ready(function () {
+            $('#example1').DataTable({
+                "paging": false,
+
+                columnDefs: [{
+                    targets: [3],
+                    "orderable": false
+                }]
+
+            });
+        });
+
+    </script>
+{% endblock %}

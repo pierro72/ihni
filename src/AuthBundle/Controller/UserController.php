@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 /**
  * User controller.
  *
- * @Route("ihni/user")
+ * @Route("qub/ihni/user")
  */
 class UserController extends Controller
 {
