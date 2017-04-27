@@ -2,40 +2,56 @@
     <nav class="navbar navbar-static-top">
         <div class="container">
 
-            <!-- Navbar Titre -->
-            <div class="navbar-header">
+            {#<!-- Navbar Titre -->#}
+            {#<div class="navbar-header">#}
 
-                <ol class="breadcrumb">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Layout</a></li>
-                    <li class="active">Top Navigation</li>
-                </ol>
+            {#<ol class="breadcrumb">#}
+            {#<li><a href="#">Home</a></li>#}
+            {#<li><a href="#">Layout</a></li>#}
+            {#<li class="active">Top Navigation</li>#}
+            {#</ol>#}
+            {#</div>#}
+
+            <div class="navbar-brand">
+                <b>IHNI</b>Gestion des utilisateurs
             </div>
-
 
             <!-- Navbar Menu Login -->
             <div class="navbar-custom-menu">
 
+                <!-- Bienvenue + nom de l'utilisateur -->
                 <ul class="nav navbar-nav">
+                    <li class="dropdown user-menu">
+
+                            <span class="item">Bienvenue {{ app.user }} </span>
+
+                    </li>
 
                     <!-- User Account Menu -->
                     <li class="dropdown user user-menu">
                         <!-- Menu Toggle Button -->
+
+                        <!-- Bouton options -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <!-- The user image in the navbar-->
-                            <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs">Alexander Pierce</span>
+                            <i class="fa fa-cog"></i>
                         </a>
                         <ul class="dropdown-menu">
-                            <!-- The user image in the menu -->
+                            <!-- Info utilisateur -->
                             <li class="user-header">
-                                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                 <p>
-                                    Alexander Pierce - Web Developer
-                                    <small>Member since Nov. 2012</small>
+                                    {{ app.user }}
+                                    <small>Créé le {{ app.user.createdAt|date('d M, Y')}}</small>
                                 </p>
+
+                                    <p>Equipe
+                                        {% for team in app.user.teamroles %}
+                                            <small>{{ team.role.nom }} de {{ team.equipe.nom }}</small>
+                                        {% endfor %}
+                                    </p>
+
+
+
                             </li>
                             <!-- Menu Body -->
 
@@ -43,7 +59,8 @@
                             <li class="user-footer">
 
                                 <div class="pull-right">
-                                    <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">Sign out</a>
+                                    <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">Sign
+                                        out</a>
                                 </div>
                             </li>
                         </ul>
@@ -53,10 +70,13 @@
         </div>
 
         <div class="container ">
+            {% set route = app.request.get('_route') %}
             <ul class="nav nav-justified bg-light-blue-active">
-                <li class="active"><a href="{{ path('user_index') }}">Gestion des utilisateurs</a></li>
-                <li><a href="{{ path('equipe_index') }}">Gestion des équipes</a></li>
-                <li><a href="#">Sécurité</a></li>
+                <li class="{{ route starts with 'user' ? 'active' }}"><a href="{{ path('user_index') }}">Gestion des
+                        utilisateurs</a></li>
+                <li class="{{ route starts with 'equipe' ? 'active' }}"><a href="{{ path('equipe_index') }}">Gestion des
+                        équipes</a></li>
+                <li class="{{ route starts with 'post' ? 'active' }}"><a href="#">Sécurité</a></li>
             </ul>
         </div>
 
