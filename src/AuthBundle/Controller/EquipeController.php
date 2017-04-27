@@ -69,9 +69,12 @@ class EquipeController extends Controller
     public function showAction(Equipe $equipe)
     {
         $deleteForm = $this->createDeleteForm($equipe);
+        $em = $this->getDoctrine()->getManager();
+        $modules = $em->getRepository('AuthBundle:Module')->findAll();
 
         return $this->render('equipe/show.html.twig', array(
             'equipe' => $equipe,
+            'modules' => $modules,
             'delete_form' => $deleteForm->createView(),
         ));
     }

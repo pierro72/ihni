@@ -1,48 +1,101 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
+{% endblock %}
 {% block body %}
-    <h1>User</h1>
+    <div class="content-wrapper">
+        <div class="container">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="box box-primary">
+                            <div class="box-body box-profile">
+                                <h3 class="profile-username text-center">{{ user }}</h3>
+                                <p class="text-muted text-center">description</p>
+                                <ul class="list-group list-group-unbordered">
+                                    <li class="list-group-item"><i class="fa fa-envelope"></i><strong>
+                                            Email</strong><p class="">{{ user.email }}</p></li>
+                                    <li class="list-group-item"><i class="fa fa-calendar"></i><strong> Créé le </strong><p
+                                                class="">{{ user.createdAt|date('d M, Y') }}</p></li>
+                                    <li class="list-group-item"><i class="fa fa-wrench"></i><strong> Créé
+                                            par</strong><p
+                                                class="">{{ user.createdBy }}</p></li>
+                                    <li class="list-group-item"><i class="fa fa-calendar-check-o"></i><strong> Actif
+                                            depuis</strong><p
+                                                class="">{% if user.activeAt %}{{ user.activeAt|date('d M, Y') }}{% endif %}</p></li>
+                                    <li class="list-group-item"><i class="fa fa-calendar-times-o"></i><strong> Actif
+                                            jusqu'au</strong><p
+                                                class="">{% if user.activeUntil %}{{ user.activeUntil|date('d M, Y') }}{% endif %}</p></li>
+                                    <li class="list-group-item"><i class="fa fa-lock"></i><strong> Actuellement
+                                            Actif</strong><p class="">
+                                            {% if user.enabled %}
+                                            <p class="label label-success">oui</p>
+                                    {% else %}
+                                        <p class="label label-danger">non</p>
+                                    {% endif %}
+                                    </li>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ user.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ user.prenom }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{% if user.createdAt %}{{ user.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Activeat</th>
-                <td>{% if user.activeAt %}{{ user.activeAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Activeuntil</th>
-                <td>{% if user.activeUntil %}{{ user.activeUntil|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('user_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('user_edit', { 'id': user.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                                </ul>
+                                <a href="{{ path('user_index') }}" class="btn btn-default">Fermer</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-9">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Equipes</h3>
+                            </div>
+                            <div class="box-body">
+                                <table class="table table-bordered dataTable table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Rôle</th>
+                                        <th>Equipe</th>
+                                        <th>Nb utilisateurs</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for teamRole in user.teamRoles %}
+                                        <tr>
+                                            <td>{{ teamRole.role.nom }}</td>
+                                            <td>{{ teamRole.equipe.nom }}</td>
+                                            <td>{{ teamRole.equipe.teamRoles|length }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+{% block javascripts %}
+    <!-- DataTables -->
+    <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+
+    <!-- page script -->
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable({
+                "paging": false,
+                "searching":false,
+                "info":false
+
+
+
+            });
+        });
+
+    </script>
 {% endblock %}
