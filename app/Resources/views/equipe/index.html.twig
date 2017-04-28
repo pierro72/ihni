@@ -1,0 +1,58 @@
+{% extends 'tabindex.html.twig' %}
+
+
+    {% block addlink %}{{ path('equipe_new') }}{% endblock %}
+    {% block addtitre %}Ajouter une nouvelle équipe{% endblock %}
+    {% block indextitre %}Liste des équipes{% endblock %}
+
+
+        {% block innertable %}
+        <thead>
+            <tr>
+
+                <th>Equipe</th>
+                <th>Pilote</th>
+                <th>Nb d'utilisateurs</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for equipe in equipes %}
+            <tr>
+
+                <td>{{ equipe.nom }}</td>
+                <td>{% for teamrole in equipe.teamRoles %}{% if teamrole.role.nom == "pilote" %}{{ teamrole.user }}{% endif %}{% endfor %}</td>
+                <td>{{ equipe.teamRoles|length }}</td>
+                <td style="width: 162px">
+                    <a href="{{ path('equipe_show', {'id': equipe.id}) }}"
+                       class="btn btn-default"><i class="fa fa-info"></i></a>
+                    <a href="{{ path('equipe_edit', {'id': equipe.id}) }}"
+                       class="btn btn-default"><i class="fa fa-pencil"></i></a>
+                    <a href="#" class="btn btn-default"><i class="fa fa-lock"></i></a>
+                    <a href="#" class="btn btn-default"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        {% endblock %}
+{% block javascripts %}
+    <!-- DataTables -->
+    <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+
+    <!-- page script -->
+    <script>
+        $(document).ready(function () {
+            $('#example1').DataTable({
+                "paging": false,
+
+                columnDefs: [{
+                    targets: [3],
+                    "orderable": false
+                }]
+
+            });
+        });
+
+    </script>
+{% endblock %}

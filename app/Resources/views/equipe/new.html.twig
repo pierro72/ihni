@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+
+
+{% endblock %}
+
+{% block body %}
+    <!-- Full Width Column -->
+    <div class="content-wrapper">
+        <div class="container">
+            <!-- Content Header (Page header) -->
+
+            <!-- Main content -->
+            <section class="content">
+
+                <div class="row">
+
+                    <div class="box box-primary">
+
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Ajouter une équipe</h3>
+                        </div>
+
+                        <div class="box-body">
+                            <!-- /.box-header -->
+                            <!-- form start -->
+
+                            {{ form_start(form) }}
+                            {{ form_row(form.nom) }}
+                            {{ form_row(form.modules) }}
+                            {{ form_row(form.teamRoles) }}
+                            {#<h4>Utilisateurs</h4>#}
+                            {#<div class="userRoles" data-prototype="{{ form_widget(form.teamRoles.vars.prototype)|e('html_attr') }}">#}
+                            {#{% for user in form.teamRoles %}#}
+                            {#<div>{{ form_row(form.teamRoles) }}</div>#}
+                            {#{% endfor %}#}
+                            {#</div>#}
+
+                            <input type="submit" value="Sauvegarder"/>
+                            {{ form_end(form) }}
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+
+    <script src="{{ asset('js/embed_Collection_Form.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            collectionFormInit('authbundle_equipe_teamRoles','un utilisateur')
+        })
+
+    </script>
+
+{% endblock %}

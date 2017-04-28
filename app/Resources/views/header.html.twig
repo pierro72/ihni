@@ -1,0 +1,88 @@
+<header class="main-header">
+    <nav class="navbar navbar-static-top">
+        <div class="container">
+
+            {#<!-- Navbar Titre -->#}
+            {#<div class="navbar-header">#}
+
+            {#<ol class="breadcrumb">#}
+            {#<li><a href="#">Home</a></li>#}
+            {#<li><a href="#">Layout</a></li>#}
+            {#<li class="active">Top Navigation</li>#}
+            {#</ol>#}
+            {#</div>#}
+
+            <div class="navbar-brand">
+                <b>IHNI</b>Gestion des utilisateurs
+            </div>
+
+            <!-- Navbar Menu Login -->
+            <div class="navbar-custom-menu">
+
+                <!-- Bienvenue + nom de l'utilisateur -->
+                <ul class="nav navbar-nav">
+                    <li class="dropdown user-menu">
+
+                            <span class="item">Bienvenue {{ app.user }} </span>
+
+                    </li>
+
+                    <!-- User Account Menu -->
+                    <li class="dropdown user user-menu">
+                        <!-- Menu Toggle Button -->
+
+                        <!-- Bouton options -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-cog"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- Info utilisateur -->
+                            <li class="user-header">
+
+                                <p>
+                                    {{ app.user }}
+                                    <small>Créé le {{ app.user.createdAt|date('d M, Y')}}</small>
+                                </p>
+
+                                    <p>Equipe
+                                        {% for team in app.user.teamroles %}
+                                            <small>{{ team.role.nom }} de {{ team.equipe.nom }}</small>
+                                        {% endfor %}
+                                    </p>
+
+
+
+                            </li>
+                            <!-- Menu Body -->
+
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+
+                                <div class="pull-right">
+                                    <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">Sign
+                                        out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container ">
+            {% set route = app.request.get('_route') %}
+            <ul class="nav nav-justified bg-light-blue-active">
+                <li class="{{ route starts with 'user' ? 'active' }}"><a href="{{ path('user_index') }}">Gestion des
+                        utilisateurs</a></li>
+                <li class="{{ route starts with 'equipe' ? 'active' }}"><a href="{{ path('equipe_index') }}">Gestion des
+                        équipes</a></li>
+                <li class="{{ route starts with 'post' ? 'active' }}"><a href="#">Sécurité</a></li>
+            </ul>
+        </div>
+
+
+    </nav>
+    <!-- Navbar Top Menu -->
+
+
+</header>

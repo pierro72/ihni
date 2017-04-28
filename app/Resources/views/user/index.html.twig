@@ -1,0 +1,71 @@
+{% extends 'tabindex.html.twig' %}
+
+{% block addlink %}{{ path('user_new') }}{% endblock %}
+{% block addtitre %}Ajouter un utilisateur{% endblock %}
+{% block indextitre %}Liste des utilisateurs{% endblock %}
+{% block innertable %}
+                                        <thead>
+                                        <tr>
+                                            <th>Prenom</th>
+                                            <th>Nom</th>
+                                            <th>Adresse e-mail</th>
+                                            <th>Etat</th>
+                                            <th>Equipe</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        {% for user in users %}
+                                        <tr>
+                                            <td>{{ user.prenom }}</td>
+                                            <td>{{ user.nom }}</td>
+                                            <td>{{ user.email }}</td>
+                                            <td>{% if user.enabled %}
+                                                    <span class="label label-success"><i class="fa fa-check"></i></span> Actif
+                                                {% else %}
+                                                    <span class="label label-danger"><i class="fa fa-ban"></i></span> Inactif
+                                                {% endif %}
+                                            </td>
+                                            <td>
+
+                                            {% for teamRole in user.teamRoles %}
+                                                <div>
+                                                {{ teamRole.equipe }} / {{ teamRole.role }}
+                                                </div>
+                                            {% endfor %}
+
+                                            </td>
+                                            <td style="width: 162px">
+                                                <a href="{{ path('user_show', {'id': user.id }) }}"
+                                                   class="btn btn-default"><i class="fa fa-info"></i></a>
+                                                <a href="{{ path('user_edit', {'id': user.id }) }}"
+                                                   class="btn btn-default"><i class="fa fa-pencil"></i></a>
+                                                <a href="#" class="btn btn-default"><i class="fa fa-lock"></i></a>
+                                                <a href="#" class="btn btn-default"><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+{% endblock %}
+    {% block javascripts %}
+        <!-- DataTables -->
+        <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+
+        <!-- page script -->
+        <script>
+            $(document).ready(function () {
+                $('#example1').DataTable({
+                    "paging": false,
+
+                    columnDefs: [{
+                        targets: [5],
+                        "orderable": false
+                    }]
+
+                });
+            });
+
+        </script>
+    {% endblock %}
