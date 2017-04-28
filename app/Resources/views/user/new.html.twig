@@ -53,23 +53,21 @@
 
     <script>
 
-        $(function () {
-
+        $(document).ready(function () {
+            collectionFormInit('app_user_registration_teamRoles','une équipe');
 
             $('.datepicker').datepicker({
                 autoclose: true,
-                language: "fr"
+                language: "fr",
+
+                format: 'yyyy-mm-dd'
+
+
+
+
 
             });
-
         });
-
-
-
-
-        $(document).ready(function () {
-            collectionFormInit('app_user_registration_teamRoles','une équipe')
-        })
 
     </script>
 {% endblock %}

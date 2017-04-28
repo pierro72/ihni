@@ -254,5 +254,20 @@ class User extends BaseUser
         return $this->nom.' '.$this->prenom;
     }
 
+    /**
+     * @Assert\IsTrue(message="la date d'activation doit être antérieure à la date de désactivation")
+     */
+    public function isAnterior(){
+        return $this->activeAt < $this->activeUntil;
+    }
+
+    /**
+     * @Assert\IsTrue(message="la date d'activation doit être postérieure à la date du jour")
+     */
+    public function isAfterNow(){
+        $now =  new \DateTime();
+        return $this->activeAt > $now;
+    }
+
 
 }

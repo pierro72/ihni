@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class UserType extends AbstractType
 {
@@ -59,6 +61,7 @@ class UserType extends AbstractType
             ])
 
         ;
+
     }
 
 
@@ -74,7 +77,14 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AuthBundle\Entity\User'
+            'data_class' => 'AuthBundle\Entity\User',
+//            'constraints' => new Callback(array(
+//                'callback' => function ($value, ExecutionContextInterface $context){
+//                    if($value['activeAt']>$value['activeUntil']){
+//                        $context->addViolation("la date de désactivation  ne peut être antérieure à la date d'activation");
+//                    }
+//                }
+//            ))
         ));
     }
 
