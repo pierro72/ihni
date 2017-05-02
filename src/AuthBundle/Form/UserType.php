@@ -31,6 +31,7 @@ class UserType extends AbstractType
             ->add('username')
             ->add('plainPassword', PasswordType::class)
             ->add('teamRoles', CollectionType::class, array(
+                'label' => "Equipes",
                 'entry_type' => TeamRoleType::class,
                 'allow_add' => true,
                 'allow_delete' => true,

@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
-
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/iCheck/square/blue.css') }}">
 
 {% endblock %}
 
@@ -53,6 +54,8 @@
 
 {% endblock %}
 {% block javascripts %}
+    <!-- iCheck -->
+    <script src="{{ asset('assets/vendor/AdminLTE/plugins/iCheck/icheck.min.js') }}"></script>
 
     <script src="{{ asset('js/embed_Collection_Form.js') }}"></script>
     <script type="text/javascript">
@@ -60,6 +63,15 @@
             collectionFormInit('authbundle_equipe_teamRoles','un utilisateur')
         })
 
+    </script>
+    <script>
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' // optional
+            });
+        });
     </script>
 
 {% endblock %}
