@@ -15,6 +15,9 @@
             <div class="navbar-brand">
                 <b>IHNI</b>Gestion des utilisateurs
             </div>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                <i class="fa fa-bars"></i>
+            </button>
 
             <!-- Navbar Menu Login -->
             <div class="navbar-custom-menu">
@@ -71,13 +74,17 @@
 
         <div class="container ">
             {% set route = app.request.get('_route') %}
-            <ul class="nav nav-justified bg-light-blue-active">
-                <li class="{{ route starts with 'user' ? 'active' }}"><a href="{{ path('user_index') }}">Gestion des
-                        utilisateurs</a></li>
-                <li class="{{ route starts with 'equipe' ? 'active' }}"><a href="{{ path('equipe_index') }}">Gestion des
-                        équipes</a></li>
-                <li class="{{ route starts with 'post' ? 'active' }}"><a href="#">Sécurité</a></li>
-            </ul>
+            <div class="navbar-collapse pull-left collapse" id="navbar-collapse" aria-expanded="false" style="height: 1px;">
+                <ul class="nav nav-justified bg-light-blue-active">
+                    <li class="{{ route starts with 'user' ? 'active' }}"><a href="{{ path('user_index') }}">Gestion des
+                            utilisateurs</a></li>
+                    <li class="{{ route starts with 'equipe' ? 'active' }}"><a href="{{ path('equipe_index') }}">Gestion des
+                            équipes</a></li>
+                    <li class="{{ route starts with 'post' ? 'active' }}"><a href="#">Sécurité</a></li>
+                </ul>
+
+            </div>
+
         </div>
 
 

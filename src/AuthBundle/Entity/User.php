@@ -65,6 +65,7 @@ class User extends BaseUser
     protected $activeAt;
     /**
      * @var Assert\Date
+
      * @ORM\Column(type="date", nullable=true)
      */
     protected $activeUntil;
