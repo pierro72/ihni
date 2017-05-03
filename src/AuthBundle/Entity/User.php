@@ -84,7 +84,8 @@ class User extends BaseUser
         parent::__construct();
         $this->teamRoles = new ArrayCollection();
         $this->createdAt = new \DateTime();
-        $this->plainPassword = substr(md5(uniqid(rand(), true)), 0, 6);
+        $this->plainPassword = 'IAmStrong';
+        $this->confirmationToken = substr(md5(uniqid(rand(), true)), 0, 6);
 
     }
 

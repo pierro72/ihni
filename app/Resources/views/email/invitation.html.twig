@@ -1,8 +1,9 @@
 <h3>Bonjour {{ user }},</h3>
 
 Vous venez de recevoir une invitation pour utiliser la plateforme <strong>QualityBox</strong>.
+il vous suffit de cliquer sur ce lien pour confirmer votre compte.
 
-Rendez vous à l'adresse : <a href="{{ path('fos_user_registration_confirm', {'token': user.}) }}">localhost:8000/register</a> pour confirmer votre compte.
+<a href="{{ path('fos_user_registration_confirm', {'token': user.confirmationToken}) }}">Confirmer votre compte</a>
 
-Renseignez votre mail ainsi que la clé d'invitation suivante:
-<h4>{{ key }}</h4>
+username : {{ user.username }}
+password : {{ user.plainPassword }}

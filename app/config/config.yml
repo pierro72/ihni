@@ -89,9 +89,6 @@ fos_user:
 
     # Surcharge le formulaire register de FOS
     registration:
-        confirmation:
-            template:   FOSUserBundle:Registration:email.txt.twig
-            enabled: true
         form:
             type: AuthBundle\Form\UserType
 

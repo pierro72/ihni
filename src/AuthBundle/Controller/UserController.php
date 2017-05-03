@@ -58,7 +58,7 @@ class UserController extends Controller
 
             $em->flush();
 
-
+            $this->sendInvitation($user);
 
 
 
@@ -131,7 +131,10 @@ class UserController extends Controller
     }
 
 
-
+    /**
+     * envoi une invitation de confirmation de compte
+     * @param User $user
+     */
     private function sendInvitation(User $user)
     {
         $invitation = \Swift_Message::newInstance()
@@ -140,8 +143,9 @@ class UserController extends Controller
             ->setSubject('Confirmation de votre compte QualityBox')
             ->setBody($this->renderView(':email:invitation.html.twig', array(
                 'user' => $user
-            )))
+            )), 'text/html')
         ;
+        $this->get('mailer')->send($invitation);
 
     }
 }
