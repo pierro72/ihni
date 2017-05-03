@@ -49,11 +49,18 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $username = substr($user->getPrenom(), 0, 1).substr($user->getNom());
+            $user->setUsername($username);
+
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($user);
 
             $em->flush();
+
+
+
+
 
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
@@ -139,5 +146,18 @@ class UserController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    private function sendInvitation(User $user)
+    {
+        $invitation = \Swift_Message::newInstance()
+            ->setFrom('IHNI@sodifrance.fr')
+            ->setTo($user->getEmail())
+            ->setSubject('Confirmation de votre compte QualityBox')
+            ->setBody($this->renderView(':email:invitation.html.twig', array(
+                'user' => $user
+            )))
+        ;
+
     }
 }
