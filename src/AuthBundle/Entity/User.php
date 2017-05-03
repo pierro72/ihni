@@ -261,7 +261,10 @@ class User extends BaseUser
      * @Assert\IsTrue(message="la date d'activation doit être antérieure à la date de désactivation")
      */
     public function isAnterior(){
-        return $this->activeAt < $this->activeUntil;
+        if($this->activeAt != null)
+        {
+            return $this->activeAt < $this->activeUntil;
+        }
     }
 
     /**
@@ -269,7 +272,10 @@ class User extends BaseUser
      */
     public function isAfterNow(){
         $now =  new \DateTime();
-        return $this->activeAt > $now;
+        if ($this->activeAt != null)
+        {
+            return $this->activeAt > $now;
+        }
     }
 
 
