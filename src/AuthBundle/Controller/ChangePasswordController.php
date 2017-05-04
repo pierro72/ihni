@@ -60,10 +60,8 @@ class ChangePasswordController extends \FOS\UserBundle\Controller\ChangePassword
             $userManager->updateUser($user);
 
             if (null === $response = $event->getResponse()) {
-                
-                $response = $this->render('user/show.html.twig', array(
-                    'user' => $user
-                ));
+                $url = $this->generateUrl('fos_user_profile_show');
+                $response = new RedirectResponse($url);
             }
 
             $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
