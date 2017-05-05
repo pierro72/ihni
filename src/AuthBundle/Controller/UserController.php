@@ -49,11 +49,18 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $username = substr($user->getPrenom(), 0, 1).$user->getNom();
+            $user->setUsername($username);
+
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($user);
 
             $em->flush();
+
+            $this->sendInvitation($user);
+
+
 
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
@@ -72,11 +79,10 @@ class UserController extends Controller
      */
     public function showAction(User $user)
     {
-        $deleteForm = $this->createDeleteForm($user);
 
         return $this->render('user/show.html.twig', array(
             'user' => $user,
-            'delete_form' => $deleteForm->createView(),
+
         ));
     }
 
@@ -88,7 +94,7 @@ class UserController extends Controller
      */
     public function editAction(Request $request, User $user)
     {
-        $deleteForm = $this->createDeleteForm($user);
+
         $editForm = $this->createForm('AuthBundle\Form\UserType', $user);
         $editForm->handleRequest($request);
 
@@ -101,43 +107,45 @@ class UserController extends Controller
         return $this->render(':user:new.html.twig', array(
             'user' => $user,
             'form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+
         ));
     }
 
     /**
      * Deletes a user entity.
      *
-     * @Route("/{id}", name="user_delete")
-     * @Method("DELETE")
+     * @Route("/{id}/delete", name="user_delete")
+     * @Method("GET")
      */
     public function deleteAction(Request $request, User $user)
     {
-        $form = $this->createDeleteForm($user);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+
+
             $em = $this->getDoctrine()->getManager();
             $em->remove($user);
             $em->flush();
-        }
+
 
         return $this->redirectToRoute('user_index');
     }
 
+
     /**
-     * Creates a form to delete a user entity.
-     *
-     * @param User $user The user entity
-     *
-     * @return \Symfony\Component\Form\Form The form
+     * envoi une invitation de confirmation de compte
+     * @param User $user
      */
-    private function createDeleteForm(User $user)
+    private function sendInvitation(User $user)
     {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('user_delete', array('id' => $user->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
+        $invitation = \Swift_Message::newInstance()
+            ->setFrom('IHNI@sodifrance.fr')
+            ->setTo($user->getEmail())
+            ->setSubject('Confirmation de votre compte QualityBox')
+            ->setBody($this->renderView(':email:invitation.html.twig', array(
+                'user' => $user
+            )), 'text/html')
         ;
+        $this->get('mailer')->send($invitation);
+
     }
 }

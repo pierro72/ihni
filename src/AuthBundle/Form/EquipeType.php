@@ -28,6 +28,7 @@ class EquipeType extends AbstractType
                 'expanded' => true
             ))
             ->add('teamRoles', CollectionType::class, array(
+                'label' => "Utilisateurs dans l'équipe",
                 'entry_type' => UserRoleType::class,
                 'allow_add' => true,
                 'allow_delete' => true,

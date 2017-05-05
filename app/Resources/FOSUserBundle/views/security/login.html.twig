@@ -36,9 +36,13 @@
             </div>
 
 
+
         <div class="col-xs-4">
             <input type="submit" class="btn btn-primary btn-block btn-flat" id="_submit" name="_submit" value="{{ 'Enregistrer'|trans }}">
         </div>
+        </div>
+        <div class="row text-center">
+            <a href="{{ path('fos_user_resetting_request') }}" class="btn btn-danger btn-flat">J'ai oublié mon mot de passe</a>
         </div>
     </form>
 {% endblock fos_user_content %}
