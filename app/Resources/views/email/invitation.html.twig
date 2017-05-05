@@ -3,7 +3,7 @@
 Vous venez de recevoir une invitation pour utiliser la plateforme <strong>QualityBox</strong>.
 il vous suffit de cliquer sur ce lien pour confirmer votre compte.
 
-<a href="{{ path('fos_user_registration_confirm', {'token': user.confirmationToken}) }}">Confirmer votre compte</a>
+<a href="{{ url('fos_user_registration_confirm', {'token': user.confirmationToken}) }}">Confirmer votre compte</a>
 
-username : {{ user.username }}
-password : {{ user.plainPassword }}
+
+
