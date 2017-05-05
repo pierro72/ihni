@@ -28,8 +28,8 @@ class UserType extends AbstractType
             ->add('prenom')
             ->add('nom')
             ->add('email', EmailType::class)
-            ->add('username')
-            ->add('plainPassword', PasswordType::class)
+//            ->add('username')
+//            ->add('plainPassword', PasswordType::class)
             ->add('teamRoles', CollectionType::class, array(
                 'label' => "Equipes",
                 'entry_type' => TeamRoleType::class,

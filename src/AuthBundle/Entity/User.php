@@ -84,6 +84,9 @@ class User extends BaseUser
         parent::__construct();
         $this->teamRoles = new ArrayCollection();
         $this->createdAt = new \DateTime();
+        $this->plainPassword = 'IAmStrong';
+        $this->confirmationToken = substr(md5(uniqid(rand(), true)), 0, 6);
+
     }
 
     /**
@@ -259,7 +262,10 @@ class User extends BaseUser
      * @Assert\IsTrue(message="la date d'activation doit être antérieure à la date de désactivation")
      */
     public function isAnterior(){
-        return $this->activeAt < $this->activeUntil;
+        if($this->activeAt != null)
+        {
+            return $this->activeAt < $this->activeUntil;
+        }
     }
 
     /**
@@ -267,7 +273,10 @@ class User extends BaseUser
      */
     public function isAfterNow(){
         $now =  new \DateTime();
-        return $this->activeAt > $now;
+        if ($this->activeAt != null)
+        {
+            return $this->activeAt > $now;
+        }
     }
 
 

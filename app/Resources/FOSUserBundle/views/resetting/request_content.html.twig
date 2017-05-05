@@ -1,0 +1,13 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+    <div class="row">
+        <label for="username">{{ "Renseignez l'adresse mail de votre compte"|trans }}</label>
+        <input type="text" id="username" name="username" class="form-control" required="required" />
+    </div>
+    <div class="row" style="padding-top: 20px">
+        <a href="/login" class="btn btn-flat btn-default">Annuler</a>
+        <input type="submit" class="btn btn-flat btn-primary" value="{{ 'Valider'|trans }}" />
+
+    </div>
+</form>
