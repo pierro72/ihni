@@ -13,3 +13,12 @@ services:
       tags:
         - { name: form.type, alias: app_user_registration}
 
+    role_voter:
+        class: AuthBundle\Security\RoleVoter
+        tags:
+          - { name: security.voter }
+
+    team_voter:
+        class: AuthBundle\Security\TeamVoter
+        tags:
+          - { name: security.voter }

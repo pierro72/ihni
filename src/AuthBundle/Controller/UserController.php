@@ -2,15 +2,17 @@
 
 namespace AuthBundle\Controller;
 
+use AuthBundle\Entity\Equipe;
 use AuthBundle\Entity\TeamRole;
 use AuthBundle\Entity\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 
 /**
  * User controller.
- *
+ * @Security("is_granted('TEAM_PILOT') or has_role('ROLE_ADMIN')")
  * @Route("qub/ihni/user")
  */
 class UserController extends Controller
@@ -148,4 +150,6 @@ class UserController extends Controller
         $this->get('mailer')->send($invitation);
 
     }
+
+
 }
