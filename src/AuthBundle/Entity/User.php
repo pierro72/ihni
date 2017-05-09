@@ -8,7 +8,8 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * User
+ * @ORM\Entity(repositoryClass="AuthBundle\Repository\UserRepository")
  * @ORM\Table(name="ihni_user")
  */
 class User extends BaseUser
