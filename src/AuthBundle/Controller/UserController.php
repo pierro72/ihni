@@ -65,7 +65,6 @@ class UserController extends Controller
 
         foreach ($currentTeam as $item){
             $result = $em->getRepository('AuthBundle:User')->findByTeam($item);
-            
             foreach ($result as $user){
                 $users[] = $user;
             }
