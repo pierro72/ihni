@@ -52,18 +52,26 @@ class UserController extends Controller
     {
         $currentUser = $this->getUser();
         $currentTeam = new ArrayCollection();
+        $users = new ArrayCollection();
+
 
         foreach ($currentUser->getTeamRoles() as $teamRole) {
-            if ($teamRole->getEquipe()->getNom() == 'pilote') {
+            if ($teamRole->getRole()->getNom() == 'pilote') {
                 $currentTeam[] = $teamRole->getEquipe();
             }
         }
-        $firstTeamRole = $currentUser->getTeamRoles()->first();
-        $someTeam = $firstTeamRole->getEquipe();
 
         $em = $this->getDoctrine()->getManager();
 
-        $users =  $em->getRepository('AuthBundle:User')->findByTeam($someTeam);
+        foreach ($currentTeam as $item){
+            $result = $em->getRepository('AuthBundle:User')->findByTeam($item);
+            
+            foreach ($result as $user){
+                $users[] = $user;
+            }
+        }
+
+
 
         return $this->render(
             'user/index.html.twig',
