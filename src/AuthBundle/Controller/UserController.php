@@ -2,15 +2,20 @@
 
 namespace AuthBundle\Controller;
 
+use AuthBundle\Entity\Equipe;
 use AuthBundle\Entity\TeamRole;
 use AuthBundle\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * User controller.
- *
+ * @Security("is_granted('TEAM_PILOT') or has_role('ROLE_ADMIN')")
  * @Route("qub/ihni/user")
  */
 class UserController extends Controller
@@ -27,9 +32,55 @@ class UserController extends Controller
 
         $users = $em->getRepository('AuthBundle:User')->findAll();
 
-        return $this->render('user/index.html.twig', array(
-            'users' => $users,
-        ));
+        return $this->render(
+            'user/index.html.twig',
+            array(
+                'users' => $users,
+            )
+        );
+    }
+
+    /**
+     * List users in the same current user team
+     *
+     * @Route("/userteam", name="userteam_index")
+     *
+     * @Method("GET")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function indexByUserTeamAction()
+    {
+        $currentUser = $this->getUser();
+        $currentTeam = new ArrayCollection();
+        $users = new ArrayCollection();
+
+
+        foreach ($currentUser->getTeamRoles() as $teamRole) {
+            if ($teamRole->getRole()->getNom() == 'pilote') {
+                $currentTeam[] = $teamRole->getEquipe();
+            }
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        foreach ($currentTeam as $item){
+            $result = $em->getRepository('AuthBundle:User')->findByTeam($item);
+            
+            foreach ($result as $user){
+                $users[] = $user;
+            }
+        }
+
+
+
+        return $this->render(
+            'user/index.html.twig',
+            array(
+                'users' => $users,
+            )
+        );
+
+
     }
 
     /**
@@ -41,7 +92,6 @@ class UserController extends Controller
     public function newAction(Request $request)
     {
         $user = new User();
-
 
 
         $form = $this->createForm('AuthBundle\Form\UserType', $user);
@@ -61,14 +111,16 @@ class UserController extends Controller
             $this->sendInvitation($user);
 
 
-
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
 
-        return $this->render('user/new.html.twig', array(
-            'user' => $user,
-            'form' => $form->createView(),
-        ));
+        return $this->render(
+            'user/new.html.twig',
+            array(
+                'user' => $user,
+                'form' => $form->createView(),
+            )
+        );
     }
 
     /**
@@ -80,10 +132,13 @@ class UserController extends Controller
     public function showAction(User $user)
     {
 
-        return $this->render('user/show.html.twig', array(
-            'user' => $user,
+        return $this->render(
+            'user/show.html.twig',
+            array(
+                'user' => $user,
 
-        ));
+            )
+        );
     }
 
     /**
@@ -104,11 +159,14 @@ class UserController extends Controller
             return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
         }
 
-        return $this->render(':user:new.html.twig', array(
-            'user' => $user,
-            'form' => $editForm->createView(),
+        return $this->render(
+            ':user:new.html.twig',
+            array(
+                'user' => $user,
+                'form' => $editForm->createView(),
 
-        ));
+            )
+        );
     }
 
     /**
@@ -121,10 +179,9 @@ class UserController extends Controller
     {
 
 
-
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($user);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
 
 
         return $this->redirectToRoute('user_index');
@@ -141,11 +198,18 @@ class UserController extends Controller
             ->setFrom('IHNI@sodifrance.fr')
             ->setTo($user->getEmail())
             ->setSubject('Confirmation de votre compte QualityBox')
-            ->setBody($this->renderView(':email:invitation.html.twig', array(
-                'user' => $user
-            )), 'text/html')
-        ;
+            ->setBody(
+                $this->renderView(
+                    ':email:invitation.html.twig',
+                    array(
+                        'user' => $user,
+                    )
+                ),
+                'text/html'
+            );
         $this->get('mailer')->send($invitation);
 
     }
+
+
 }

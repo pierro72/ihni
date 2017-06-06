@@ -8,7 +8,8 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * User
+ * @ORM\Entity(repositoryClass="AuthBundle\Repository\UserRepository")
  * @ORM\Table(name="ihni_user")
  */
 class User extends BaseUser
@@ -76,9 +77,12 @@ class User extends BaseUser
      */
     protected $teamRoles;
     /**
+     * @var ArrayCollection|Equipe
+     */
+    protected $equipes;
+    /**
      * User constructor.
      */
-
     public function __construct()
     {
         parent::__construct();
@@ -253,6 +257,13 @@ class User extends BaseUser
         return $this;
     }
 
+    public function getEquipes(){
+        foreach ($this->teamRoles as $teamRole){
+            $equipes[] = $teamRole->getEquipe();
+        }
+        return $equipes;
+    }
+
     function __toString()
     {
         return $this->nom.' '.$this->prenom;
@@ -278,6 +289,7 @@ class User extends BaseUser
             return $this->activeAt > $now;
         }
     }
+
 
 
 }
