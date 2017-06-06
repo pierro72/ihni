@@ -5,3 +5,10 @@
     color: white;
     display: block;
 }
+.list-pilote {
+    min-height: 60px;
+}
+.titre-team {
+    font-size: 2em;
+
+}
