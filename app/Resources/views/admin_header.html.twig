@@ -1,0 +1,13 @@
+<div class="container ">
+    {% set route = app.request.get('_route') %}
+    <div class="navbar-collapse pull-left collapse" id="navbar-collapse" aria-expanded="false" style="height: 1px;">
+        <ul class="nav nav-justified bg-light-blue-active">
+            <li class="{{ route starts with 'user' ? 'active' }}"><a href="{{ path('user_index') }}">Gestion des
+                    utilisateurs</a></li>
+            <li class="{{ route starts with 'equipe' ? 'active' }}"><a href="{{ path('equipe_index') }}">Gestion des
+                    équipes</a></li>
+            <li class="{{ route starts with 'post' ? 'active' }}"><a href="#">Sécurité</a></li>
+        </ul>
+
+    </div>
+</div>
