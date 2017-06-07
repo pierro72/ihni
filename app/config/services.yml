@@ -13,6 +13,12 @@ services:
       tags:
         - { name: form.type, alias: app_user_registration}
 
+    app.form.user.role:
+      class: AuthBundle\Form\TeamRoleType
+      arguments: ["@security.authorization_checker"]
+      tags:
+        - { name: form.type }
+
     role_voter:
         class: AuthBundle\Security\RoleVoter
         tags:

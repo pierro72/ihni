@@ -24,15 +24,15 @@
                             <h3 class="box-title">Ajouter un utilisateur</h3>
                         </div>
 
-                            <div class="box-body">
-                                <!-- /.box-header -->
-                                <!-- form start -->
-                                {{ form_start(form) }}
-                                {{ form_widget(form) }}
-                                <a href="{{ path('user_index') }}" class="btn btn-default">Annuler</a>
-                                <input type="submit" value="Valider" class="btn btn-primary"/>
-                                {{ form_end(form) }}
-                            </div>
+                        <div class="box-body">
+                            <!-- /.box-header -->
+                            <!-- form start -->
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
+                            <a href="{{ path('user_index') }}" class="btn btn-default">Annuler</a>
+                            <input type="submit" value="Valider" class="btn btn-primary"/>
+                            {{ form_end(form) }}
+                        </div>
 
 
                     </div>
@@ -45,6 +45,7 @@
 
 {% endblock %}
 {% block javascripts %}
+
     <script src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
     <script src="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/locales/bootstrap-datepicker.fr.js') }}"></script>
@@ -53,18 +54,21 @@
     <script src="{{ asset('js/embed_Collection_Form.js') }}"></script>
 
     <script>
+        var isAdmin = false;
+
+        {% if is_granted('ROLE_ADMIN') %}
+        isAdmin = true;
+        {% endif %}
+
 
         $(document).ready(function () {
-            collectionFormInit('app_user_registration_teamRoles','une équipe');
+            collectionFormInit('app_user_registration_teamRoles', 'une équipe');
 
             $('.datepicker').datepicker({
                 autoclose: true,
                 language: "fr",
 
                 format: 'yyyy-mm-dd'
-
-
-
 
 
             });

@@ -275,7 +275,7 @@ class User extends BaseUser
      * @Assert\IsTrue(message="la date d'activation doit être antérieure à la date de désactivation")
      */
     public function isAnterior(){
-        if($this->activeAt != null)
+        if($this->activeAt != null && $this->activeUntil != null)
         {
             return $this->activeAt < $this->activeUntil;
         }
