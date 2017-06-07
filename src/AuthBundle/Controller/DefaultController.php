@@ -7,6 +7,7 @@ use AuthBundle\Entity\Module;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+
 /**
  * @Route("qub/")
  */
@@ -17,7 +18,17 @@ class DefaultController extends Controller
      */
     public function indexTeamTable()
     {
+
         $teams =  $this->getUser()->getEquipes();
+        //Redirige directement vers choix module si le user n'a qu'une équipe
+        if ($teams->count() == 1){
+
+            return $this->redirectToRoute('module_table', array(
+                'equipe' => $teams->first()->getId()
+            ));
+
+        }
+
 
         return $this->render(':equipe:team_table.html.twig', array(
             'teams' => $teams
@@ -29,6 +40,13 @@ class DefaultController extends Controller
     public function indexModuleTable(Equipe $equipe)
     {
         $modules = $equipe->getModules();
+        //Redirige directement vers le module si le user n'a qu'un module
+        if ($modules->count() == 1){
+            return $this->redirectToRoute('goout', array(
+                'equipe' => $equipe->getId(),
+                'module' => $modules->first()->getId()
+            ));
+        }
 
         return $this->render(':equipe:module_table.html.twig', array(
             'modules' => $modules,

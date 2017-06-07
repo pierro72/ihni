@@ -76,10 +76,7 @@ class User extends BaseUser
 
      */
     protected $teamRoles;
-    /**
-     * @var ArrayCollection|Equipe
-     */
-    protected $equipes;
+
     /**
      * User constructor.
      */
@@ -257,11 +254,16 @@ class User extends BaseUser
         return $this;
     }
 
+    /**
+     * @return ArrayCollection|Equipe
+     */
     public function getEquipes(){
+        $equipes = new ArrayCollection();
         foreach ($this->teamRoles as $teamRole){
-            $equipes[] = $teamRole->getEquipe();
+            $equipes->add($teamRole->getEquipe());
         }
         return $equipes;
+
     }
 
     function __toString()
