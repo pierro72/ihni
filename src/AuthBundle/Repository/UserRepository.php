@@ -26,6 +26,8 @@ class UserRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+
 }
 
 //SELECT ihni_user.username

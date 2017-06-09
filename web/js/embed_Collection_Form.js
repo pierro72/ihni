@@ -22,10 +22,10 @@ function collectionFormInit($id, $sujet) {
     $collectionHolder.find('div.form_line>.row').each(function () {
         addFormDeleteLink($(this));
     });
-    if(isAdmin){
+
         //add the "add" link
         $collectionHolder.append($addLink);
-    }
+
 
 
     // count the current form inputs we have (e.g. 2), use that as the new

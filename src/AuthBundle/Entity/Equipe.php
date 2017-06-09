@@ -201,6 +201,18 @@ class Equipe
         return $this->modules;
     }
 
+    public function getPilote()
+    {
+        $pilote = new ArrayCollection();
+        foreach ($this->teamRoles as $teamRole){
+            if ($teamRole->getRole()->getNom() == 'pilote'){
+                $pilote->add($teamRole);
+            }
+        }
+
+        return $pilote;
+    }
+
     function __toString()
     {
         return $this->nom;

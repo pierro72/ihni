@@ -28,7 +28,36 @@
                             <!-- /.box-header -->
                             <!-- form start -->
                             {{ form_start(form) }}
+                            {% if intention == 'create' %}
                             {{ form_widget(form) }}
+                        {% else %}
+                        {{ form_row(form.prenom) }}
+                        {{ form_row(form.nom) }}
+                        {{ form_row(form.email) }}
+
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th>Équipe</th>
+                                    <th>Rôle</th>
+                                    <th></th>
+                                </tr>
+                                {% for teamRole in user.teamRoles %}
+                                    <tr>
+                                        <td>{{ teamRole.equipe }}</td>
+                                        <td>{{ teamRole.role }}</td>
+                                        <td>
+                                            {% if teamRole.equipe in app.user.equipesPilote %}
+                                            <a href="{{ path('equipe_edit', {'id': teamRole.equipe.id}) }}"
+                                               class="btn btn-success">Éditer</a></td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+
+                                {% endif %}
+                                </tbody>
+                            </table>
+
                             <a href="{{ path('user_index') }}" class="btn btn-default">Annuler</a>
                             <input type="submit" value="Valider" class="btn btn-primary"/>
                             {{ form_end(form) }}

@@ -85,7 +85,7 @@ class User extends BaseUser
         parent::__construct();
         $this->teamRoles = new ArrayCollection();
         $this->createdAt = new \DateTime();
-        $this->plainPassword = 'IAmStrong';
+        $this->plainPassword = substr(md5(uniqid(rand(), true)), 0, 6);
         $this->confirmationToken = substr(md5(uniqid(rand(), true)), 0, 6);
 
     }
@@ -264,6 +264,16 @@ class User extends BaseUser
         }
         return $equipes;
 
+    }
+
+    public function getEquipesPilote(){
+        $equipes = new ArrayCollection();
+        foreach ($this->teamRoles as $teamRole){
+            if ($teamRole->getRole()->getNom() == 'pilote'){
+                $equipes->add($teamRole->getEquipe());
+            }
+        }
+        return $equipes;
     }
 
     function __toString()

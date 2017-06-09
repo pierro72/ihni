@@ -73,20 +73,7 @@ class UserController extends Controller
     {
         $user = new User();
 
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            $currentUser = $this->getUser();
-            foreach ($currentUser->getTeamRoles() as $currentTeamRole) {
-                if ($currentTeamRole->getRole()->getNom() == 'pilote') {
-                    $teamRole = new TeamRole();
-                    $teamRole->setEquipe($currentTeamRole->getEquipe());
-                    $user->addTeamRole($teamRole);
 
-                }
-            }
-
-
-
-        };
         $form = $this->createForm('AuthBundle\Form\UserType', $user);
 
 
@@ -113,6 +100,7 @@ class UserController extends Controller
             'user/new.html.twig',
             array(
                 'user' => $user,
+                'intention' => 'create',
                 'form' => $form->createView(),
             )
         );
@@ -149,15 +137,19 @@ class UserController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
+            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
+
+
 
         return $this->render(
             ':user:new.html.twig',
             array(
                 'user' => $user,
+                'intention' => 'edit',
                 'form' => $editForm->createView(),
 
             )
