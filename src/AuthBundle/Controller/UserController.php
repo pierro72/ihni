@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 class UserController extends Controller
 {
     /**
-     * Lists all user entities.
+     * Lists all user entities if Role_Admin is granted else list users in theam where the user is Pilote
      *
      * @Route("/", name="user_index")
      * @Method("GET")
@@ -30,7 +30,30 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $users = $em->getRepository('AuthBundle:User')->findAll();
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+
+
+            $users = $em->getRepository('AuthBundle:User')->findAll();
+        } else {
+            $currentUser = $this->getUser();
+            $currentTeam = new ArrayCollection();
+            $users = new ArrayCollection();
+
+            foreach ($currentUser->getTeamRoles() as $teamRole) {
+                if ($teamRole->getRole()->getNom() == 'pilote') {
+                    $currentTeam[] = $teamRole->getEquipe();
+                }
+            }
+            foreach ($currentTeam as $item) {
+                $result = $em->getRepository('AuthBundle:User')->findByTeam($item);
+                foreach ($result as $user) {
+                    if(!$users->contains($user))
+                    {
+                        $users[] = $user;
+                    }
+                }
+            }
+        }
 
         return $this->render(
             'user/index.html.twig',
@@ -38,48 +61,6 @@ class UserController extends Controller
                 'users' => $users,
             )
         );
-    }
-
-    /**
-     * List users in the same current user team
-     *
-     * @Route("/userteam", name="userteam_index")
-     *
-     * @Method("GET")
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function indexByUserTeamAction()
-    {
-        $currentUser = $this->getUser();
-        $currentTeam = new ArrayCollection();
-        $users = new ArrayCollection();
-
-
-        foreach ($currentUser->getTeamRoles() as $teamRole) {
-            if ($teamRole->getRole()->getNom() == 'pilote') {
-                $currentTeam[] = $teamRole->getEquipe();
-            }
-        }
-
-        $em = $this->getDoctrine()->getManager();
-
-        foreach ($currentTeam as $item){
-            $result = $em->getRepository('AuthBundle:User')->findByTeam($item);
-            foreach ($result as $user){
-                $users[] = $user;
-            }
-        }
-
-
-
-        return $this->render(
-            'user/index.html.twig',
-            array(
-                'users' => $users,
-            )
-        );
-
-
     }
 
     /**
@@ -94,6 +75,8 @@ class UserController extends Controller
 
 
         $form = $this->createForm('AuthBundle\Form\UserType', $user);
+
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -117,6 +100,7 @@ class UserController extends Controller
             'user/new.html.twig',
             array(
                 'user' => $user,
+                'intention' => 'create',
                 'form' => $form->createView(),
             )
         );
@@ -153,15 +137,19 @@ class UserController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
+            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
+
+
 
         return $this->render(
             ':user:new.html.twig',
             array(
                 'user' => $user,
+                'intention' => 'edit',
                 'form' => $editForm->createView(),
 
             )

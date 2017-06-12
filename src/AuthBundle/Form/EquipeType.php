@@ -3,11 +3,14 @@
 namespace AuthBundle\Form;
 
 use AuthBundle\Entity\Module;
+
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EquipeType extends AbstractType
@@ -27,6 +30,8 @@ class EquipeType extends AbstractType
                 'multiple' => true,
                 'expanded' => true
             ))
+
+
             ->add('teamRoles', CollectionType::class, array(
                 'label' => "Utilisateurs dans l'équipe",
                 'entry_type' => UserRoleType::class,
@@ -35,12 +40,11 @@ class EquipeType extends AbstractType
                 'by_reference' => false,
                 'required' => false,
 
-
-
-
-
             ))
+
+
         ;
+
     }
     
     /**

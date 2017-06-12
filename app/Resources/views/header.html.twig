@@ -71,7 +71,7 @@
                                 {% if inAdmin %}
                                     <div class="pull-right"><a href="{{ path('team_table') }}" class="btn btn-default btn-flat">QualityBox</a>
                                     </div>
-                                {% else %}
+                                {% elseif is_granted('ROLE_ADMIN') or is_granted('TEAM_PILOT') %}
 
                                 <div class="pull-right"><a href="{{ path('user_index') }}" class="btn btn-default btn-flat">IHNI</a></div>
                                 {% endif %}

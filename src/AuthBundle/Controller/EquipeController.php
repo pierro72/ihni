@@ -28,7 +28,13 @@ class EquipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $equipes = $em->getRepository('AuthBundle:Equipe')->findAll();
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
+        {
+            $equipes = $em->getRepository('AuthBundle:Equipe')->findAll();
+        }
+        else{
+            $equipes = $this->getUser()->getEquipesPilote();
+        }
 
         return $this->render('equipe/index.html.twig', array(
             'equipes' => $equipes,
@@ -89,18 +95,19 @@ class EquipeController extends Controller
     public function editAction(Request $request, Equipe $equipe)
     {
 
-
         $deleteForm = $this->createDeleteForm($equipe);
         $editForm = $this->createForm('AuthBundle\Form\EquipeType', $equipe);
+
         $editForm->handleRequest($request);
 
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 
+
             $this->getDoctrine()->getManager()->flush();
 
 
-            return $this->redirectToRoute('equipe_edit', array('id' => $equipe->getId()));
+            return $this->redirectToRoute('equipe_show', array('id' => $equipe->getId()));
         }
 
         return $this->render('equipe/new.html.twig', array(

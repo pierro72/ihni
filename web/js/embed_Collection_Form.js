@@ -6,6 +6,7 @@
  */
 
 
+
 function collectionFormInit($id, $sujet) {
 
     var $collectionHolder;
@@ -21,8 +22,11 @@ function collectionFormInit($id, $sujet) {
     $collectionHolder.find('div.form_line>.row').each(function () {
         addFormDeleteLink($(this));
     });
-    //add the "add" link
-    $collectionHolder.append($addLink);
+
+        //add the "add" link
+        $collectionHolder.append($addLink);
+
+
 
     // count the current form inputs we have (e.g. 2), use that as the new
     // index when inserting a new item (e.g. 2)
@@ -58,7 +62,9 @@ function addForm($collectionHolder, $addLink) {
     var $newFormLi = $('<div></div>').append(newForm);
     $addLink.before($newFormLi);
 
+
     addFormDeleteLink($newFormLi.find('.row'));
+
 
 
 
@@ -77,3 +83,8 @@ function addFormDeleteLink($formDiv) {
         $formDiv.remove();
     })
 }
+//on document.load
+$(function () {
+    //Reenable disabled field for saving
+
+});
