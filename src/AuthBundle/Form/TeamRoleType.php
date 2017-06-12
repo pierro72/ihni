@@ -54,6 +54,7 @@ class TeamRoleType extends AbstractType
                     'class' => Role::class,
                     'choice_label' => 'nom',
 
+
                 )
             );
         } //Si Role Pilote restreint les choix aux équipes piloté et rôles classiques
@@ -63,39 +64,39 @@ class TeamRoleType extends AbstractType
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
                 function (FormEvent $event) use ($user) {
-                        $form = $event->getForm();
+                    $form = $event->getForm();
 
-                        $formOptions = array(
-                            'class'         => Equipe::class,
-                            'choice_label'  => 'nom',
-                            'query_builder' => function(EntityRepository $er) use ($user) {
-                                return $er->createQueryBuilder('e')
-                                    ->innerJoin('e.teamRoles', 't')
-                                    ->innerJoin('t.user','u')
-                                    ->where('u = :zeuser')
-                                    ->setParameter('zeuser', $user)
-                                    ->andWhere("t.role = 1")
-                                    ;
-                            }
-                        );
-                        $form->add(
-                            'equipe',
+                    $formOptions = array(
+                        'class' => Equipe::class,
+                        'choice_label' => 'nom',
+                        'choices' => $user->getPilote(),
+//                            'query_builder' => function(EntityRepository $er) use ($user) {
+//                                return $er->createQueryBuilder('e')
+//                                    ->innerJoin('e.teamRoles', 't')
+//                                    ->innerJoin('t.user','u')
+//                                    ->where('u = :zeuser')
+//                                    ->setParameter('zeuser', $user)
+//                                    ->andWhere("t.role = 1")
+//                                    ;
+//                            }
+                    );
+                    $form->add(
+                        'equipe',
+                        EntityType::class,
+                        $formOptions
+                    )
+                        ->add(
+                            'role',
                             EntityType::class,
-                            $formOptions
+                            array(
+                                'class' => Role::class,
+                                'query_builder' => function (EntityRepository $er) {
+                                    return $er->createQueryBuilder('u')
+                                        ->where("u.nom != 'pilote'");
+                                },
+                                'choice_label' => 'nom',
                             )
-                            ->add(
-                                'role',
-                                EntityType::class,
-                                array(
-                                    'class' => Role::class,
-                                    'query_builder' => function (EntityRepository $er) {
-                                        return $er->createQueryBuilder('u')
-                                            ->where("u.nom != 'pilote'");
-                                    },
-                                    'choice_label' => 'nom',
-                                )
-                            )
-                        ;
+                        );
                 }
             );
 

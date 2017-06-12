@@ -23,7 +23,7 @@ class User extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column(type="string",length=50,nullable=false)
+     * @ORM\Column(type="string",length=50, nullable=true)
      * @Assert\NotBlank(message="Entrez le nom du nouvel utilisateur.",groups={"Registration", "Profile"})
      * @Assert\Length(
      *     min = 3,
@@ -36,7 +36,7 @@ class User extends BaseUser
     protected $nom;
     /**
      * @var string
-     * @ORM\Column(type="string",length=50,nullable=false)
+     * @ORM\Column(type="string",length=50, nullable=true)
      * @Assert\NotBlank(message="Entrez le prénom du nouvel utilisateur.",groups={"Registration", "Profile"})
      * @Assert\Length(
      *     min = 3,
@@ -49,7 +49,7 @@ class User extends BaseUser
     protected $prenom;
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime")
      */
     protected $createdAt;
     /**
@@ -70,6 +70,11 @@ class User extends BaseUser
      * @ORM\Column(type="date", nullable=true)
      */
     protected $activeUntil;
+    /**
+     * @var Equipe|ArrayCollection
+     * @ORM\OneToMany(targetEntity="AuthBundle\Entity\Equipe", mappedBy="pilote")
+     */
+    protected $pilote;
     /**
      * @var ArrayCollection|TeamRole
      * @ORM\OneToMany(targetEntity="AuthBundle\Entity\TeamRole", mappedBy="user", cascade={"all"}, orphanRemoval=true)
@@ -206,6 +211,16 @@ class User extends BaseUser
     }
 
     /**
+     * @return Equipe|ArrayCollection
+     */
+    public function getPilote()
+    {
+        return $this->pilote;
+    }
+
+
+
+    /**
      * Add teamRole
      *
      * @param \AuthBundle\Entity\TeamRole $teamRole
@@ -266,15 +281,15 @@ class User extends BaseUser
 
     }
 
-    public function getEquipesPilote(){
-        $equipes = new ArrayCollection();
-        foreach ($this->teamRoles as $teamRole){
-            if ($teamRole->getRole()->getNom() == 'pilote'){
-                $equipes->add($teamRole->getEquipe());
-            }
-        }
-        return $equipes;
-    }
+//    public function getEquipesPilote(){
+//        $equipes = new ArrayCollection();
+//        foreach ($this->teamRoles as $teamRole){
+//            if ($teamRole->getRole()->getNom() == 'pilote'){
+//                $equipes->add($teamRole->getEquipe());
+//            }
+//        }
+//        return $equipes;
+//    }
 
     function __toString()
     {

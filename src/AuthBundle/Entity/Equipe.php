@@ -38,6 +38,11 @@ class Equipe
      */
     private $createdAt;
     /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\User", inversedBy="pilote", cascade={"persist"})
+     */
+    private $pilote;
+    /**
      * @var ArrayCollection|TeamRole
      * @ORM\OneToMany(targetEntity="AuthBundle\Entity\TeamRole", mappedBy="equipe", cascade={"all"}, orphanRemoval=true)
 
@@ -201,17 +206,36 @@ class Equipe
         return $this->modules;
     }
 
+    /**
+     * @return User
+     */
     public function getPilote()
     {
-        $pilote = new ArrayCollection();
-        foreach ($this->teamRoles as $teamRole){
-            if ($teamRole->getRole()->getNom() == 'pilote'){
-                $pilote->add($teamRole);
-            }
-        }
-
-        return $pilote;
+        return $this->pilote;
     }
+
+    /**
+     * @param User $pilote
+     */
+    public function setPilote($pilote)
+    {
+        $this->pilote = $pilote;
+    }
+
+
+//    public function getPilote()
+//    {
+//        $pilote = new ArrayCollection();
+//        foreach ($this->teamRoles as $teamRole){
+//            if ($teamRole->getRole()->getNom() == 'pilote'){
+//                $pilote->add($teamRole);
+//            }
+//        }
+//
+//        return $pilote;
+//    }
+
+
 
     function __toString()
     {

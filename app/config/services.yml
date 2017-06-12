@@ -25,6 +25,12 @@ services:
       tags:
         - { name: form.type }
 
+    app.equipetype.admin:
+      class: AuthBundle\Form\EquipeType
+      arguments: ['@security.authorization_checker']
+      tags:
+        - { name: form.type}
+
     role_voter:
         class: AuthBundle\Security\RoleVoter
         tags:

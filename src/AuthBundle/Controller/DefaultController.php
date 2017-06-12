@@ -14,12 +14,22 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class DefaultController extends Controller
 {
     /**
+     * @Route("/")
+     */
+    public function redirectToChoices(){
+        return $this->redirectToRoute('team_table');
+    }
+    /**
      * @Route("team_table/", name="team_table")
      */
     public function indexTeamTable()
     {
 
         $teams =  $this->getUser()->getEquipes();
+        $teamsPilote = $this->getUser()->getPilote();
+        foreach ($teamsPilote as $team){
+            $teams->add($team);
+        }
         //Redirige directement vers choix module si le user n'a qu'une équipe
         if ($teams->count() == 1){
 

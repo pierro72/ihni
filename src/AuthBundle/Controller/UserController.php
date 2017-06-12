@@ -35,23 +35,17 @@ class UserController extends Controller
 
             $users = $em->getRepository('AuthBundle:User')->findAll();
         } else {
-            $currentUser = $this->getUser();
-            $currentTeam = new ArrayCollection();
+
+            $equipePilote = $this->getUser()->getPilote();
             $users = new ArrayCollection();
 
-            foreach ($currentUser->getTeamRoles() as $teamRole) {
-                if ($teamRole->getRole()->getNom() == 'pilote') {
-                    $currentTeam[] = $teamRole->getEquipe();
-                }
-            }
-            foreach ($currentTeam as $item) {
-                $result = $em->getRepository('AuthBundle:User')->findByTeam($item);
-                foreach ($result as $user) {
-                    if(!$users->contains($user))
-                    {
-                        $users[] = $user;
-                    }
-                }
+
+            $users->add($this->getUser());
+            foreach ($equipePilote as $equipe) {
+               $teamRoles = $equipe->getTeamRoles();
+               foreach ($teamRoles as $teamRole){
+                   $users->add($teamRole->getUser());
+               }
             }
         }
 
