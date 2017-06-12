@@ -30,6 +30,11 @@
                             {{ form_start(form) }}
                             {{ form_row(form.nom) }}
                             {{ form_row(form.modules) }}
+                            <div class="row">
+                                <div class="col-md-5">
+                                    {{ form_row(form.pilote) }}
+                                </div>
+                            </div>
                             {{ form_row(form.teamRoles) }}
                             {#<h4>Utilisateurs</h4>#}
                             {#<div class="userRoles" data-prototype="{{ form_widget(form.teamRoles.vars.prototype)|e('html_attr') }}">#}
@@ -61,7 +66,7 @@
     <script src="{{ asset('js/embed_Collection_Form.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            collectionFormInit('authbundle_equipe_teamRoles','un utilisateur')
+            collectionFormInit('authbundle_equipe_teamRoles', 'un utilisateur')
         })
 
     </script>

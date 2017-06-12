@@ -63,9 +63,9 @@ class RoleVoter extends Voter
      * Check if the user is Pilot of a team
      */
     private function isTeamPilot(User $user){
-        foreach ($user->getTeamRoles() as $teamRole){
-            if ($teamRole->getRole()->getNom() == "pilote") return true;
-        }
+
+            if (!$user->getPilote() == null) return true;
+
         return false;
     }
 }

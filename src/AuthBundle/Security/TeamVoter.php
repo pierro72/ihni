@@ -62,9 +62,9 @@ class TeamVoter extends Voter
      * Vérifie si le user fait partie de l'équipe et en est le pilote
      */
     private function isTeamMatePilot(User $user, Equipe $equipe){
-        foreach ($user->getTeamRoles() as $teamRole){
-            if($teamRole->getEquipe() == $equipe && $teamRole->getRole()->getNom() == "pilote") return true;
-        }
+
+            if($equipe.getPilote() == $user) return true;
+
         return false;
     }
 }

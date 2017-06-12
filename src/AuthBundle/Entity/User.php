@@ -71,6 +71,11 @@ class User extends BaseUser
      */
     protected $activeUntil;
     /**
+     * @var Equipe|ArrayCollection
+     * @ORM\OneToMany(targetEntity="AuthBundle\Entity\Equipe", mappedBy="pilote")
+     */
+    protected $pilote;
+    /**
      * @var ArrayCollection|TeamRole
      * @ORM\OneToMany(targetEntity="AuthBundle\Entity\TeamRole", mappedBy="user", cascade={"all"}, orphanRemoval=true)
 
@@ -206,6 +211,16 @@ class User extends BaseUser
     }
 
     /**
+     * @return Equipe|ArrayCollection
+     */
+    public function getPilote()
+    {
+        return $this->pilote;
+    }
+
+
+
+    /**
      * Add teamRole
      *
      * @param \AuthBundle\Entity\TeamRole $teamRole
@@ -266,15 +281,15 @@ class User extends BaseUser
 
     }
 
-    public function getEquipesPilote(){
-        $equipes = new ArrayCollection();
-        foreach ($this->teamRoles as $teamRole){
-            if ($teamRole->getRole()->getNom() == 'pilote'){
-                $equipes->add($teamRole->getEquipe());
-            }
-        }
-        return $equipes;
-    }
+//    public function getEquipesPilote(){
+//        $equipes = new ArrayCollection();
+//        foreach ($this->teamRoles as $teamRole){
+//            if ($teamRole->getRole()->getNom() == 'pilote'){
+//                $equipes->add($teamRole->getEquipe());
+//            }
+//        }
+//        return $equipes;
+//    }
 
     function __toString()
     {

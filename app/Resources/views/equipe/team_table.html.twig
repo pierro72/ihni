@@ -19,12 +19,12 @@
                                         <li class="list-group-item"><i class="fa fa-calendar"></i><b> Créée le</b><span
                                                     class="pull-right">{{ team.createdAt|date('d M, Y') }}</span></li>
                                         <!-- Afficher le(s) pilote(s) -->
-                                        {% for teamRole in team.teamRoles %}
-                                            {% if teamRole.role.nom == 'pilote' %}
+
+
                                                 <li class="list-group-item"><i class="fa fa-paw"></i><b> Pilote</b><span
-                                                            class="pull-right">{{ teamRole.user }}</span></li>
-                                            {% endif %}
-                                        {% endfor %}
+                                                            class="pull-right">{{ team.pilote }}</span></li>
+
+
                                         <!-- Afficher les modules dispo -->
                                         <li class="list-group-item"><i class="fa fa-users"></i><b> Utilisateurs</b><span
                                                     class="pull-right">{{ team.teamRoles|length }}</span></li>

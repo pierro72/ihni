@@ -20,6 +20,10 @@ class DefaultController extends Controller
     {
 
         $teams =  $this->getUser()->getEquipes();
+        $teamsPilote = $this->getUser()->getPilote();
+        foreach ($teamsPilote as $team){
+            $teams->add($team);
+        }
         //Redirige directement vers choix module si le user n'a qu'une équipe
         if ($teams->count() == 1){
 

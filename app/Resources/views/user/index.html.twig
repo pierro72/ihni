@@ -29,13 +29,20 @@
                                                 {% endif %}
                                             </td>
                                             <td>
+                                                {% for equipe in user.pilote %}
+                                                    <div>
+                                                        {{ equipe }} / Pilote
+                                                    </div>
+                                                {% endfor %}
 
                                             {% for teamRole in user.teamRoles %}
+
 
                                                 <div>
                                                 {{ teamRole.equipe }} / {{ teamRole.role }}
                                                 </div>
                                             {% endfor %}
+
 
                                             </td>
                                             <td style="width: 162px">

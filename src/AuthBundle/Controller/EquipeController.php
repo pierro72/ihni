@@ -33,7 +33,7 @@ class EquipeController extends Controller
             $equipes = $em->getRepository('AuthBundle:Equipe')->findAll();
         }
         else{
-            $equipes = $this->getUser()->getEquipesPilote();
+            $equipes = $this->getUser()->getPilote();
         }
 
         return $this->render('equipe/index.html.twig', array(
