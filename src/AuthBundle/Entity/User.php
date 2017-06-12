@@ -23,7 +23,7 @@ class User extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column(type="string",length=50,nullable=false)
+     * @ORM\Column(type="string",length=50, nullable=true)
      * @Assert\NotBlank(message="Entrez le nom du nouvel utilisateur.",groups={"Registration", "Profile"})
      * @Assert\Length(
      *     min = 3,
@@ -36,7 +36,7 @@ class User extends BaseUser
     protected $nom;
     /**
      * @var string
-     * @ORM\Column(type="string",length=50,nullable=false)
+     * @ORM\Column(type="string",length=50, nullable=true)
      * @Assert\NotBlank(message="Entrez le prénom du nouvel utilisateur.",groups={"Registration", "Profile"})
      * @Assert\Length(
      *     min = 3,
@@ -49,7 +49,7 @@ class User extends BaseUser
     protected $prenom;
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime")
      */
     protected $createdAt;
     /**

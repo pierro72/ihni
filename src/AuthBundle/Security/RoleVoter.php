@@ -64,7 +64,7 @@ class RoleVoter extends Voter
      */
     private function isTeamPilot(User $user){
 
-            if (!$user->getPilote() == null) return true;
+            if (count($user->getPilote()) > 0) return true;
 
         return false;
     }

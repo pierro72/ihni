@@ -14,6 +14,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class DefaultController extends Controller
 {
     /**
+     * @Route("/")
+     */
+    public function redirectToChoices(){
+        return $this->redirectToRoute('team_table');
+    }
+    /**
      * @Route("team_table/", name="team_table")
      */
     public function indexTeamTable()
