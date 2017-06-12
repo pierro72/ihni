@@ -40,59 +40,59 @@ class UserRoleType extends AbstractType
                 )
             );
 
-//        $builder
-//            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
-//
-//                $form = $event->getForm();
-//                $teamRole = $event->getData();
-//
-//                if(!$teamRole == null){
-//                    if ($teamRole->getRole()->getNom() == 'pilote'){
-//                        $form
-//
-//                            ->add('user', EntityType::class, array(
-//                                'class' => User::class,
-//                                'disabled' => true,
-//                                'mapped' => false
-//                            ))
-//                            ->add('role', EntityType::class, array(
-//                                'class' => Role::class,
-//                                'disabled' => true,
-//                                'mapped' =>false,
-//                                'choice_label' => 'nom'
-//                            ))
-//                        ;
-//
-//                    }
-//                    else{
-//                        dump($teamRole);
-//                        $form->add(
-//                            'user',
-//                            EntityType::class,
-//                            array(
-//                                'class' => User::class,
-//                            )
-//                        )
-//                            ->add(
-//                                'role',
-//                                EntityType::class,
-//                                array(
-//                                    'class' => Role::class,
-//                                    'choice_label' => 'nom',
-//                                )
-//                            );
-//
-//                    }
-//                    ;
-//                }
-//
-//
-//
-//
-//            }
-//            )
-//
-//            ;
+        $builder
+            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
+
+                $form = $event->getForm();
+                $teamRole = $event->getData();
+
+                if(!$teamRole == null){
+                    if ($teamRole->getRole()->getNom() == 'pilote'){
+                        $form
+
+                            ->add('user', EntityType::class, array(
+                                'class' => User::class,
+                                'disabled' => true,
+
+                            ))
+                            ->add('role', EntityType::class, array(
+                                'class' => Role::class,
+                                'disabled' => true,
+
+                                'choice_label' => 'nom'
+                            ))
+                        ;
+
+                    }
+                    else{
+
+                        $form->add(
+                            'user',
+                            EntityType::class,
+                            array(
+                                'class' => User::class,
+                            )
+                        )
+                            ->add(
+                                'role',
+                                EntityType::class,
+                                array(
+                                    'class' => Role::class,
+                                    'choice_label' => 'nom',
+                                )
+                            );
+
+                    }
+                    ;
+                }
+
+
+
+
+            }
+            )
+
+            ;
 
 
 

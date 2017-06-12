@@ -94,15 +94,9 @@ class EquipeController extends Controller
      */
     public function editAction(Request $request, Equipe $equipe)
     {
-        $cache = $equipe->getPilote()->first();
-        $equipe->getTeamRoles()->removeElement($cache);
-
-
 
         $deleteForm = $this->createDeleteForm($equipe);
         $editForm = $this->createForm('AuthBundle\Form\EquipeType', $equipe);
-
-        if($cache)$equipe->addTeamRole($cache);
 
         $editForm->handleRequest($request);
 

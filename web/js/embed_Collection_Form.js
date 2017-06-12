@@ -62,7 +62,9 @@ function addForm($collectionHolder, $addLink) {
     var $newFormLi = $('<div></div>').append(newForm);
     $addLink.before($newFormLi);
 
+
     addFormDeleteLink($newFormLi.find('.row'));
+
 
 
 
@@ -81,3 +83,8 @@ function addFormDeleteLink($formDiv) {
         $formDiv.remove();
     })
 }
+//on document.load
+$(function () {
+    //Reenable disabled field for saving
+
+});
