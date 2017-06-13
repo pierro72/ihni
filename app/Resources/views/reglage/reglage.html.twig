@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.min.css') }}"/>
+{% endblock %}
+{% block body %}
+    <!-- Full Width Column -->
+    <div class="content-wrapper">
+        <div class="container">
+            <!-- Content Header (Page header) -->
+
+            <!-- Main content -->
+            <section class="content">
+
+                <div class="row">
+                    <div class="">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#administration" data-toggle="tab" aria-expanded="true">Administration</a>
+                                </li>
+                                <li><a href="#modules" data-toggle="tab" aria-expanded="false">Modules</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="administration">
+                                    <div class="">
+                                        {#<form class="form" method="post">#}
+                                            {#<div class="form-group">#}
+                                                {#<label for="id_label_multiple">Administrateurs</label>#}
+                                                {#<select class="select2 form-control" id="id_label_multiple" multiple="multiple">#}
+                                                    {#{% for user in users %}#}
+                                                        {#<option {% if user in admins %}selected="selected"{% endif %}>{{ user }}</option>#}
+                                                    {#{% endfor %}#}
+                                                {#</select>#}
+                                            {#</div>#}
+                                            {#<div class="">#}
+                                                {#<button type="submit" class="btn btn-primary">Enregistrer</button>#}
+                                            {#</div>#}
+                                        {#</form>#}
+                                        {{ form_start(adminForm) }}
+
+                                        {{ form_widget(adminForm) }}
+
+
+
+                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        {{ form_end(adminForm) }}
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane" id="modules">
+                                    yeehaa je suis modules
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript"
+            src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
+    <script type="text/javascript">
+        $('#auth_bundle_reglage_admin').select2();
+    </script>
+{% endblock %}

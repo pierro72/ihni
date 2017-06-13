@@ -6,7 +6,9 @@
                     utilisateurs</a></li>
             <li class="{{ route starts with 'equipe' ? 'active' }}"><a href="{{ path('equipe_index') }}">Gestion des
                     équipes</a></li>
-            <li class="{{ route starts with 'post' ? 'active' }}"><a href="#">Sécurité</a></li>
+            {% if is_granted('ROLE_ADMIN') %}
+            <li class="{{ route starts with 'securite' ? 'active' }}"><a href="{{ path('reglage') }}">Sécurité</a></li>
+            {% endif %}
         </ul>
 
     </div>
