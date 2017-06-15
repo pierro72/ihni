@@ -21,6 +21,7 @@ class UserRoleType extends AbstractType
     {
 
 
+
         $builder
 
             ->add(
@@ -28,7 +29,7 @@ class UserRoleType extends AbstractType
                 EntityType::class,
                 array(
                     'class' => User::class,
-                    'query_builder' => function (EntityRepository $er){
+                    'query_builder' => function (EntityRepository $er ){
                         return $er->createQueryBuilder('u')
                             ->orderBy('u.nom', 'ASC');
                     }

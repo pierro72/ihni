@@ -52,6 +52,16 @@ function addForm($collectionHolder, $addLink) {
     // instead be a number based on how many items we have
     var newForm = prototype.replace(/__name__/g, index);
 
+    // Remove selected elements to avoid doublons
+    $('.form_line').each(function () {
+        var selected = $(this).find($(':selected')).val();
+        var regex = new RegExp("<option value=\""+selected+"\">[^<>]*<\/option>", "g");
+        console.log(regex);
+
+        newForm = newForm.replace(regex, '');
+        console.log(selected);
+    });
+
     // increase the index with one for the next item
     $collectionHolder.data('index', index + 1);
 
