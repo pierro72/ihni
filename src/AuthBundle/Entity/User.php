@@ -3,6 +3,8 @@
 namespace AuthBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\NotifyPropertyChanged;
+use Doctrine\Common\PropertyChangedListener;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -295,7 +297,7 @@ class User extends BaseUser
 
     function __toString()
     {
-        return $this->nom.' '.$this->prenom;
+        return $this->prenom.' '.$this->nom;
     }
 
     /**
@@ -342,8 +344,5 @@ class User extends BaseUser
 
         return $this;
     }
-
-
-
 
 }

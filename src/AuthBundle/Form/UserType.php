@@ -58,9 +58,7 @@ class UserType extends AbstractType
 
                if (!$user || null === $user->getId()||$this->authorization->isGranted('ROLE_ADMIN')){
                    $form
-                       ->add('admin', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', array(
-                           'required' => false
-                       ))
+
                        ->add('teamRoles', CollectionType::class, array(
                            'label' => "Equipes",
                            'entry_type' => TeamRoleType::class,

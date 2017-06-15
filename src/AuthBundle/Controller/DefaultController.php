@@ -89,4 +89,10 @@ class DefaultController extends Controller
             "admin"=>$admin
         ));
     }
+    /**
+     * @Route("redirect", name="auth_default_index")
+     */
+    public function redirectAuthDefault(){
+        return $this->redirectToRoute('team_table');
+    }
 }

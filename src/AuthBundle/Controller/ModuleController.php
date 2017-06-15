@@ -3,13 +3,14 @@
 namespace AuthBundle\Controller;
 
 use AuthBundle\Entity\Module;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Module controller.
- *
+ * @Security("has_role ('ROLE_ADMIN')")
  * @Route("module")
  */
 class ModuleController extends Controller
@@ -54,6 +55,7 @@ class ModuleController extends Controller
         return $this->render('module/new.html.twig', array(
             'module' => $module,
             'form' => $form->createView(),
+            'inAdmin' => true,
         ));
     }
 

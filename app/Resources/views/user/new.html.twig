@@ -61,7 +61,10 @@
                             {{ form_row(form.activeUntil) }}
                             <a href="{{ path('user_index') }}" class="btn btn-default">Annuler</a>
                             <input type="submit" value="Valider" class="btn btn-primary"/>
+                            {% if intention == "edit" %}
 
+                                <button type="button" class="btn btn-warning" id="send_invit" data-loading-text="" data-success-text=""><i class="fa fa-send"></i> Envoyer une invitation</button>
+                            {% endif %}
                             {{ form_end(form) }}
                         </div>
 
@@ -106,4 +109,30 @@
         });
 
     </script>
+    {% if intention == 'edit' %}
+    <script>
+        $(function () {
+
+
+            $('#send_invit').click(function () {
+                $btn = $(this);
+                $btn.prop('disabled', true).html("<i class='fa fa-circle-o-notch fa-spin'></i> envoi en cours ...");
+
+                $.ajax({
+                    method: "POST",
+                    url: '{{ path('send_request', {'id': user.id}) }}',
+                    data: {
+                        mailaddress: $('#app_user_registration_email').val()
+                    },
+                    success: function () {
+                        $btn.removeClass('btn-warning').addClass('btn-success').html("<i class='fa fa-check'></i> Invitation envoyée");
+                    }
+                }).done(function () {
+
+                });
+
+            })
+        })
+    </script>
+    {% endif %}
 {% endblock %}

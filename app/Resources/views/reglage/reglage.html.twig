@@ -47,13 +47,45 @@
 
                                 </div>
                                 <div class="tab-pane" id="modules">
-                                    yeehaa je suis modules
+                                    <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                                    Connecter un nouveau module
+                                                </button>
+
+                                                <table id="example1" class="table table-bordered table-striped dataTable">
+                                                    {% include 'module/index.html.twig' %}
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+            <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Connecter un nouveau module</h4>
+                        </div>
+                        <div class="modal-body">
+                            {% include 'module/new.html.twig' %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
         </div>
     </div>
 {% endblock %}
@@ -62,5 +94,30 @@
             src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
     <script type="text/javascript">
         $('#auth_bundle_reglage_admin').select2();
+        $('#authbundle_module_equipes').select2({
+            placeholder: "Choisir les équipes qui utilisent le module",
+            width: '100%',
+        });
+
+    </script>
+    <!-- DataTables -->
+    <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+
+    <!-- page script -->
+    <script>
+        $(document).ready(function () {
+            $('#example1').DataTable({
+                "paging": false,
+                "searching":false,
+
+                columnDefs: [{
+                    targets: [1],
+                    "orderable": false
+                }]
+
+            });
+        });
+
     </script>
 {% endblock %}

@@ -5,6 +5,7 @@ namespace AuthBundle\Form;
 use AuthBundle\Entity\Role;
 use AuthBundle\Entity\TeamRole;
 use AuthBundle\Entity\User;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -27,6 +28,10 @@ class UserRoleType extends AbstractType
                 EntityType::class,
                 array(
                     'class' => User::class,
+                    'query_builder' => function (EntityRepository $er){
+                        return $er->createQueryBuilder('u')
+                            ->orderBy('u.nom', 'ASC');
+                    }
 
                 )
             )
