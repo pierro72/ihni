@@ -11,9 +11,9 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
 
-                <a class="btn btn-default" href="{% block addlink %}{% endblock %}">
-                    <i class="fa fa-plus"></i> {% block addtitre %}{% endblock %}</a>
+                {% block addButton %}
 
+                {% endblock %}
             </section>
 
             <!-- Main content -->
@@ -31,7 +31,7 @@
                                     <table id="example1" class="table table-bordered table-striped dataTable">
                                         {% block innertable %}
 
-                                    {% endblock %}
+                                        {% endblock %}
                                     </table>
                                 </div>
                             </div>

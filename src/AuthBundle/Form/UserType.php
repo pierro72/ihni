@@ -50,6 +50,7 @@ class UserType extends AbstractType
 
             ;
 
+
             //Vérifie si l'utilisateur est nouveau ou si role Admin pour afficher ou pas le bloc
             $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event){
                $user = $event->getData();
@@ -57,6 +58,7 @@ class UserType extends AbstractType
 
                if (!$user || null === $user->getId()||$this->authorization->isGranted('ROLE_ADMIN')){
                    $form
+
                        ->add('teamRoles', CollectionType::class, array(
                            'label' => "Equipes",
                            'entry_type' => TeamRoleType::class,
@@ -112,7 +114,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AuthBundle\Entity\User',
-//            '
+//
         ));
     }
 

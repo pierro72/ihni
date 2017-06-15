@@ -3,6 +3,8 @@
 namespace AuthBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\NotifyPropertyChanged;
+use Doctrine\Common\PropertyChangedListener;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -82,6 +84,7 @@ class User extends BaseUser
      */
     protected $teamRoles;
 
+
     /**
      * User constructor.
      */
@@ -92,6 +95,7 @@ class User extends BaseUser
         $this->createdAt = new \DateTime();
         $this->plainPassword = substr(md5(uniqid(rand(), true)), 0, 6);
         $this->confirmationToken = substr(md5(uniqid(rand(), true)), 0, 6);
+//        $this->isAdmin = $this->isAdmin();
 
     }
 
@@ -293,7 +297,7 @@ class User extends BaseUser
 
     function __toString()
     {
-        return $this->nom.' '.$this->prenom;
+        return $this->prenom.' '.$this->nom;
     }
 
     /**
@@ -317,6 +321,28 @@ class User extends BaseUser
         }
     }
 
+    /**
+     * @return bool
+     */
+    public function isAdmin(){
 
+        return $this->hasRole('ROLE_ADMIN');
+
+    }
+
+    /**
+     * @param $boolean
+     * @return $this
+     */
+    public function setAdmin($boolean){
+        if (true === $boolean){
+            $this->addRole('ROLE_ADMIN');
+        }
+        else {
+            $this->removeRole('ROLE_ADMIN');
+        }
+
+        return $this;
+    }
 
 }

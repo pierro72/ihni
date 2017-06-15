@@ -1,0 +1,23 @@
+
+
+        <thead>
+            <tr>
+
+                <th>Nom</th>
+
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for module in modules %}
+            <tr>
+                <td>{{ module.nom }}</td>
+                <td>
+                    <a href="{{ path('module_show', { 'id': module.id }) }}" class="btn btn-default" disabled="disabled"><i class="fa fa-info"></i></a>
+                    <a href="{{ path('module_edit', { 'id': module.id }) }}" class="btn btn-default" disabled="disabled"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+

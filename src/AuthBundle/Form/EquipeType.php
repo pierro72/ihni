@@ -5,6 +5,7 @@ namespace AuthBundle\Form;
 use AuthBundle\Entity\Module;
 
 use AuthBundle\Entity\User;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -49,7 +50,11 @@ class EquipeType extends AbstractType
             ))
             ->add('pilote', EntityType::class, array(
                 'class' => User::class,
-                'disabled' => $disabled
+                'disabled' => $disabled,
+                'query_builder' => function (EntityRepository $er){
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.nom', 'ASC');
+                }
             ))
             ->add('teamRoles', CollectionType::class, array(
                 'label' => "Utilisateurs dans l'équipe",

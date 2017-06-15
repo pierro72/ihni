@@ -45,6 +45,7 @@ class EquipeController extends Controller
      * Creates a new equipe entity.
      *
      * @Route("/new", name="equipe_new")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)

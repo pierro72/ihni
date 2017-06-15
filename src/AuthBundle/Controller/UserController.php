@@ -6,12 +6,15 @@ use AuthBundle\Entity\Equipe;
 use AuthBundle\Entity\TeamRole;
 use AuthBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
+use FOS\UserBundle\Event\GetResponseNullableUserEvent;
+use FOS\UserBundle\FOSUserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * User controller.
@@ -132,9 +135,12 @@ class UserController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 
-            $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+
+//            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
 
 
@@ -168,10 +174,37 @@ class UserController extends Controller
         return $this->redirectToRoute('user_index');
     }
 
+    /**
+     * @param Request $request
+     * @param User $user
+     * @Route("/{id}/sendrequest", name="send_request")
+     * @Method("POST")
+     * @return Response
+     */
+    public function sendrequestAction(Request $request, User $user)
+    {
+        $tokenGenerator = $this->get('fos_user.util.token_generator');
+        $user->setConfirmationToken($tokenGenerator->generateToken());
+        $this->getDoctrine()->getManager()->flush();
+
+        $mailaddress = $request->get('mailaddress');
+        dump($mailaddress);
+        $user->setEmail($mailaddress);
+        $result = $this->sendInvitation($user);
+        return new Response(json_encode([
+            'success' => $result,
+
+        ]));
+    }
+
 
     /**
      * envoi une invitation de confirmation de compte
+
+     */
+    /**
      * @param User $user
+     * @return int
      */
     private function sendInvitation(User $user)
     {
@@ -188,9 +221,10 @@ class UserController extends Controller
                 ),
                 'text/html'
             );
-        $this->get('mailer')->send($invitation);
+        return $this->get('mailer')->send($invitation);
 
     }
+
 
 
 }
