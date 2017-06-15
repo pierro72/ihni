@@ -2,21 +2,29 @@
 
 namespace AuthBundle\Controller;
 
+use AuthBundle\Entity\Equipe;
 use AuthBundle\Entity\TeamRole;
 use AuthBundle\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
+use FOS\UserBundle\Event\GetResponseNullableUserEvent;
+use FOS\UserBundle\FOSUserEvents;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * User controller.
- *
+ * @Security("is_granted('TEAM_PILOT') or has_role('ROLE_ADMIN')")
  * @Route("qub/ihni/user")
  */
 class UserController extends Controller
 {
     /**
-     * Lists all user entities.
+     * Lists all user entities if Role_Admin is granted else list users in theam where the user is Pilote
      *
      * @Route("/", name="user_index")
      * @Method("GET")
@@ -25,11 +33,31 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $users = $em->getRepository('AuthBundle:User')->findAll();
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
 
-        return $this->render('user/index.html.twig', array(
-            'users' => $users,
-        ));
+
+            $users = $em->getRepository('AuthBundle:User')->findAll();
+        } else {
+
+            $equipePilote = $this->getUser()->getPilote();
+            $users = new ArrayCollection();
+
+
+            $users->add($this->getUser());
+            foreach ($equipePilote as $equipe) {
+               $teamRoles = $equipe->getTeamRoles();
+               foreach ($teamRoles as $teamRole){
+                   $users->add($teamRole->getUser());
+               }
+            }
+        }
+
+        return $this->render(
+            'user/index.html.twig',
+            array(
+                'users' => $users,
+            )
+        );
     }
 
     /**
@@ -43,8 +71,9 @@ class UserController extends Controller
         $user = new User();
 
 
-
         $form = $this->createForm('AuthBundle\Form\UserType', $user);
+
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -61,14 +90,17 @@ class UserController extends Controller
             $this->sendInvitation($user);
 
 
-
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
 
-        return $this->render('user/new.html.twig', array(
-            'user' => $user,
-            'form' => $form->createView(),
-        ));
+        return $this->render(
+            'user/new.html.twig',
+            array(
+                'user' => $user,
+                'intention' => 'create',
+                'form' => $form->createView(),
+            )
+        );
     }
 
     /**
@@ -80,10 +112,13 @@ class UserController extends Controller
     public function showAction(User $user)
     {
 
-        return $this->render('user/show.html.twig', array(
-            'user' => $user,
+        return $this->render(
+            'user/show.html.twig',
+            array(
+                'user' => $user,
 
-        ));
+            )
+        );
     }
 
     /**
@@ -99,16 +134,26 @@ class UserController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+
+//            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
 
-        return $this->render(':user:new.html.twig', array(
-            'user' => $user,
-            'form' => $editForm->createView(),
 
-        ));
+
+        return $this->render(
+            ':user:new.html.twig',
+            array(
+                'user' => $user,
+                'intention' => 'edit',
+                'form' => $editForm->createView(),
+
+            )
+        );
     }
 
     /**
@@ -121,19 +166,45 @@ class UserController extends Controller
     {
 
 
-
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($user);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
 
 
         return $this->redirectToRoute('user_index');
     }
 
+    /**
+     * @param Request $request
+     * @param User $user
+     * @Route("/{id}/sendrequest", name="send_request")
+     * @Method("POST")
+     * @return Response
+     */
+    public function sendrequestAction(Request $request, User $user)
+    {
+        $tokenGenerator = $this->get('fos_user.util.token_generator');
+        $user->setConfirmationToken($tokenGenerator->generateToken());
+        $this->getDoctrine()->getManager()->flush();
+
+        $mailaddress = $request->get('mailaddress');
+        dump($mailaddress);
+        $user->setEmail($mailaddress);
+        $result = $this->sendInvitation($user);
+        return new Response(json_encode([
+            'success' => $result,
+
+        ]));
+    }
+
 
     /**
      * envoi une invitation de confirmation de compte
+
+     */
+    /**
      * @param User $user
+     * @return int
      */
     private function sendInvitation(User $user)
     {
@@ -141,11 +212,19 @@ class UserController extends Controller
             ->setFrom('IHNI@sodifrance.fr')
             ->setTo($user->getEmail())
             ->setSubject('Confirmation de votre compte QualityBox')
-            ->setBody($this->renderView(':email:invitation.html.twig', array(
-                'user' => $user
-            )), 'text/html')
-        ;
-        $this->get('mailer')->send($invitation);
+            ->setBody(
+                $this->renderView(
+                    ':email:invitation.html.twig',
+                    array(
+                        'user' => $user,
+                    )
+                ),
+                'text/html'
+            );
+        return $this->get('mailer')->send($invitation);
 
     }
+
+
+
 }

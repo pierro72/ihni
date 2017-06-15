@@ -2,6 +2,8 @@
 
 namespace AuthBundle\Repository;
 
+use AuthBundle\Entity\User;
+
 /**
  * EquipeRepository
  *
@@ -10,4 +12,5 @@ namespace AuthBundle\Repository;
  */
 class EquipeRepository extends \Doctrine\ORM\EntityRepository
 {
+
 }

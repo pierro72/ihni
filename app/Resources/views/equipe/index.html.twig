@@ -1,9 +1,14 @@
 {% extends 'tabindex.html.twig' %}
 
-
-    {% block addlink %}{{ path('equipe_new') }}{% endblock %}
-    {% block addtitre %}Ajouter une nouvelle équipe{% endblock %}
     {% block indextitre %}Liste des équipes{% endblock %}
+
+    {% block addButton %}
+        {% if is_granted('ROLE_ADMIN') %}
+        <a class="btn btn-default" href="{{ path('equipe_new') }}">
+            <i class="fa fa-plus"></i> Ajouter une nouvelle équipe</a>
+        {% endif %}
+        {% endblock %}
+
 
 
         {% block innertable %}
@@ -21,7 +26,7 @@
             <tr>
 
                 <td>{{ equipe.nom }}</td>
-                <td>{% for teamrole in equipe.teamRoles %}{% if teamrole.role.nom == "pilote" %}{{ teamrole.user }}{% endif %}{% endfor %}</td>
+                <td>{{ equipe.pilote }}</td>
                 <td>{{ equipe.teamRoles|length }}</td>
                 <td style="width: 162px">
                     <a href="{{ path('equipe_show', {'id': equipe.id}) }}"
@@ -45,6 +50,7 @@
         $(document).ready(function () {
             $('#example1').DataTable({
                 "paging": false,
+                "info": false,
 
                 columnDefs: [{
                     targets: [3],

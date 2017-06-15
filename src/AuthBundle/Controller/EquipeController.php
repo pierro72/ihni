@@ -5,6 +5,7 @@ namespace AuthBundle\Controller;
 use AuthBundle\Entity\Equipe;
 use AuthBundle\Entity\TeamRole;
 use Doctrine\Common\Collections\ArrayCollection;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Equipe controller.
- *
+ * @Security("is_granted('TEAM_PILOT') or has_role('ROLE_ADMIN')")
  * @Route("qub/ihni/equipe")
  */
 class EquipeController extends Controller
@@ -27,7 +28,13 @@ class EquipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $equipes = $em->getRepository('AuthBundle:Equipe')->findAll();
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
+        {
+            $equipes = $em->getRepository('AuthBundle:Equipe')->findAll();
+        }
+        else{
+            $equipes = $this->getUser()->getPilote();
+        }
 
         return $this->render('equipe/index.html.twig', array(
             'equipes' => $equipes,
@@ -38,6 +45,7 @@ class EquipeController extends Controller
      * Creates a new equipe entity.
      *
      * @Route("/new", name="equipe_new")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -88,18 +96,19 @@ class EquipeController extends Controller
     public function editAction(Request $request, Equipe $equipe)
     {
 
-
         $deleteForm = $this->createDeleteForm($equipe);
         $editForm = $this->createForm('AuthBundle\Form\EquipeType', $equipe);
+
         $editForm->handleRequest($request);
 
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 
+
             $this->getDoctrine()->getManager()->flush();
 
 
-            return $this->redirectToRoute('equipe_edit', array('id' => $equipe->getId()));
+            return $this->redirectToRoute('equipe_show', array('id' => $equipe->getId()));
         }
 
         return $this->render('equipe/new.html.twig', array(

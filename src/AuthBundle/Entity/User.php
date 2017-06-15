@@ -3,12 +3,15 @@
 namespace AuthBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\NotifyPropertyChanged;
+use Doctrine\Common\PropertyChangedListener;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * User
+ * @ORM\Entity(repositoryClass="AuthBundle\Repository\UserRepository")
  * @ORM\Table(name="ihni_user")
  */
 class User extends BaseUser
@@ -22,7 +25,7 @@ class User extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column(type="string",length=50,nullable=false)
+     * @ORM\Column(type="string",length=50, nullable=true)
      * @Assert\NotBlank(message="Entrez le nom du nouvel utilisateur.",groups={"Registration", "Profile"})
      * @Assert\Length(
      *     min = 3,
@@ -35,7 +38,7 @@ class User extends BaseUser
     protected $nom;
     /**
      * @var string
-     * @ORM\Column(type="string",length=50,nullable=false)
+     * @ORM\Column(type="string",length=50, nullable=true)
      * @Assert\NotBlank(message="Entrez le prénom du nouvel utilisateur.",groups={"Registration", "Profile"})
      * @Assert\Length(
      *     min = 3,
@@ -48,7 +51,7 @@ class User extends BaseUser
     protected $prenom;
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime")
      */
     protected $createdAt;
     /**
@@ -70,22 +73,29 @@ class User extends BaseUser
      */
     protected $activeUntil;
     /**
+     * @var Equipe|ArrayCollection
+     * @ORM\OneToMany(targetEntity="AuthBundle\Entity\Equipe", mappedBy="pilote")
+     */
+    protected $pilote;
+    /**
      * @var ArrayCollection|TeamRole
      * @ORM\OneToMany(targetEntity="AuthBundle\Entity\TeamRole", mappedBy="user", cascade={"all"}, orphanRemoval=true)
 
      */
     protected $teamRoles;
+
+
     /**
      * User constructor.
      */
-
     public function __construct()
     {
         parent::__construct();
         $this->teamRoles = new ArrayCollection();
         $this->createdAt = new \DateTime();
-        $this->plainPassword = 'IAmStrong';
+        $this->plainPassword = substr(md5(uniqid(rand(), true)), 0, 6);
         $this->confirmationToken = substr(md5(uniqid(rand(), true)), 0, 6);
+//        $this->isAdmin = $this->isAdmin();
 
     }
 
@@ -205,6 +215,16 @@ class User extends BaseUser
     }
 
     /**
+     * @return Equipe|ArrayCollection
+     */
+    public function getPilote()
+    {
+        return $this->pilote;
+    }
+
+
+
+    /**
      * Add teamRole
      *
      * @param \AuthBundle\Entity\TeamRole $teamRole
@@ -253,16 +273,38 @@ class User extends BaseUser
         return $this;
     }
 
+    /**
+     * @return ArrayCollection|Equipe
+     */
+    public function getEquipes(){
+        $equipes = new ArrayCollection();
+        foreach ($this->teamRoles as $teamRole){
+            $equipes->add($teamRole->getEquipe());
+        }
+        return $equipes;
+
+    }
+
+//    public function getEquipesPilote(){
+//        $equipes = new ArrayCollection();
+//        foreach ($this->teamRoles as $teamRole){
+//            if ($teamRole->getRole()->getNom() == 'pilote'){
+//                $equipes->add($teamRole->getEquipe());
+//            }
+//        }
+//        return $equipes;
+//    }
+
     function __toString()
     {
-        return $this->nom.' '.$this->prenom;
+        return $this->prenom.' '.$this->nom;
     }
 
     /**
      * @Assert\IsTrue(message="la date d'activation doit être antérieure à la date de désactivation")
      */
     public function isAnterior(){
-        if($this->activeAt != null)
+        if($this->activeAt != null && $this->activeUntil != null)
         {
             return $this->activeAt < $this->activeUntil;
         }
@@ -279,5 +321,28 @@ class User extends BaseUser
         }
     }
 
+    /**
+     * @return bool
+     */
+    public function isAdmin(){
+
+        return $this->hasRole('ROLE_ADMIN');
+
+    }
+
+    /**
+     * @param $boolean
+     * @return $this
+     */
+    public function setAdmin($boolean){
+        if (true === $boolean){
+            $this->addRole('ROLE_ADMIN');
+        }
+        else {
+            $this->removeRole('ROLE_ADMIN');
+        }
+
+        return $this;
+    }
 
 }

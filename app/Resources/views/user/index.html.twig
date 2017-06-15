@@ -1,8 +1,10 @@
 {% extends 'tabindex.html.twig' %}
 
-{% block addlink %}{{ path('user_new') }}{% endblock %}
-{% block addtitre %}Ajouter un utilisateur{% endblock %}
 {% block indextitre %}Liste des utilisateurs{% endblock %}
+{% block addButton %}
+    <a class="btn btn-default" href="{{ path('user_new') }}">
+        <i class="fa fa-plus"></i> Ajouter un utilisateur</a>
+{% endblock %}
 {% block innertable %}
                                         <thead>
                                         <tr>
@@ -28,12 +30,20 @@
                                                 {% endif %}
                                             </td>
                                             <td>
+                                                {% for equipe in user.pilote %}
+                                                    <div>
+                                                        {{ equipe }} / Pilote
+                                                    </div>
+                                                {% endfor %}
 
                                             {% for teamRole in user.teamRoles %}
+
+
                                                 <div>
                                                 {{ teamRole.equipe }} / {{ teamRole.role }}
                                                 </div>
                                             {% endfor %}
+
 
                                             </td>
                                             <td style="width: 162px">
@@ -59,10 +69,12 @@
             $(document).ready(function () {
                 $('#example1').DataTable({
                     "paging": false,
+                    "info": false,
 
                     columnDefs: [{
                         targets: [5],
-                        "orderable": false
+                        "orderable": false,
+
                     }]
 
                 });
