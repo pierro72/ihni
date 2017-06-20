@@ -80,6 +80,7 @@ class UserController extends Controller
 
             $username = substr($user->getPrenom(), 0, 1).$user->getNom();
             $user->setUsername($username);
+            $user->setCreatedBy($this->getUser());
 
             $em = $this->getDoctrine()->getManager();
 

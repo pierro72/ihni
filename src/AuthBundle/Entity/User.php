@@ -68,7 +68,6 @@ class User extends BaseUser
     protected $activeAt;
     /**
      * @var Assert\Date
-
      * @ORM\Column(type="date", nullable=true)
      */
     protected $activeUntil;
@@ -80,7 +79,6 @@ class User extends BaseUser
     /**
      * @var ArrayCollection|TeamRole
      * @ORM\OneToMany(targetEntity="AuthBundle\Entity\TeamRole", mappedBy="user", cascade={"all"}, orphanRemoval=true)
-
      */
     protected $teamRoles;
     /**
@@ -193,8 +191,6 @@ class User extends BaseUser
     }
 
 
-
-
     /**
      * Set createdBy
      *
@@ -243,7 +239,6 @@ class User extends BaseUser
     {
         return $this->pilote;
     }
-
 
 
     /**
@@ -298,11 +293,13 @@ class User extends BaseUser
     /**
      * @return ArrayCollection|Equipe
      */
-    public function getEquipes(){
+    public function getEquipes()
+    {
         $equipes = new ArrayCollection();
-        foreach ($this->teamRoles as $teamRole){
+        foreach ($this->teamRoles as $teamRole) {
             $equipes->add($teamRole->getEquipe());
         }
+
         return $equipes;
 
     }
@@ -325,9 +322,9 @@ class User extends BaseUser
     /**
      * @Assert\IsTrue(message="la date d'activation doit être antérieure à la date de désactivation")
      */
-    public function isAnterior(){
-        if($this->activeAt != null && $this->activeUntil != null)
-        {
+    public function isAnterior()
+    {
+        if ($this->activeAt != null && $this->activeUntil != null) {
             return $this->activeAt < $this->activeUntil;
         }
     }
@@ -335,10 +332,10 @@ class User extends BaseUser
     /**
      * @Assert\IsTrue(message="la date d'activation doit être postérieure à la date du jour")
      */
-    public function isAfterNow(){
-        $now =  new \DateTime();
-        if ($this->activeAt != null)
-        {
+    public function isAfterNow()
+    {
+        $now = new \DateTime();
+        if ($this->activeAt != null) {
             return $this->activeAt > $now;
         }
     }
@@ -346,7 +343,8 @@ class User extends BaseUser
     /**
      * @return bool
      */
-    public function isAdmin(){
+    public function isAdmin()
+    {
 
         return $this->hasRole('ROLE_ADMIN');
 
@@ -356,11 +354,11 @@ class User extends BaseUser
      * @param $boolean
      * @return $this
      */
-    public function setAdmin($boolean){
-        if (true === $boolean){
+    public function setAdmin($boolean)
+    {
+        if (true === $boolean) {
             $this->addRole('ROLE_ADMIN');
-        }
-        else {
+        } else {
             $this->removeRole('ROLE_ADMIN');
         }
 
