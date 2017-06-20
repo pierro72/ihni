@@ -11,12 +11,14 @@
 
 namespace AuthBundle\Controller;
 
+use AuthBundle\Entity\User;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\FOSUserEvents;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 
 /**
@@ -45,12 +47,14 @@ class RegistrationController extends \FOS\UserBundle\Controller\RegistrationCont
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
         $dispatcher = $this->get('event_dispatcher');
 
+        /** @var  $user User*/
         $user = $userManager->findUserByConfirmationToken($token);
 
         if (null === $user) {
             throw new NotFoundHttpException(sprintf('The user with "confirmation token" does not exist for value "%s"', $token));
         }
 
+//      $now = new \DateTime();
 
         $form = $formFactory->createForm();
         $form->setData($user);
@@ -61,7 +65,13 @@ class RegistrationController extends \FOS\UserBundle\Controller\RegistrationCont
             $event = new FormEvent($form, $request);
 
             $user->setConfirmationToken(null);
+//            if (!$user->getActiveAt()== null && !$user->getActiveUntil()==null){
+//                if($user->getActiveAt() > $now){
+//                    $response = $this->redirectToRoute('auth_default_index');
+//                }
+//            }
             $user->setEnabled(true);
+            $user->setConfirmationStatus("accepted");
 
             $userManager->updateUser($user);
 

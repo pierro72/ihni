@@ -81,14 +81,17 @@ class UserController extends Controller
             $username = substr($user->getPrenom(), 0, 1).$user->getNom();
             $user->setUsername($username);
 
-
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($user);
 
             $em->flush();
 
-            $this->sendInvitation($user);
+            //vérifie si la date d'activation du compte est valide avant d'envoyer l'invitation
+            if ($user->getActiveAt() < new \DateTime() || $user->getActiveAt() == null)
+            {
+                $this->sendInvitation($user);
+            }
 
 
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
@@ -182,15 +185,19 @@ class UserController extends Controller
      * @Method("POST")
      * @return Response
      */
-    public function sendrequestAction(Request $request, User $user)
+    public function sendrequestAction(Request $request = null, User $user)
     {
         $tokenGenerator = $this->get('fos_user.util.token_generator');
         $user->setConfirmationToken($tokenGenerator->generateToken());
         $this->getDoctrine()->getManager()->flush();
 
-        $mailaddress = $request->get('mailaddress');
-        dump($mailaddress);
-        $user->setEmail($mailaddress);
+        if (!$request == null)
+        {
+            $mailaddress = $request->get('mailaddress');
+            $user->setEmail($mailaddress);
+        }
+
+
         $result = $this->sendInvitation($user);
         return new Response(json_encode([
             'success' => $result,
@@ -222,6 +229,8 @@ class UserController extends Controller
                 ),
                 'text/html'
             );
+        $user->setConfirmationStatus("pending");
+        $this->getDoctrine()->getManager()->flush();
         return $this->get('mailer')->send($invitation);
 
     }

@@ -83,7 +83,11 @@ class User extends BaseUser
 
      */
     protected $teamRoles;
-
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true, length = 10)
+     */
+    protected $confirmationStatus;
 
     /**
      * User constructor.
@@ -95,6 +99,7 @@ class User extends BaseUser
         $this->createdAt = new \DateTime();
         $this->plainPassword = substr(md5(uniqid(rand(), true)), 0, 6);
         $this->confirmationToken = substr(md5(uniqid(rand(), true)), 0, 6);
+        $this->confirmationStatus = "waiting";
 //        $this->isAdmin = $this->isAdmin();
 
     }
@@ -213,6 +218,23 @@ class User extends BaseUser
     {
         return $this->createdBy;
     }
+
+    /**
+     * @return string
+     */
+    public function getConfirmationStatus()
+    {
+        return $this->confirmationStatus;
+    }
+
+    /**
+     * @param string $confirmationStatus
+     */
+    public function setConfirmationStatus($confirmationStatus)
+    {
+        $this->confirmationStatus = $confirmationStatus;
+    }
+
 
     /**
      * @return Equipe|ArrayCollection
