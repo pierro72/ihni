@@ -90,7 +90,7 @@ class UserController extends Controller
 
             //vérifie si la date d'activation du compte est valide avant d'envoyer l'invitation
             if ($user->getActiveAt() < new \DateTime() || $user->getActiveAt() == null) {
-                $this->sendInvitation($user);
+                $this->get('app.sendinvitation')->sendInvitation($user);
             }
 
 
@@ -196,7 +196,7 @@ class UserController extends Controller
         }
 
 
-        $result = $this->sendInvitation($user);
+        $result = $this->get('app.sendinvitation')->sendInvitation($user);
 
         return new Response(
             json_encode(
@@ -208,35 +208,35 @@ class UserController extends Controller
         );
     }
 
-
-    /**
-     * envoi une invitation de confirmation de compte
-     */
-    /**
-     * @param User $user
-     * @return int
-     */
-    private function sendInvitation(User $user)
-    {
-        $invitation = \Swift_Message::newInstance()
-            ->setFrom('IHNI@sodifrance.fr')
-            ->setTo($user->getEmail())
-            ->setSubject('Confirmation de votre compte QualityBox')
-            ->setBody(
-                $this->renderView(
-                    ':email:invitation.html.twig',
-                    array(
-                        'user' => $user,
-                    )
-                ),
-                'text/html'
-            );
-        $user->setConfirmationStatus("pending");
-        $this->getDoctrine()->getManager()->flush();
-
-        return $this->get('mailer')->send($invitation);
-
-    }
+//      Voir service
+//    /**
+//     * envoi une invitation de confirmation de compte
+//     */
+//    /**
+//     * @param User $user
+//     * @return int
+//     */
+//    private function sendInvitation(User $user)
+//    {
+//        $invitation = \Swift_Message::newInstance()
+//            ->setFrom('IHNI@sodifrance.fr')
+//            ->setTo($user->getEmail())
+//            ->setSubject('Confirmation de votre compte QualityBox')
+//            ->setBody(
+//                $this->renderView(
+//                    ':email:invitation.html.twig',
+//                    array(
+//                        'user' => $user,
+//                    )
+//                ),
+//                'text/html'
+//            );
+//        $user->setConfirmationStatus("pending");
+//        $this->getDoctrine()->getManager()->flush();
+//
+//        return $this->get('mailer')->send($invitation);
+//
+//    }
 
 
 }
