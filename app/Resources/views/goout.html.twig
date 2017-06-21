@@ -3,31 +3,59 @@
 {% block body %}
     <div class="content-wrapper">
         <div class="container">
-            <section class="content-header"><h1>Resultat launcher</h1></section>
+            {#<section class="content-header"><h1>Resultat launcher</h1></section>#}
+            {#<section class="content">#}
+                {#<div class="box box-default">#}
+                    {#<div class="box-body box-profile">#}
+                        {#<ul class="mist-group list-group-unbordered">#}
+                            {#<li class="list-group-item"><b>Utilisateur : </b>#}
+                                {#<p class="pull-right">{{ user }}</p>#}
+                            {#</li>#}
+                            {#<li class="list-group-item"><b>admin : </b>#}
+                                {#<p class="pull-right">{% if admin %}oui{% else %}non{% endif %}</p>#}
+                            {#</li>#}
+                            {#<li class="list-group-item"><b>Equipe selectionnée : </b>#}
+                                {#<p class="pull-right">{{ equipe.nom }}</p>#}
+                            {#</li>#}
+                            {#<li class="list-group-item"><b>Role :</b>#}
+                                {#<p class="pull-right">{{ role.nom }}</p>#}
+                            {#</li>#}
+                            {#<li class="list-group-item"><b>Module sélectionné :</b>#}
+                                {#<p class="pull-right">{{ module.nom }}</p>#}
+                            {#</li>#}
+                        {#</ul>#}
+
+                    {#</div>#}
+                {#</div>#}
+            {#</section>#}
             <section class="content">
                 <div class="box box-default">
-                    <div class="box-body box-profile">
-                        <ul class="mist-group list-group-unbordered">
-                            <li class="list-group-item"><b>Utilisateur : </b>
-                                <p class="pull-right">{{ user }}</p>
-                            </li>
-                            <li class="list-group-item"><b>admin : </b>
-                                <p class="pull-right">{% if admin %}oui{% else %}non{% endif %}</p>
-                            </li>
-                            <li class="list-group-item"><b>Equipe selectionnée : </b>
-                                <p class="pull-right">{{ equipe.nom }}</p>
-                            </li>
-                            <li class="list-group-item"><b>Role :</b>
-                                <p class="pull-right">{{ role.nom }}</p>
-                            </li>
-                            <li class="list-group-item"><b>Module sélectionné :</b>
-                                <p class="pull-right">{{ module.nom }}</p>
-                            </li>
-                        </ul>
-
+                    <div class="box-header with-border">
+                        <h3>Chargement de {{ module.nom }} ...</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="loader center-block"></div>
                     </div>
                 </div>
             </section>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+<script>
+    $(function () {
+        var $actionForm = $('<form>', {'action': '/qub{{ module.url }}', 'method': 'post'}).append(
+            formLine('user','{{ app.user }}'),
+            formLine('id_user','{{ app.user.id }}'),
+            formLine('admin',{% if is_granted('ROLE_ADMIN') %}true{% else %}false{% endif %}),
+            formLine('team', '{{ equipe.nom }}'),
+            formLine('id_team', '{{ equipe.id }}'),
+            formLine('role','{{ role.nom }}')
+        );
+        $actionForm.appendTo($('body')).submit();
+    });
+    function formLine(name, value) {
+        return $('<input>', {'name': name, 'value': value, 'type': 'hidden'})
+    }
+</script>
 {% endblock %}

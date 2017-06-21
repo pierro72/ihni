@@ -90,6 +90,7 @@ class DefaultController extends Controller
             "role" =>$role,
             "admin"=>$admin
         ));
+
     }
     /**
      * @Route("redirect", name="auth_default_index")
