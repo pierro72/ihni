@@ -58,7 +58,7 @@ class User extends BaseUser
      * Référence le compte USER qui a créé le compte
      * @var User
      * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\User")
-     * @ORM\Column(nullable=true)
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="id")
      */
     protected $createdBy;
     /**
@@ -68,7 +68,6 @@ class User extends BaseUser
     protected $activeAt;
     /**
      * @var Assert\Date
-
      * @ORM\Column(type="date", nullable=true)
      */
     protected $activeUntil;
@@ -80,10 +79,13 @@ class User extends BaseUser
     /**
      * @var ArrayCollection|TeamRole
      * @ORM\OneToMany(targetEntity="AuthBundle\Entity\TeamRole", mappedBy="user", cascade={"all"}, orphanRemoval=true)
-
      */
     protected $teamRoles;
-
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true, length = 10)
+     */
+    protected $confirmationStatus;
 
     /**
      * User constructor.
@@ -95,6 +97,7 @@ class User extends BaseUser
         $this->createdAt = new \DateTime();
         $this->plainPassword = substr(md5(uniqid(rand(), true)), 0, 6);
         $this->confirmationToken = substr(md5(uniqid(rand(), true)), 0, 6);
+        $this->confirmationStatus = "waiting";
 //        $this->isAdmin = $this->isAdmin();
 
     }
@@ -188,8 +191,6 @@ class User extends BaseUser
     }
 
 
-
-
     /**
      * Set createdBy
      *
@@ -215,13 +216,29 @@ class User extends BaseUser
     }
 
     /**
+     * @return string
+     */
+    public function getConfirmationStatus()
+    {
+        return $this->confirmationStatus;
+    }
+
+    /**
+     * @param string $confirmationStatus
+     */
+    public function setConfirmationStatus($confirmationStatus)
+    {
+        $this->confirmationStatus = $confirmationStatus;
+    }
+
+
+    /**
      * @return Equipe|ArrayCollection
      */
     public function getPilote()
     {
         return $this->pilote;
     }
-
 
 
     /**
@@ -276,11 +293,13 @@ class User extends BaseUser
     /**
      * @return ArrayCollection|Equipe
      */
-    public function getEquipes(){
+    public function getEquipes()
+    {
         $equipes = new ArrayCollection();
-        foreach ($this->teamRoles as $teamRole){
+        foreach ($this->teamRoles as $teamRole) {
             $equipes->add($teamRole->getEquipe());
         }
+
         return $equipes;
 
     }
@@ -303,28 +322,31 @@ class User extends BaseUser
     /**
      * @Assert\IsTrue(message="la date d'activation doit être antérieure à la date de désactivation")
      */
-    public function isAnterior(){
-        if($this->activeAt != null && $this->activeUntil != null)
-        {
+    public function isAnterior()
+    {
+        if ($this->activeAt != null && $this->activeUntil != null) {
             return $this->activeAt < $this->activeUntil;
         }
     }
+//  Problématique en cas d'édition
+//    /**
+//     * @Assert\IsTrue(message="la date d'activation doit être postérieure à la date du jour")
+//     */
+//    public function isAfterNow()
+//    {
+//        $now = new \DateTime();
+//        if ($this->activeAt != null) {
+//            dump($this->activeAt);
+//            return $this->activeAt > $now;
+//        }
+//    }
 
-    /**
-     * @Assert\IsTrue(message="la date d'activation doit être postérieure à la date du jour")
-     */
-    public function isAfterNow(){
-        $now =  new \DateTime();
-        if ($this->activeAt != null)
-        {
-            return $this->activeAt > $now;
-        }
-    }
 
     /**
      * @return bool
      */
-    public function isAdmin(){
+    public function isAdmin()
+    {
 
         return $this->hasRole('ROLE_ADMIN');
 
@@ -334,11 +356,11 @@ class User extends BaseUser
      * @param $boolean
      * @return $this
      */
-    public function setAdmin($boolean){
-        if (true === $boolean){
+    public function setAdmin($boolean)
+    {
+        if (true === $boolean) {
             $this->addRole('ROLE_ADMIN');
-        }
-        else {
+        } else {
             $this->removeRole('ROLE_ADMIN');
         }
 

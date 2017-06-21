@@ -79,13 +79,15 @@ class DefaultController extends Controller
             "equipe"=>$equipe
         ));
 
+        $role = (!$teamrole == null) ? $teamrole->getRole() : array('nom' => 'pilote');
+
 
 
         return $this->render('goout.html.twig', array(
             "module" =>$module,
             "equipe" =>$equipe,
             "user" =>$user,
-            "role" =>$teamrole->getRole(),
+            "role" =>$role,
             "admin"=>$admin
         ));
     }

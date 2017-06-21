@@ -45,10 +45,10 @@ class UserController extends Controller
 
             $users->add($this->getUser());
             foreach ($equipePilote as $equipe) {
-               $teamRoles = $equipe->getTeamRoles();
-               foreach ($teamRoles as $teamRole){
-                   $users->add($teamRole->getUser());
-               }
+                $teamRoles = $equipe->getTeamRoles();
+                foreach ($teamRoles as $teamRole) {
+                    $users->add($teamRole->getUser());
+                }
             }
         }
 
@@ -80,6 +80,7 @@ class UserController extends Controller
 
             $username = substr($user->getPrenom(), 0, 1).$user->getNom();
             $user->setUsername($username);
+            $user->setCreatedBy($this->getUser());
 
             $em = $this->getDoctrine()->getManager();
 
@@ -87,7 +88,10 @@ class UserController extends Controller
 
             $em->flush();
 
-            $this->sendInvitation($user);
+            //vérifie si la date d'activation du compte est valide avant d'envoyer l'invitation
+            if ($user->getActiveAt() < new \DateTime() || $user->getActiveAt() == null) {
+                $this->get('app.sendinvitation')->sendInvitation($user);
+            }
 
 
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
@@ -140,9 +144,8 @@ class UserController extends Controller
             $em->flush();
 
 
-//            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
+            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
-
 
 
         return $this->render(
@@ -181,50 +184,59 @@ class UserController extends Controller
      * @Method("POST")
      * @return Response
      */
-    public function sendrequestAction(Request $request, User $user)
+    public function sendrequestAction(User $user, Request $request = null)
     {
         $tokenGenerator = $this->get('fos_user.util.token_generator');
         $user->setConfirmationToken($tokenGenerator->generateToken());
         $this->getDoctrine()->getManager()->flush();
 
-        $mailaddress = $request->get('mailaddress');
-        dump($mailaddress);
-        $user->setEmail($mailaddress);
-        $result = $this->sendInvitation($user);
-        return new Response(json_encode([
-            'success' => $result,
+        if (!$request == null) {
+            $mailaddress = $request->get('mailaddress');
+            $user->setEmail($mailaddress);
+        }
 
-        ]));
+
+        $result = $this->get('app.sendinvitation')->sendInvitation($user);
+
+        return new Response(
+            json_encode(
+                [
+                    'success' => $result,
+
+                ]
+            )
+        );
     }
 
-
-    /**
-     * envoi une invitation de confirmation de compte
-
-     */
-    /**
-     * @param User $user
-     * @return int
-     */
-    private function sendInvitation(User $user)
-    {
-        $invitation = \Swift_Message::newInstance()
-            ->setFrom('IHNI@sodifrance.fr')
-            ->setTo($user->getEmail())
-            ->setSubject('Confirmation de votre compte QualityBox')
-            ->setBody(
-                $this->renderView(
-                    ':email:invitation.html.twig',
-                    array(
-                        'user' => $user,
-                    )
-                ),
-                'text/html'
-            );
-        return $this->get('mailer')->send($invitation);
-
-    }
-
+//      Voir service
+//    /**
+//     * envoi une invitation de confirmation de compte
+//     */
+//    /**
+//     * @param User $user
+//     * @return int
+//     */
+//    private function sendInvitation(User $user)
+//    {
+//        $invitation = \Swift_Message::newInstance()
+//            ->setFrom('IHNI@sodifrance.fr')
+//            ->setTo($user->getEmail())
+//            ->setSubject('Confirmation de votre compte QualityBox')
+//            ->setBody(
+//                $this->renderView(
+//                    ':email:invitation.html.twig',
+//                    array(
+//                        'user' => $user,
+//                    )
+//                ),
+//                'text/html'
+//            );
+//        $user->setConfirmationStatus("pending");
+//        $this->getDoctrine()->getManager()->flush();
+//
+//        return $this->get('mailer')->send($invitation);
+//
+//    }
 
 
 }

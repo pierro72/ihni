@@ -24,16 +24,23 @@ class TeamRole
     /**
      * @var Role
      * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\Role", inversedBy="teamRoles", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $role;
     /**
      * @var User
+     * @Assert\NotNull(message="Le champ Utilisateur doit être rempli")
+     *
      * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\User", inversedBy="teamRoles", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
     /**
      * @var Equipe
+     * @Assert\NotNull(message="Le champ Equipe doit être rempli")
+     *
      * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\Equipe", inversedBy="teamRoles")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $equipe;
 

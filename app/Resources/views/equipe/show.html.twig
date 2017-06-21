@@ -40,6 +40,7 @@
                                     </li>
                                 </ul>
                                 <a href="{{ path('equipe_index') }}" class="btn btn-default">Fermer</a>
+                                <a href="{{ path('equipe_edit', {'id': equipe.id}) }}" class="btn btn-primary">Editer</a>
                             </div>
                         </div>
                     </div>
@@ -59,7 +60,7 @@
                                         <tbody>
                                         {% for teamRole in equipe.teamRoles %}
                                             <tr>
-                                                <td>{{ teamRole.user }}</td>
+                                                <td><a href="{{ path('user_show', {'id': teamRole.user.id}) }}">{{ teamRole.user }}</a></td>
                                                 <td>{{ teamRole.role.nom }}</td>
                                             </tr>
                                         {% endfor %}

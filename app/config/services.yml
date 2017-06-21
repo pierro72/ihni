@@ -31,6 +31,10 @@ services:
       tags:
         - { name: form.type}
 
+    app.sendinvitation:
+      class: AuthBundle\sendInvitation
+      arguments: ['@mailer','@doctrine.orm.entity_manager','@twig']
+
     role_voter:
         class: AuthBundle\Security\RoleVoter
         tags:

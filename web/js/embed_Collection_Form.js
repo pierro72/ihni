@@ -52,6 +52,16 @@ function addForm($collectionHolder, $addLink) {
     // instead be a number based on how many items we have
     var newForm = prototype.replace(/__name__/g, index);
 
+    // Remove selected elements to avoid doublons
+    $('.form_line').each(function () {
+        var selected = $(this).find($(':selected')).val();
+        var regex = new RegExp("<option value=\""+selected+"\">[^<>]*<\/option>", "g");
+
+
+        newForm = newForm.replace(regex, '');
+
+    });
+
     // increase the index with one for the next item
     $collectionHolder.data('index', index + 1);
 
@@ -60,16 +70,17 @@ function addForm($collectionHolder, $addLink) {
 
 
     var $newFormLi = $('<div></div>').append(newForm);
-    $addLink.before($newFormLi);
+     $addLink.before($newFormLi);
 
+     console.log($newFormLi.find(('select:first > option')).length);
+     if($newFormLi.find(('select:first > option')).length <= 1){
+         $addLink.remove();
+     }
 
     addFormDeleteLink($newFormLi.find('.row'));
 
 
-
-
-
-}
+    }
 function addFormDeleteLink($formDiv) {
     var $removeFormA = $('<a href=# class="equipe_form_delete btn btn-danger"><i class="fa fa-minus-circle"></i> Supprimer</a>');
 
@@ -81,6 +92,8 @@ function addFormDeleteLink($formDiv) {
 
         //remove the User from the form
         $formDiv.remove();
+
+
     })
 }
 //on document.load
