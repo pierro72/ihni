@@ -31,6 +31,10 @@ class CheckUserDateValidityCommand extends ContainerAwareCommand
 
     }
 
+    /**
+     *A lancer par le serveur en tâche Cron à 1h00 chaque jour
+     * Vérifie la validité des comptes et les active ou désactive le cas échéant
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
@@ -38,15 +42,32 @@ class CheckUserDateValidityCommand extends ContainerAwareCommand
         $users = $em->getRepository('AuthBundle:User')->findAll();
 
 
+        $output->writeln([
+            '======================================',
+
+        ]);
         foreach ($users as $user){
             $activateAt = $user->getActiveAt();
             $activeUntil = $user->getActiveUntil();
             $now = new \DateTime();
-            if (!$activateAt == null && !$user->isEnabled() && $activateAt < $now ){
-                $controller = new UserController();
-                $controller->sendrequestAction($user);
+            //active les comptes qui ont dépassé leur date d'activation
+            if (!$activateAt == null && !$user->isEnabled() && $activateAt < $now && $user->getConfirmationStatus() == "waiting" ){
+
+                $this->getContainer()->get('app.sendinvitation')->sendInvitation($user);
+                $output->writeln('activation de '.$user);
             }
+            //désactive les comptes qui ont dépassé leur date de désactivation
+            if (!$activeUntil == null && $user->isEnabled() && $activeUntil < $now){
+                $user->setEnabled(false);
+                $em->flush();
+                $output->writeln('désativation de '.$user);
+            }
+
         }
+        $output->writeln([
+
+            '======================================',
+        ]);
     }
 
 

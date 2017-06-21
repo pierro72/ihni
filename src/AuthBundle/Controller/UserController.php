@@ -45,10 +45,10 @@ class UserController extends Controller
 
             $users->add($this->getUser());
             foreach ($equipePilote as $equipe) {
-               $teamRoles = $equipe->getTeamRoles();
-               foreach ($teamRoles as $teamRole){
-                   $users->add($teamRole->getUser());
-               }
+                $teamRoles = $equipe->getTeamRoles();
+                foreach ($teamRoles as $teamRole) {
+                    $users->add($teamRole->getUser());
+                }
             }
         }
 
@@ -89,8 +89,7 @@ class UserController extends Controller
             $em->flush();
 
             //vérifie si la date d'activation du compte est valide avant d'envoyer l'invitation
-            if ($user->getActiveAt() < new \DateTime() || $user->getActiveAt() == null)
-            {
+            if ($user->getActiveAt() < new \DateTime() || $user->getActiveAt() == null) {
                 $this->sendInvitation($user);
             }
 
@@ -145,9 +144,8 @@ class UserController extends Controller
             $em->flush();
 
 
-//            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
+            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
-
 
 
         return $this->render(
@@ -186,30 +184,33 @@ class UserController extends Controller
      * @Method("POST")
      * @return Response
      */
-    public function sendrequestAction(Request $request = null, User $user)
+    public function sendrequestAction(User $user, Request $request = null)
     {
         $tokenGenerator = $this->get('fos_user.util.token_generator');
         $user->setConfirmationToken($tokenGenerator->generateToken());
         $this->getDoctrine()->getManager()->flush();
 
-        if (!$request == null)
-        {
+        if (!$request == null) {
             $mailaddress = $request->get('mailaddress');
             $user->setEmail($mailaddress);
         }
 
 
         $result = $this->sendInvitation($user);
-        return new Response(json_encode([
-            'success' => $result,
 
-        ]));
+        return new Response(
+            json_encode(
+                [
+                    'success' => $result,
+
+                ]
+            )
+        );
     }
 
 
     /**
      * envoi une invitation de confirmation de compte
-
      */
     /**
      * @param User $user
@@ -232,10 +233,10 @@ class UserController extends Controller
             );
         $user->setConfirmationStatus("pending");
         $this->getDoctrine()->getManager()->flush();
+
         return $this->get('mailer')->send($invitation);
 
     }
-
 
 
 }

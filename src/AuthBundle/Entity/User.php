@@ -58,7 +58,7 @@ class User extends BaseUser
      * Référence le compte USER qui a créé le compte
      * @var User
      * @ORM\ManyToOne(targetEntity="AuthBundle\Entity\User")
-     * @ORM\Column(nullable=true)
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="id")
      */
     protected $createdBy;
     /**
@@ -328,17 +328,19 @@ class User extends BaseUser
             return $this->activeAt < $this->activeUntil;
         }
     }
+//  Problématique en cas d'édition
+//    /**
+//     * @Assert\IsTrue(message="la date d'activation doit être postérieure à la date du jour")
+//     */
+//    public function isAfterNow()
+//    {
+//        $now = new \DateTime();
+//        if ($this->activeAt != null) {
+//            dump($this->activeAt);
+//            return $this->activeAt > $now;
+//        }
+//    }
 
-    /**
-     * @Assert\IsTrue(message="la date d'activation doit être postérieure à la date du jour")
-     */
-    public function isAfterNow()
-    {
-        $now = new \DateTime();
-        if ($this->activeAt != null) {
-            return $this->activeAt > $now;
-        }
-    }
 
     /**
      * @return bool
