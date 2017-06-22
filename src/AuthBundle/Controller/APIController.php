@@ -48,7 +48,7 @@ class APIController extends Controller
         foreach ($teamRoles as $teamRole) {
             $formatTeam[] = [
                 'equipe' => $teamRole->getEquipe()->toArray(),
-                'role' => $teamRole->getRole(),
+                'role' => $teamRole->getRole()->getNom(),
             ];
         }
         $pilotes = $user->getPilote();
@@ -61,8 +61,9 @@ class APIController extends Controller
             }
         }
         $response = array(
+            'info' => $user->toArray(),
             'equipes' => $formatTeam,
-            'user' => $user->toArray(),
+
         );
 
         return new JsonResponse($response);
