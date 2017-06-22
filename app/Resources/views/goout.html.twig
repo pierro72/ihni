@@ -45,6 +45,7 @@
 <script>
     $(function () {
         var $actionForm = $('<form>', {'action': '/qub{{ module.url }}', 'method': 'post'}).append(
+            formLine('apiKey','{{ module.apiKey }}'),
             formLine('user','{{ app.user }}'),
             formLine('id_user','{{ app.user.id }}'),
             formLine('admin',{% if is_granted('ROLE_ADMIN') %}true{% else %}false{% endif %}),

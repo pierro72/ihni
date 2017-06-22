@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="equipe")
  * @ORM\Entity(repositoryClass="AuthBundle\Repository\EquipeRepository")
  * @UniqueEntity(fields={"nom"}, message="Le nom de l'équipe est déjà utilisé")
-
  */
 class Equipe
 {
@@ -51,9 +50,8 @@ class Equipe
     /**
      * @var ArrayCollection|TeamRole
      * @ORM\OneToMany(targetEntity="AuthBundle\Entity\TeamRole", mappedBy="equipe", cascade={"all"}, orphanRemoval=true)
-
      */
-    private  $teamRoles;
+    private $teamRoles;
     /**
      * @var ArrayCollection|Module
      * @ORM\ManyToMany(targetEntity="AuthBundle\Entity\Module", mappedBy="equipes")
@@ -118,6 +116,7 @@ class Equipe
     {
         return $this->createdAt;
     }
+
     /**
      * Constructor
      */
@@ -173,7 +172,6 @@ class Equipe
 
         $this->teamRoles = $teamRoles;
     }
-
 
 
     /**
@@ -244,10 +242,21 @@ class Equipe
 //    }
 
 
-
     function __toString()
     {
         return $this->nom;
+    }
+
+    function toArray()
+    {
+        $array = array(
+            'id' => $this->id,
+            'name' => $this->nom,
+            'createdAt' => $this->createdAt,
+            'pilote' => $this->pilote->toArray(),
+        )
+        ;
+        return $array;
     }
 
 }

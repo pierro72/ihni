@@ -273,6 +273,7 @@ class User extends BaseUser
      */
     public function getTeamRoles()
     {
+
         return $this->teamRoles;
     }
 
@@ -365,6 +366,27 @@ class User extends BaseUser
         }
 
         return $this;
+    }
+
+    /**
+     * Retourne les infos non critiques du User sous forme de tableau
+     * @return array
+     */
+    public function toArray(){
+        $array = array(
+            'id' => $this->id,
+            'nom' => $this->nom,
+            'prenom' => $this->prenom,
+            'username' => $this->username,
+            'mail'=> $this->email,
+            'admin' => $this->isAdmin(),
+            'createdBy' => $this->createdBy == null ? '' : $this->createdBy->toArray(),
+            'createdAt' => $this->createdAt,
+            'active' => $this->enabled,
+            'activeAt' => $this->activeAt,
+            'activeUntil' => $this->activeUntil,
+        );
+        return $array;
     }
 
 }
