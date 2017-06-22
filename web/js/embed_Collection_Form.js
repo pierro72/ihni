@@ -23,9 +23,8 @@ function collectionFormInit($id, $sujet) {
         addFormDeleteLink($(this));
     });
 
-        //add the "add" link
-        $collectionHolder.append($addLink);
-
+    //add the "add" link
+    $collectionHolder.append($addLink);
 
 
     // count the current form inputs we have (e.g. 2), use that as the new
@@ -55,7 +54,7 @@ function addForm($collectionHolder, $addLink) {
     // Remove selected elements to avoid doublons
     $('.form_line').each(function () {
         var selected = $(this).find($(':selected')).val();
-        var regex = new RegExp("<option value=\""+selected+"\">[^<>]*<\/option>", "g");
+        var regex = new RegExp("<option value=\"" + selected + "\">[^<>]*<\/option>", "g");
 
 
         newForm = newForm.replace(regex, '');
@@ -66,21 +65,26 @@ function addForm($collectionHolder, $addLink) {
     $collectionHolder.data('index', index + 1);
 
 
-
-
-
     var $newFormLi = $('<div></div>').append(newForm);
-     $addLink.before($newFormLi);
+    $addLink.before($newFormLi);
 
-     console.log($newFormLi.find(('select:first > option')).length);
-     if($newFormLi.find(('select:first > option')).length <= 1){
-         $addLink.remove();
-     }
+    console.log($newFormLi.find(('select:first > option')).length);
+    if ($newFormLi.find(('select:first > option')).length <= 1) {
+        $addLink.remove();
+    }
 
     addFormDeleteLink($newFormLi.find('.row'));
+    $('.datepicker').datepicker({
+        autoclose: true,
+        language: "fr",
+
+        format: 'yyyy-mm-dd'
 
 
-    }
+    });
+
+
+}
 function addFormDeleteLink($formDiv) {
     var $removeFormA = $('<a href=# class="equipe_form_delete btn btn-danger"><i class="fa fa-minus-circle"></i> Supprimer</a>');
 

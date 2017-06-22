@@ -62,23 +62,29 @@
 {% block javascripts %}
     <!-- iCheck -->
     <script src="{{ asset('assets/vendor/AdminLTE/plugins/iCheck/icheck.min.js') }}"></script>
-
+    <script src="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/locales/bootstrap-datepicker.fr.js') }}"></script>
     <script src="{{ asset('js/embed_Collection_Form.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            collectionFormInit('authbundle_equipe_teamRoles', 'un utilisateur')
-        })
+            collectionFormInit('authbundle_equipe_teamRoles', 'un utilisateur');
 
-    </script>
-    <script>
-        $(function () {
+            $('.datepicker').datepicker({
+                autoclose: true,
+                language: "fr",
+
+                format: 'yyyy-mm-dd'
+
+
+            });
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%' // optional
             });
+        })
 
-        });
     </script>
+
 
 {% endblock %}

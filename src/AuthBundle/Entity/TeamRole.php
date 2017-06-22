@@ -43,6 +43,11 @@ class TeamRole
      * @ORM\JoinColumn(nullable=false)
      */
     private $equipe;
+    /**
+     * @var Assert\Date
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateFin;
 
 
     /**
@@ -126,6 +131,23 @@ class TeamRole
     {
         return $this->role;
     }
+
+    /**
+     * @return Assert\Date
+     */
+    public function getDateFin()
+    {
+        return $this->dateFin;
+    }
+
+    /**
+     * @param Assert\Date $dateFin
+     */
+    public function setDateFin($dateFin)
+    {
+        $this->dateFin = $dateFin;
+    }
+
 
 
 }

@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -44,7 +45,19 @@ class UserRoleType extends AbstractType
                     'choice_label' => 'nom',
 
                 )
-            );
+            )
+            ->add('dateFin',DateType::class, [
+                'widget' => 'single_text',
+
+                'html5' => false,
+                'label' => "Actif à partir du : ",
+                'required' => false,
+                'attr' => [
+                    'class' => 'datepicker',
+                    'placeholder' => "Laissez vide si indéfini"
+                ]
+            ])
+        ;
 
 //        $builder
 //            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
