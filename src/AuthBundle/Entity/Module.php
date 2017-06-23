@@ -38,6 +38,12 @@ class Module
      * @ORM\ManyToMany(targetEntity="AuthBundle\Entity\Equipe",inversedBy="modules", cascade={"persist"})
      */
     private $equipes;
+    /**
+     * @var string
+     * @ORM\Column(unique=true,type="string",nullable=false, length=13)
+     */
+    private $apiKey;
+
 
 
     /**
@@ -96,6 +102,8 @@ class Module
     public function __construct()
     {
         $this->equipes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->apiKey = substr(md5(uniqid(rand(), true)), 0, 12);
+
     }
 
     /**
@@ -131,4 +139,13 @@ class Module
     {
         return $this->equipes;
     }
+
+    /**
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
 }

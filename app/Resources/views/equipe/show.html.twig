@@ -55,6 +55,7 @@
                                         <tr>
                                             <th>Utilisateurs</th>
                                             <th>Rôle</th>
+                                            <th>Date de fin</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -62,6 +63,7 @@
                                             <tr>
                                                 <td><a href="{{ path('user_show', {'id': teamRole.user.id}) }}">{{ teamRole.user }}</a></td>
                                                 <td>{{ teamRole.role.nom }}</td>
+                                                <td>{% if teamRole.dateFin != null %}{{ teamRole.dateFin|date('d/m/Y') }}{% endif %}</td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>

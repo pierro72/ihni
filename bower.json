@@ -1,0 +1,21 @@
+{
+  "name": "IHNI",
+  "homepage": "null",
+  "authors": [
+    "Douglas Metthey <d.metthey@gmail.com>"
+  ],
+  "description": "apllication gestion des utilisateurs de la plateforme QualityBox",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/assets/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AdminLTE": "admin-lte#^2.3.11"
+  }
+}
