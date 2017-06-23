@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -57,6 +58,18 @@ class TeamRoleType extends AbstractType
 
                 )
             );
+            $builder->add('dateFin',DateType::class, [
+                'widget' => 'single_text',
+
+                'html5' => false,
+                'label' => "Actif à partir du : ",
+                'required' => false,
+                'attr' => [
+                    'class' => 'datepicker',
+                    'placeholder' => "Laissez vide pour si indéfini"
+                ]
+            ]);
+
         } //Si Role Pilote restreint les choix aux équipes piloté et rôles classiques
         else {
             $user = $this->tokenStorage->getToken()->getUser();
@@ -96,7 +109,19 @@ class TeamRoleType extends AbstractType
                                 },
                                 'choice_label' => 'nom',
                             )
-                        );
+                        )
+                        ->add('dateFin',DateType::class, [
+                            'widget' => 'single_text',
+
+                            'html5' => false,
+                            'label' => "Actif à partir du : ",
+                            'required' => false,
+                            'attr' => [
+                                'class' => 'datepicker',
+                                'placeholder' => "Laissez vide si indéfini"
+                            ]
+                        ])
+                    ;
                 }
             );
 
