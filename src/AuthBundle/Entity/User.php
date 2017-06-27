@@ -7,12 +7,18 @@ use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\Common\PropertyChangedListener;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
  * @ORM\Entity(repositoryClass="AuthBundle\Repository\UserRepository")
  * @ORM\Table(name="ihni_user")
+ * @UniqueEntity(
+ *     fields={"nom","prénom"},
+ *     errorPath="nom",
+ *     message="L'utilisateur existe déjà"
+ * )
  */
 class User extends BaseUser
 {
