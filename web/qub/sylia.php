@@ -21,7 +21,7 @@
 <iframe src="../iframe/qb_menu_simple.php" style="width: 100%; height: 50px; " frameborder="0"></iframe>
 <div class="container">
     <div class="row">
-        <h1>Bienvenue dans {module}</h1>
+        <h1 id="titre">Bienvenue dans {module}</h1>
     </div>
     <div class="row list">
         <h3>Utilisateur <small id="user">{user.name}</small></h3>
@@ -38,9 +38,15 @@
             <small id="id_team">{team.id}</small>
         </h3>
         <h3>role
-            <small role="role">{role}</small>
+            <small id="role">{role}</small>
         </h3>
 
+    </div>
+    <div class="row api_call">
+        <select name="methode" id="methode">
+            <option value="get_user">Get User</option>
+            <option value="get_equipe">Get Team</option>
+        </select>
     </div>
 </div>
 
@@ -54,12 +60,28 @@
        $('.list small').each(function () {
            var id = $(this).attr("id");
            $(this).html(post[id]);
-       })
+       });
+        $('#titre').html("Bienvenue dans " + $(document).attr('title'));
+
+    }
+    function getUser(id){
+
+        $.ajax({
+            method: "GET",
+            url: "https://box.dmetthey.fr/api/user/"+id,
+            data: {
+                apikey : post.apiKey
+            },
+            dataType : "json"
+        }).done(function (result) {
+            return result;
+        })
     }
 
     $(function () {
 
         fillData();
+        console.log(getUser(2));
 
 
     });

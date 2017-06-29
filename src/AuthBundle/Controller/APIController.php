@@ -69,7 +69,7 @@ class APIController extends Controller
 
         );
 
-        return new JsonResponse($response);
+        return new JsonResponse($response,array('Access-Control-Allow-Origin'=> '*'));
 
     }
     /**
@@ -104,6 +104,6 @@ class APIController extends Controller
             'users' => $users
         );
 
-        return new JsonResponse($response);
+        return new JsonResponse($response,array('Access-Control-Allow-Origin'=> '*'));
     }
 }
