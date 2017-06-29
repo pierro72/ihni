@@ -89,11 +89,11 @@
                 <li>
                     {
                     <ul>
-                        <li>"info" : obj Equipe {}
+                        <li>"info" : <a href="#obj_equipe">obj Equipe {}</a>
                         </li>
                         <li>"users" : array [
                             <ul>
-                                <li>obj User{}</li>
+                                <li><a href="#obj_user">obj User {}</a></li>
                             </ul>
                             ]
 
@@ -136,11 +136,11 @@
                 <li>
                     {
                     <ul>
-                        <li>"info" : obj User {}
+                        <li>"info" : <a href="#obj_user">obj User {}</a>
                         </li>
                         <li>"equipes" : array[
                             <ul>{
-                                <li>"equipe" : obj Equipe {}</li>
+                                <li>"equipe" : <a href="#obj_equipe">obj Equipe {}</a></li>
                                 <li>"role" : string</li>
                                 }
                             </ul>
@@ -161,7 +161,7 @@
             <h2>Dictionnaire des objets</h2>
         </div>
         <div class="panel-body">
-            <h4>Obj User : </h4>
+            <h4 id="obj_user">Obj User : </h4>
             <ul class="list-group">
                 <li class="list-group-item">"id" : int</li>
                 <li class="list-group-item">"nom" : string</li>
@@ -169,25 +169,28 @@
                 <li class="list-group-item">"username" : string</li>
                 <li class="list-group-item">"mail" : string</li>
                 <li class="list-group-item">"admin" : bool</li>
-                <li class="list-group-item">"createdBy" : obj User{}</li>
+                <li class="list-group-item">"createdBy" : <a href="#obj_user">obj User {}</a></li>
                 <li class="list-group-item">"createdAt" : obj Date{}</li>
                 <li class="list-group-item">"active" : bool</li>
                 <li class="list-group-item">"activeAt" : obj Date{}</li>
                 <li class="list-group-item">"activeUntil" : obj Date{}</li>
-                <li class="list-group-item">"pilote" : obj User{}</li>
+                <li class="list-group-item">"pilote" : <a href="#obj_user">obj User {}</a></li>
 
             </ul>
-            <h4>Obj Equipe :</h4>
+            <h4 id="obj_equipe">Obj Equipe :</h4>
             <ul class="list-group">
                 <li class="list-group-item">"id" : int</li>
                 <li class="list-group-item">"name" : string</li>
                 <li class="list-group-item">"createdAt" : obj Date{}</li>
-                <li class="list-group-item">"pilote" : obj User{}</li>
-                <li class="list-group-item">"modules" : array[Obj Module]
+                <li class="list-group-item">"pilote" : <a href="#obj_user">obj User {}</a></li>
+                <li class="list-group-item">"modules" : array[
+                    <ul>
+                        <li><a href="#obj_module">obj Module {}</a></li>
+                    </ul>]
                 </li>
 
             </ul>
-            <h4>Obj Module :</h4>
+            <h4 id="obj_module">Obj Module :</h4>
             <ul class="list-group">
                 <li class="list-group-item">"id_module" : int</li>
                 <li class="list-group-item">"nom" : string</li>
