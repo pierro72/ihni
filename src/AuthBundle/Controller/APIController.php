@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * API Controller
- * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
+ 
  */
 class APIController extends Controller
 {

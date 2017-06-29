@@ -90,6 +90,7 @@ class DefaultController extends Controller
             "role" =>$role,
             "admin"=>$admin
         ));
+//        return $this->redirect('/qub/sylia');
 
     }
     /**

@@ -44,7 +44,7 @@
 {% block javascripts %}
 <script>
     $(function () {
-        var $actionForm = $('<form>', {'action': '/qub{{ module.url }}', 'method': 'post'}).append(
+        var $actionForm = $('<form>', {'action': '/qub{{ module.url }}.php', 'method': 'post'}).append(
             formLine('apiKey','{{ module.apiKey }}'),
             formLine('user','{{ app.user }}'),
             formLine('id_user','{{ app.user.id }}'),
