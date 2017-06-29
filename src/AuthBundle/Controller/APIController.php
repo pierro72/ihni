@@ -6,6 +6,7 @@ use AuthBundle\Entity\Equipe;
 use AuthBundle\Entity\User;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * API Controller
- *
+ * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
 class APIController extends Controller
 {
@@ -23,9 +24,11 @@ class APIController extends Controller
      * @param User $user
      * @Route("api/user/{id}")
      * @Method("GET")
+
      * @return JsonResponse
      */
     public function getTeamsByUserAction(User $user, Request $request){
+
 
         $er = $this->getDoctrine()->getManager()->getRepository("AuthBundle:Module");
         $keyManager = $er->createQueryBuilder('m')
