@@ -148,4 +148,15 @@ class Module
         return $this->apiKey;
     }
 
+    /**
+     * @return array
+     */
+    public function toArray(){
+        $array = array(
+            'id_module' => $this->getId(),
+            'nom' => $this->getNom(),
+        );
+        return $array;
+    }
+
 }

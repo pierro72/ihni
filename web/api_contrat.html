@@ -8,7 +8,8 @@
     <title>Contrat D'API IHNI</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,10 +28,13 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h2>Lancement de l'application <small>Paramètres envoyés</small></h2>
+            <h2>Lancement de l'application
+                <small>Paramètres envoyés</small>
+            </h2>
         </div>
         <div class="panel-body">
-            <p>Lorsque un utilisateur lance une application depuis IHNI, ses informations sont envoyées en POST à l'adresse : /qub/{url_application}</p>
+            <p>Lorsque un utilisateur lance une application depuis IHNI, ses informations sont envoyées en POST à
+                l'adresse : /qub/{url_application}</p>
             <h4>Paramètre : </h4>
             <ul>
                 <li>Methode : POST</li>
@@ -52,7 +56,8 @@
                 admin:true<br>
                 team:CDS Java<br>
                 id_team:6<br>
-                role:utilisateur</div>
+                role:utilisateur
+            </div>
         </div>
     </div>
     <div class="panel panel-default">
@@ -84,15 +89,7 @@
                 <li>
                     {
                     <ul>
-                        <li>"info" : obj Equipe {
-                            <ul class="list-group">
-                                <li class="list-group-item">"id" : int</li>
-                                <li class="list-group-item">"name" : string</li>
-                                <li class="list-group-item">"createdAt" : obj Date{}</li>
-                                <li class="list-group-item">"pilote" : obj User{}</li>
-
-                            </ul>
-                            }
+                        <li>"info" : obj Equipe {}
                         </li>
                         <li>"users" : array [
                             <ul>
@@ -139,23 +136,8 @@
                 <li>
                     {
                     <ul>
-                        <li>"info" : obj User {
-                            <ul class="list-group">
-                                <li class="list-group-item">"id" : int</li>
-                                <li class="list-group-item">"nom" : string</li>
-                                <li class="list-group-item">"prenom" : string</li>
-                                <li class="list-group-item">"username" : string</li>
-                                <li class="list-group-item">"mail" : string</li>
-                                <li class="list-group-item">"admin" : bool</li>
-                                <li class="list-group-item">"createdBy" : obj User{}</li>
-                                <li class="list-group-item">"createdAt" : obj Date{}</li>
-                                <li class="list-group-item">"active" : bool</li>
-                                <li class="list-group-item">"activeAt" : obj Date{}</li>
-                                <li class="list-group-item">"activeUntil" : obj Date{}</li>
-                                <li class="list-group-item">"pilote" : obj User{}</li>
-
-                            </ul>
-                            }</li>
+                        <li>"info" : obj User {}
+                        </li>
                         <li>"equipes" : array[
                             <ul>{
                                 <li>"equipe" : obj Equipe {}</li>
@@ -172,6 +154,44 @@
             </ul>
             <h4>Exemple :</h4>
             <div class="well">/api/user/2?apikey=f3a7da7e66b0</div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2>Dictionnaire des objets small</h2>
+        </div>
+        <div class="panel-body">
+            <h4>Obj User : </h4>
+            <ul class="list-group">
+                <li class="list-group-item">"id" : int</li>
+                <li class="list-group-item">"nom" : string</li>
+                <li class="list-group-item">"prenom" : string</li>
+                <li class="list-group-item">"username" : string</li>
+                <li class="list-group-item">"mail" : string</li>
+                <li class="list-group-item">"admin" : bool</li>
+                <li class="list-group-item">"createdBy" : obj User{}</li>
+                <li class="list-group-item">"createdAt" : obj Date{}</li>
+                <li class="list-group-item">"active" : bool</li>
+                <li class="list-group-item">"activeAt" : obj Date{}</li>
+                <li class="list-group-item">"activeUntil" : obj Date{}</li>
+                <li class="list-group-item">"pilote" : obj User{}</li>
+
+            </ul>
+            <h4>Obj Equipe :</h4>
+            <ul class="list-group">
+                <li class="list-group-item">"id" : int</li>
+                <li class="list-group-item">"name" : string</li>
+                <li class="list-group-item">"createdAt" : obj Date{}</li>
+                <li class="list-group-item">"pilote" : obj User{}</li>
+                <li class="list-group-item">"modules" : array[Obj Module]
+                </li>
+
+            </ul>
+            <h4>Obj Module :</h4>
+            <ul class="list-group">
+                <li class="list-group-item">"id_module" : int</li>
+                <li class="list-group-item">"nom" : string</li>
+            </ul>
         </div>
     </div>
 </div>
