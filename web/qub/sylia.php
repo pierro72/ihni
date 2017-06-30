@@ -65,17 +65,17 @@
 
     }
     function getUser(id){
-
-        $.ajax({
+         return $.ajax({
             method: "GET",
             url: "https://box.dmetthey.fr/api/user/"+id,
+
             data: {
-                apikey : post.apiKey
-            },
-            dataType : "json"
-        }).done(function (result) {
-            return result;
-        })
+                apikey : 'f3a7da7e66b0'
+            }
+        });
+    }
+    function handleData(data){
+        return data;
     }
 
     $(function () {
