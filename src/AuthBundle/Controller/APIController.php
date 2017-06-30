@@ -97,7 +97,10 @@ class APIController extends Controller
         $teamRoles = $equipe->getTeamRoles();
         $users = [];
         foreach ($teamRoles as $teamRole){
-            $users[]= $teamRole->getUser()->toArray();
+            $users[]= array(
+               "user" => $teamRole->getUser()->toArray(),
+                "role"=> $teamRole->getRole()->getNom()
+            );
         }
         $response = array(
             'info' => $equipe->toArray(),
