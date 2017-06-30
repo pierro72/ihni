@@ -65,7 +65,7 @@ class APIController extends Controller
         }
         $response = array(
             'info' => $user->toArray(),
-            'equipes' => $formatTeam,
+            'equipes_role' => $formatTeam,
 
         );
 

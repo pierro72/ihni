@@ -24,7 +24,9 @@
         <h1 id="titre">Bienvenue dans {module}</h1>
     </div>
     <div class="row list">
-        <h3>Utilisateur <small id="user">{user.name}</small></h3>
+        <h3>Utilisateur
+            <small id="user">{user.name}</small>
+        </h3>
         <h3>Id Utilisateur
             <small id="id_user"></small>
         </h3>
@@ -57,31 +59,32 @@
 <script type="text/javascript">
     var post = <?php echo json_encode($_POST); ?>;
     function fillData() {
-       $('.list small').each(function () {
-           var id = $(this).attr("id");
-           $(this).html(post[id]);
-       });
+        $('.list small').each(function () {
+            var id = $(this).attr("id");
+            $(this).html(post[id]);
+        });
         $('#titre').html("Bienvenue dans " + $(document).attr('title'));
 
     }
-    function getUser(id){
-         return $.ajax({
+    function getUser(id) {
+        $.ajax({
             method: "GET",
-            url: "https://box.dmetthey.fr/api/user/"+id,
+            datatype: "json",
+            url: "https://box.dmetthey.fr/api/user/" + id,
 
             data: {
-                apikey : 'f3a7da7e66b0'
+                apikey: 'f3a7da7e66b0'
             }
+        }).done(function (data) {
+            console.log(data);
         });
     }
-    function handleData(data){
-        return data;
-    }
+
 
     $(function () {
 
         fillData();
-        console.log(getUser(2));
+        getUser(2)
 
 
     });
