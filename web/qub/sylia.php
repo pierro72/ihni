@@ -177,8 +177,10 @@
                 $('#api_form').append('<select name="equipe" id="equipe"></select>');
                 fillTeamForm();
                 $('#equipe').change(function () {
+                    $('#sendbtn').removeAttr("disabled");
                     $('#address').html($('#address').html().slice(0, 10) + $(this).find('option:selected').val() + "?apikey=f3a7da7e66b0");
                 });
+
                 break;
         }
 
@@ -186,7 +188,7 @@
     });
     $('#sendbtn').click(function () {
         $('#result').remove();
-        $.get('localhost:8000' + $('#address').html()).done(function (data) {
+        $.get('https://box.dmetthey.fr' + $('#address').html()).done(function (data) {
             console.log(data);
             if ($('#address').html().slice(5, 9) === "user") {
 
@@ -243,6 +245,12 @@
                     "</div>" +
                     "</div>"
                 );
+                $('#info :nth-child(1)').append("<small> " + data.info.name + "</small>");
+                $('#info :nth-child(2)').append("<small> " + data.info.pilote.prenom + " " + data.info.pilote.nom + "</small>");
+                $('#info :nth-child(3)').append("<small> " + data.info.createdAt.date.slice(0, 16) + "</small>");
+                $('#info :nth-child(4)').append("<small> " + data.info.modules.forEach(function (module) {
+                        return module.nom + " ";
+                    }) + "</small>");
             }
         })
     })

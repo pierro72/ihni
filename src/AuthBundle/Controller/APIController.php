@@ -16,7 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * API Controller
- 
  */
 class APIController extends Controller
 {
@@ -24,10 +23,10 @@ class APIController extends Controller
      * @param User $user
      * @Route("api/user/{id}")
      * @Method("GET")
-
      * @return JsonResponse
      */
-    public function getTeamsByUserAction(User $user, Request $request){
+    public function getTeamsByUserAction(User $user, Request $request)
+    {
 
 
         $er = $this->getDoctrine()->getManager()->getRepository("AuthBundle:Module");
@@ -39,10 +38,10 @@ class APIController extends Controller
 
         $apiKey = $request->get('apikey');
 
-        if ($apiKey == null || array_search($apiKey, array_column($keyManager,'apiKey')) == false){
+        if ($apiKey == null || array_search($apiKey, array_column($keyManager, 'apiKey')) == false) {
             return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_NOT_FOUND);
         }
-        if($user == null){
+        if ($user == null) {
             return new JsonResponse(['message' => 'Aucun utilisateur avec cette id'], Response::HTTP_NOT_FOUND);
         }
 
@@ -55,11 +54,11 @@ class APIController extends Controller
             ];
         }
         $pilotes = $user->getPilote();
-        if(!$pilotes == null){
-            foreach ($pilotes as $pilote){
+        if (!$pilotes == null) {
+            foreach ($pilotes as $pilote) {
                 $formatTeam[] = [
                     'equipe' => $pilote->toArray(),
-                    'role' => 'pilote'
+                    'role' => 'pilote',
                 ];
             }
         }
@@ -69,16 +68,18 @@ class APIController extends Controller
 
         );
 
-        return new JsonResponse($response,200,array('Access-Control-Allow-Origin'=> '*'));
+        return new JsonResponse($response, 200, array('Access-Control-Allow-Origin' => '*'));
 
     }
+
     /**
      * @param Equipe $equipe
      * @Route("api/team/{id}")
      * @Method("GET")
      * @return JsonResponse
      */
-    public function getUsersbyTeam(Request $request, Equipe $equipe){
+    public function getUsersbyTeam(Request $request, Equipe $equipe)
+    {
         $er = $this->getDoctrine()->getManager()->getRepository("AuthBundle:Module");
         $keyManager = $er->createQueryBuilder('m')
             ->select('m.apiKey')
@@ -88,25 +89,56 @@ class APIController extends Controller
 
         $apiKey = $request->get('apikey');
 
-        if ($apiKey == null || array_search($apiKey, array_column($keyManager,'apiKey')) == false){
+        if ($apiKey == null || array_search($apiKey, array_column($keyManager, 'apiKey')) == false) {
             return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_NOT_FOUND);
         }
-        if($equipe == null){
+        if ($equipe == null) {
             return new JsonResponse(['message' => 'Aucun utilisateur avec cette id'], Response::HTTP_NOT_FOUND);
         }
         $teamRoles = $equipe->getTeamRoles();
         $users = [];
-        foreach ($teamRoles as $teamRole){
-            $users[]= array(
-               "user" => $teamRole->getUser()->toArray(),
-                "role"=> $teamRole->getRole()->getNom()
+        foreach ($teamRoles as $teamRole) {
+            $users[] = array(
+                "user" => $teamRole->getUser()->toArray(),
+                "role" => $teamRole->getRole()->getNom(),
             );
         }
         $response = array(
             'info' => $equipe->toArray(),
-            'users' => $users
+            'users' => $users,
         );
 
-        return new JsonResponse($response,200,array('Access-Control-Allow-Origin'=> '*'));
+        return new JsonResponse($response, 200, array('Access-Control-Allow-Origin' => '*'));
+    }
+
+    /**
+     * @Route("api/alluser")
+     * @Method("GET")
+     * @return JsonResponse
+     */
+    public function getAllUser(Request $request)
+    {
+        $apiKey = $request->get('apikey');
+        $em = $this->getDoctrine()->getManager();
+        $keyManager = $em->getRepository("AuthBundle:Module")->createQueryBuilder('m')
+            ->select('m.apiKey')
+            ->getQuery()
+            ->getResult();
+
+        if ($apiKey == null || array_search($apiKey, array_column($keyManager, 'apiKey')) == false) {
+            return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_NOT_FOUND);
+        }
+
+
+        $users = $em->getRepository("AuthBundle:User")->findAll();
+
+        $usersJson = [];
+        foreach ($users as $user) {
+            $usersJson[] = array(
+                'user' => $user->toArray(),
+            );
+        };
+
+        return new JsonResponse($usersJson, 200, array('Access-Control-Allow-Origin' => '*'));
     }
 }
