@@ -18,19 +18,54 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body>
+<body style="padding-top: 70px">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header"><a href="/api_contrat.html" class="navbar-brand">API IHNI</a></div>
+        <ul class="nav navbar-nav">
+            <li><a href="#lancement">Lancement</a></li>
+            <li class="dropdown">
+                <a href="#methode" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Méthodes<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#team">api/team/{id}</a></li>
+                    <li><a href="#user">api/user/{id}</a></li>
+                    <li><a href="#alluser">api/alluser</a></li>
+                </ul>
+            </li>
 
+
+            <li><a href="#dico">Dictionnaire des objets</a></li>
+        </ul>
+    </div>
+</nav>
 <div class="container">
     <div class="page-header">
         <h1>Contrat d'API IHNI
-            <small></small>
+
         </h1>
     </div>
+    <div>
+        <h5>Contexte</h5>
+        <ul>
+            <li><a href="#lancement">Lancement de l'application</a> </li>
+        </ul>
+        <h5>Méthodes</h5>
+        <ul>
+            <li><a href="#team">api/team/{id}</a> Retourne les infos d'une équipe  </li>
+            <li><a href="#user">api/user/{id}</a> Retourne les infos d'un utilisateur</li>
+            <li><a href="#alluser">api/alluser</a> Retourne la liste de tous les utilisateurs</li>
+        </ul>
+        <h5>Dictionnaire</h5>
+        <ul>
+            <li><a href="$dico">Dictionnaire des objets</a> </li>
+        </ul>
+    </div>
+    <hr>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h2>Lancement de l'application
+            <h3 id="lancement">Lancement de l'application
                 <small>Paramètres envoyés</small>
-            </h2>
+            </h3>
         </div>
         <div class="panel-body">
             <p>Lorsque un utilisateur lance une application depuis IHNI, ses informations sont envoyées en POST à
@@ -60,11 +95,18 @@
             </div>
         </div>
     </div>
+
+    <div>
+        <hr>
+        <h2>Méthodes</h2>
+        <hr>
+    </div>
+
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h2>api/team/{id}
+            <h3 id="team">api/team/{id}
                 <small> Retourne les infos d'une équipe</small>
-            </h2>
+            </h3>
         </div>
         <div class="panel-body">
 
@@ -110,9 +152,9 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h2>api/user/{id}
+            <h3 id="user">api/user/{id}
                 <small> Retourne les infos d'un utilisateur</small>
-            </h2>
+            </h3>
         </div>
         <div class="panel-body">
 
@@ -159,7 +201,47 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h2>Dictionnaire des objets</h2>
+            <h3 id="alluser">api/alluser
+                <small> Retourne la liste de tous les utilisateurs</small>
+            </h3>
+        </div>
+        <div class="panel-body">
+
+            <h4>Paramètre :</h4>
+            <ul>
+                <li>Methode : GET
+                    <h5>apikey
+                        <small> string: clé d'accès au service</small>
+                    </h5>
+                </li>
+            </ul>
+            <h4>Return :
+                <small>format JSON</small>
+            </h4>
+
+            <ul>
+                <li>
+                    [
+                    <ul>{
+                        <li> "user" : <a href="#obj_user">obj User {}</a>
+                        </li>
+                        }</ul>
+                    ]
+
+                </li>
+            </ul>
+            <h4>Exemple :</h4>
+            <div class="well">/api/alluser?apikey=f3a7da7e66b0</div>
+        </div>
+    </div>
+    <div>
+        <hr>
+        <h2>Dictionnaire</h2>
+        <hr>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>Dictionnaire des objets</h3>
         </div>
         <div class="panel-body">
             <h4 id="obj_user">Obj User : </h4>
