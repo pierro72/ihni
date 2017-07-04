@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Sylia</title>
+    <title>Skilex</title>
 
     <!-- Bootstrap -->
     <link href="../assets/vendor/AdminLTE/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -258,12 +258,12 @@
                 })
                 ;
 
-                
+
                 data.users.forEach(function (teamRole) {
                     $('#equipes_role').append(
                         "<tr>" +
-                            "<td>" + teamRole.user.prenom + " " + teamRole.user.nom + "</td>" +
-                            "<td>" + teamRole.role + "</td>" +
+                        "<td>" + teamRole.user.prenom + " " + teamRole.user.nom + "</td>" +
+                        "<td>" + teamRole.role + "</td>" +
                         "</tr>"
                     )
                 })
