@@ -258,7 +258,7 @@
                 })
                 ;
 
-                
+
                 data.users.forEach(function (teamRole) {
                     $('#equipes_role').append(
                         "<tr>" +
