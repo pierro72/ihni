@@ -30,7 +30,7 @@ class Module
     private $nom;
     /**
      * @var string
-     * @ORM\Column(name="url", type="string", length=10, unique=true)
+     * @ORM\Column(name="url", type="string", unique=true)
      */
     private $url;
     /**
