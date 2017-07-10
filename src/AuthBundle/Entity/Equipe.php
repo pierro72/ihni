@@ -249,11 +249,17 @@ class Equipe
 
     function toArray()
     {
+        $modules = $this->getModules();
+        $modulesAsArray = [];
+        foreach ($modules as $module){
+            $modulesAsArray[] = $module->toArray();
+        }
         $array = array(
             'id' => $this->id,
             'name' => $this->nom,
             'createdAt' => $this->createdAt,
             'pilote' => $this->pilote->toArray(),
+            'modules' => $modulesAsArray,
         )
         ;
         return $array;

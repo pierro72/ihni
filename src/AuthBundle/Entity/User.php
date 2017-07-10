@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="AuthBundle\Repository\UserRepository")
  * @ORM\Table(name="ihni_user")
  * @UniqueEntity(
- *     fields={"nom","prénom"},
+ *     fields={"nom","prenom"},
  *     errorPath="nom",
  *     message="L'utilisateur existe déjà"
  * )

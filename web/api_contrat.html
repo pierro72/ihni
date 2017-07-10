@@ -8,7 +8,8 @@
     <title>Contrat D'API IHNI</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,74 +18,95 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body>
+<body style="padding-top: 70px">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header"><a href="/api_contrat.html" class="navbar-brand">API IHNI</a></div>
+        <ul class="nav navbar-nav">
+            <li><a href="#lancement">Lancement</a></li>
+            <li class="dropdown">
+                <a href="#methode" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Méthodes<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#team">api/team/{id}</a></li>
+                    <li><a href="#user">api/user/{id}</a></li>
+                    <li><a href="#alluser">api/alluser</a></li>
+                </ul>
+            </li>
 
+
+            <li><a href="#dico">Dictionnaire des objets</a></li>
+        </ul>
+    </div>
+</nav>
 <div class="container">
     <div class="page-header">
         <h1>Contrat d'API IHNI
-            <small></small>
+
         </h1>
     </div>
+    <div>
+        <h5>Contexte</h5>
+        <ul>
+            <li><a href="#lancement">Lancement de l'application</a> </li>
+        </ul>
+        <h5>Méthodes</h5>
+        <ul>
+            <li><a href="#team">api/team/{id}</a> Retourne les infos d'une équipe  </li>
+            <li><a href="#user">api/user/{id}</a> Retourne les infos d'un utilisateur</li>
+            <li><a href="#alluser">api/alluser</a> Retourne la liste de tous les utilisateurs</li>
+        </ul>
+        <h5>Dictionnaire</h5>
+        <ul>
+            <li><a href="#dico">Dictionnaire des objets</a> </li>
+        </ul>
+    </div>
+    <hr>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h2>api/user/{id}
-                <small> Retourne les infos d'un utilisateur</small>
-            </h2>
+            <h3 id="lancement">Lancement de l'application
+                <small>Paramètres envoyés</small>
+            </h3>
         </div>
         <div class="panel-body">
-
-            <h4>Paramètre :</h4>
+            <p>Lorsque un utilisateur lance une application depuis IHNI, ses informations sont envoyées en POST à
+                l'adresse : /qub/{url_application}</p>
+            <h4>Paramètre : </h4>
             <ul>
-                <li>Addresse :
-                    <h5>{id}
-                        <small> int: id de l'utilisateur</small>
-                    </h5>
-                </li>
-                <li>Methode : GET
-                    <h5>apikey
-                        <small> string: clé d'accès au service</small>
-                    </h5>
-                </li>
+                <li>Methode : POST</li>
             </ul>
-            <h4>Return :
-                <small>format JSON</small>
-            </h4>
-
+            <h4>Form Data :</h4>
             <ul>
-                <li>
-                    {
-                    <ul>
-                        <li>"info" : obj Equipe {
-                            <ul class="list-group">
-                                <li class="list-group-item">"id" : int</li>
-                                <li class="list-group-item">"name" : string</li>
-                                <li class="list-group-item">"createdAt" : obj Date{}</li>
-                                <li class="list-group-item">"pilote" : obj User{}</li>
-
-                            </ul>
-                            }
-                        </li>
-                        <li>"users" : array [
-                            <ul>
-                                <li>obj User{}</li>
-                            </ul>
-                            ]
-
-                        </li>
-                    </ul>
-                    }
-
-                </li>
+                <li>"apiKey" : string (clé d'api de l'application lancée)</li>
+                <li>"user" : string (nom + + prénom)</li>
+                <li>"id_user" : int</li>
+                <li>"admin" : bool</li>
+                <li>"team" : string (nom de l'équipe choisie par l'utilisateur pour lancer l'application)</li>
+                <li>"id_team" : int (id de l'équipe choisie par l'utilisateur pour lancer l'application)</li>
+                <li>"role" : string (role de l'utilisateur dans l'équipe choisie pour lancer l'application)</li>
             </ul>
             <h4>Exemple :</h4>
-            <div class="well">/api/user/2?apikey=f3477da7856b0</div>
+            <div class="well">apiKey:f3a7da7e66b0<br>
+                user:Nils Langen<br>
+                id_user:2<br>
+                admin:true<br>
+                team:CDS Java<br>
+                id_team:6<br>
+                role:utilisateur
+            </div>
         </div>
     </div>
+
+    <div>
+        <hr>
+        <h2>Méthodes</h2>
+        <hr>
+    </div>
+
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h2>api/team/{id}
+            <h3 id="team">api/team/{id}
                 <small> Retourne les infos d'une équipe</small>
-            </h2>
+            </h3>
         </div>
         <div class="panel-body">
 
@@ -109,26 +131,59 @@
                 <li>
                     {
                     <ul>
-                        <li>"info" : obj User {
-                            <ul class="list-group">
-                                <li class="list-group-item">"id" : int</li>
-                                <li class="list-group-item">"nom" : string</li>
-                                <li class="list-group-item">"prenom" : string</li>
-                                <li class="list-group-item">"username" : string</li>
-                                <li class="list-group-item">"mail" : string</li>
-                                <li class="list-group-item">"admin" : bool</li>
-                                <li class="list-group-item">"createdBy" : obj User{}</li>
-                                <li class="list-group-item">"createdAt" : obj Date{}</li>
-                                <li class="list-group-item">"active" : bool</li>
-                                <li class="list-group-item">"activeAt" : obj Date{}</li>
-                                <li class="list-group-item">"activeUntil" : obj Date{}</li>
-                                <li class="list-group-item">"pilote" : obj User{}</li>
-
+                        <li>"info" : <a href="#obj_equipe">obj Equipe {}</a>
+                        </li>
+                        <li>"users" : array [ Obj{
+                            <ul>
+                                <li>"user" : <a href="#obj_user">obj User {}</a></li>
+                                <li>"role" : string</li>
                             </ul>
-                            }</li>
-                        <li>"equipes" : array[
+                            }]
+
+                        </li>
+                    </ul>
+                    }
+
+                </li>
+            </ul>
+            <h4>Exemple :</h4>
+            <div class="well">/api/team/2?apikey=f3a7da7e66b0</div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 id="user">api/user/{id}
+                <small> Retourne les infos d'un utilisateur</small>
+            </h3>
+        </div>
+        <div class="panel-body">
+
+            <h4>Paramètre :</h4>
+            <ul>
+                <li>Addresse :
+                    <h5>{id}
+                        <small> int: id de l'utilisateur</small>
+                    </h5>
+                </li>
+                <li>Methode : GET
+                    <h5>apikey
+                        <small> string: clé d'accès au service</small>
+                    </h5>
+                </li>
+            </ul>
+            <h4>Return :
+                <small>format JSON</small>
+            </h4>
+
+            <ul>
+                <li>
+                    {
+                    <ul>
+                        <li>"info" : <a href="#obj_user">obj User {}</a>
+                        </li>
+                        <li>"equipes_role" : array[ (liste d'objets contenant le lien équipe/rôle)
                             <ul>{
-                                <li>"equipe" : obj Equipe {}</li>
+                                <li>"equipe" : <a href="#obj_equipe">obj Equipe {}</a></li>
                                 <li>"role" : string</li>
                                 }
                             </ul>
@@ -141,7 +196,88 @@
                 </li>
             </ul>
             <h4>Exemple :</h4>
-            <div class="well">/api/team/2?apikey=f3477da7856b0</div>
+            <div class="well">/api/user/2?apikey=f3a7da7e66b0</div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 id="alluser">api/alluser
+                <small> Retourne la liste de tous les utilisateurs</small>
+            </h3>
+        </div>
+        <div class="panel-body">
+
+            <h4>Paramètre :</h4>
+            <ul>
+                <li>Methode : GET
+                    <h5>apikey
+                        <small> string: clé d'accès au service</small>
+                    </h5>
+                </li>
+            </ul>
+            <h4>Return :
+                <small>format JSON</small>
+            </h4>
+
+            <ul>
+                <li>
+                    [
+                    <ul>{
+                        <li> "user" : <a href="#obj_user">obj User {}</a>
+                        </li>
+                        }</ul>
+                    ]
+
+                </li>
+            </ul>
+            <h4>Exemple :</h4>
+            <div class="well">/api/alluser?apikey=f3a7da7e66b0</div>
+        </div>
+    </div>
+    <div>
+        <hr>
+        <h2 id="dico">Dictionnaire</h2>
+        <hr>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>Dictionnaire des objets</h3>
+        </div>
+        <div class="panel-body">
+            <h4 id="obj_user">Obj User : </h4>
+            <ul class="list-group">
+                <li class="list-group-item">"id" : int</li>
+                <li class="list-group-item">"nom" : string</li>
+                <li class="list-group-item">"prenom" : string</li>
+                <li class="list-group-item">"username" : string</li>
+                <li class="list-group-item">"mail" : string</li>
+                <li class="list-group-item">"admin" : bool</li>
+                <li class="list-group-item">"createdBy" : <a href="#obj_user">obj User {}</a></li>
+                <li class="list-group-item">"createdAt" : obj Date{}</li>
+                <li class="list-group-item">"active" : bool</li>
+                <li class="list-group-item">"activeAt" : obj Date{}</li>
+                <li class="list-group-item">"activeUntil" : obj Date{}</li>
+
+
+            </ul>
+            <h4 id="obj_equipe">Obj Equipe :</h4>
+            <ul class="list-group">
+                <li class="list-group-item">"id" : int</li>
+                <li class="list-group-item">"name" : string</li>
+                <li class="list-group-item">"createdAt" : obj Date{}</li>
+                <li class="list-group-item">"pilote" : <a href="#obj_user">obj User {}</a></li>
+                <li class="list-group-item">"modules" : array[
+                    <ul>
+                        <li><a href="#obj_module">obj Module {}</a></li>
+                    </ul>]
+                </li>
+
+            </ul>
+            <h4 id="obj_module">Obj Module :</h4>
+            <ul class="list-group">
+                <li class="list-group-item">"id_module" : int</li>
+                <li class="list-group-item">"nom" : string</li>
+            </ul>
         </div>
     </div>
 </div>

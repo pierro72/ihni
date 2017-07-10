@@ -30,7 +30,7 @@ class Module
     private $nom;
     /**
      * @var string
-     * @ORM\Column(name="url", type="string", length=10, unique=true)
+     * @ORM\Column(name="url", type="string", unique=true)
      */
     private $url;
     /**
@@ -146,6 +146,17 @@ class Module
     public function getApiKey()
     {
         return $this->apiKey;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(){
+        $array = array(
+            'id_module' => $this->getId(),
+            'nom' => $this->getNom(),
+        );
+        return $array;
     }
 
 }
