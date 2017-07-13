@@ -23,6 +23,23 @@
     margin-bottom: 150px;
 }
 
+.p_breadcrumb {
+    list-style: none;
+    color: lightgrey;
+    display: inline-block;
+    padding: 15px 15px;
+}
+.p_breadcrumb > li {
+    display: inline-block;
+}
+.p_breadcrumb > li:before{
+    content: '\00A0\00A0\00A0/\00A0\00A0\00A0'
+}
+.p_breadcrumb a {
+    color: white;
+    font-style: normal;
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
