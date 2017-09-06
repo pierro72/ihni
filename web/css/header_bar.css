@@ -1,0 +1,41 @@
+
+/* 
+    Created on : 5 sept. 2017, 15:48:28
+    Author     : dmetthey
+*/
+
+.dropdown-menu {
+    width: 288px;
+    
+}
+.dropdown-menu>li>.row {
+    padding: 3px 10px 0 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+.app-nav {
+    display: inline;
+    margin-top: 8px;
+    margin-left: 10px;
+}
+.app-nav>a {
+   
+}
+.app-nav>.dropdown-menu {
+    margin-top: 13px;
+}
+.app-list {
+    list-style: none;
+    padding-left: 6px;
+}
+
+.app-list li{
+    float: left;    
+    padding: 10px;
+    
+}
+.app-list li a {
+   width: 115px;
+    height: 115px;
+}
+

@@ -44,3 +44,6 @@ services:
         class: AuthBundle\Security\TeamVoter
         tags:
           - { name: security.voter }
+
+    app.generateusername:
+        class: AuthBundle\GenerateUsername
