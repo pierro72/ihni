@@ -78,7 +78,10 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $username = substr($user->getPrenom(), 0, 1).$user->getNom();
+            //injecte la classe GenerateUsername
+            $formater = $this->get('app.generateUsername');
+
+            $username = $formater->generateUsername($user->getPrenom(),$user->getNom());
             $user->setUsername($username);
             $user->setCreatedBy($this->getUser());
 
@@ -138,6 +141,11 @@ class UserController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            //injecte la classe GenerateUsername
+            $formater = $this->get('app.generateUsername');
+
+            $username = $formater->generateUsername($user->getPrenom(),$user->getNom());
+            $user->setUsername($username);
 
 
             $em = $this->getDoctrine()->getManager();

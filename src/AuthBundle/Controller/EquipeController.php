@@ -124,16 +124,14 @@ class EquipeController extends Controller
      * @Route("/{id}", name="equipe_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Equipe $equipe)
+    public function deleteAction(
+        Equipe $equipe)
     {
-        $form = $this->createDeleteForm($equipe);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($equipe);
             $em->flush();
-        }
+
 
         return $this->redirectToRoute('equipe_index');
     }
