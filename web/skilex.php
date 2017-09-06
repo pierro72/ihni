@@ -20,6 +20,7 @@
 <body>
 <iframe src="iframe/qb_menu_simple.php" style="width: 100%; height: 50px; " frameborder="0"></iframe>
 <div class="container">
+    <div class="row"><a href="https://box.dmetthey.fr/api_contrat.html">Doc API</a> </div>
     <div class="row">
         <h1 id="titre">Bienvenue dans {module}</h1>
     </div>
