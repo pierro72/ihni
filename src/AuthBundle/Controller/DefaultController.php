@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 
 /**
- * @Route("qub/")
+ * @Route("/")
  */
 class DefaultController extends Controller
 {
@@ -90,7 +90,6 @@ class DefaultController extends Controller
             "role" =>$role,
             "admin"=>$admin
         ));
-//        return $this->redirect('/qub/sylia');
 
     }
     /**
