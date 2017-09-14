@@ -49,7 +49,7 @@
 
                     <!-- Bienvenue + nom de l'utilisateur -->
                     <ul class="nav navbar-nav">
-                        <li><a href="/ihni/user" target="_top">IHNI</a> </li>
+                        <li><a href="/qub/ihni/user" target="_top">IHNI</a> </li>
                         <li><a href="/logout" target="_top">Déconnection</a> </li>
                     </ul>
 
