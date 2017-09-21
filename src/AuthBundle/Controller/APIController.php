@@ -142,7 +142,7 @@ class APIController extends Controller
             $usersJson[] = array(
                 'user' => $user->toArray(),
             );
-        };
+        }
 
         return new JsonResponse($usersJson, 200, array('Access-Control-Allow-Origin' => '*'));
     }
