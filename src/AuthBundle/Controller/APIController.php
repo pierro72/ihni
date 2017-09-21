@@ -105,7 +105,7 @@ class APIController extends Controller
             
         }
         $users[] = array(
-            "user" => $equipe->getPilote(),
+            "user" => $equipe->getPilote()->toArray(),
             "role" => "pilote",
         );
         $response = array(
