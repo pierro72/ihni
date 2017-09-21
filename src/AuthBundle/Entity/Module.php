@@ -152,10 +152,11 @@ class Module
      * @return array
      */
     public function toArray(){
-        $array = array(
+        $array = [
             'id_module' => $this->getId(),
             'nom' => $this->getNom(),
-        );
+            'url' => $this->url
+            ];
         return $array;
     }
 
