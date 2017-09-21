@@ -102,7 +102,12 @@ class APIController extends Controller
                 "user" => $teamRole->getUser()->toArray(),
                 "role" => $teamRole->getRole()->getNom(),
             );
+            
         }
+        $users[] = array(
+            "user" => $equipe->getPilote(),
+            "role" => "pilote",
+        );
         $response = array(
             'info' => $equipe->toArray(),
             'users' => $users,
