@@ -43,7 +43,9 @@
                             {#{% endfor %}#}
                             {#</div>#}
 
-                            <input type="submit" value="Sauvegarder"/>
+                            <input class="btn btn-default type="submit" value="Valider"/>
+                                  <a class="btn btn-default" href="{{ path('equipe_index') }}">
+                                  <i class="fa fa-back"></i> Annuler</a>
                             {{ form_end(form) }}
 
 

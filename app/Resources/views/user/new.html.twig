@@ -31,7 +31,7 @@
                             {% if intention == 'create' or is_granted('ROLE_ADMIN') %}
                             {{ form_widget(form) }}
                         {% else %}
-                        {{ form_row(form.prenom) }}
+                        {{ form_row(form.prenom ) }}
                         {{ form_row(form.nom) }}
                         {{ form_row(form.email) }}
 
