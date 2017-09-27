@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 
 /**
- * @Route("/")
+ * @Route("/qub/")
  */
 class DefaultController extends Controller
 {
