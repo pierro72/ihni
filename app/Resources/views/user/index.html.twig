@@ -13,6 +13,7 @@
                                             <th>Adresse e-mail</th>
                                             <th>Etat</th>
                                             <th>Equipe</th>
+                                            <th>Métier</th>
                                             <th>Actions</th>
                                         </tr>
                                         </thead>
@@ -46,6 +47,7 @@
 
 
                                             </td>
+                                            <td>{{ user.jobName }}</td>
                                             <td style="width: 162px">
                                                 <a title="Voir toutes les informations utilisateur" href="{{ path('user_show', {'id': user.id }) }}"
                                                    class="btn btn-default"><i class="fa fa-info"></i></a>
