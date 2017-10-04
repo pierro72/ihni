@@ -56,9 +56,8 @@ class UserType extends AbstractType {
                     ]
                 ])
                 ->add('jobName', ChoiceType::class, array(
-                    'choice_loader' => new CallbackChoiceLoader(function() {
-                                return User::getJobChoice();
-                            }),
+                    'choices' => User::getJobChoice()
+                            
                     
                     
                 ))
