@@ -453,6 +453,8 @@ class User extends BaseUser {
             'active' => $this->enabled,
             'activeAt' => $this->activeAt,
             'activeUntil' => $this->activeUntil,
+            'bornDate' => $this->bornDate,
+            'jobName' => $this->jobName
         );
         return $array;
     }
