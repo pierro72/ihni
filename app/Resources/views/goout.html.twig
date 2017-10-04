@@ -51,7 +51,8 @@
             formLine('admin',{% if is_granted('ROLE_ADMIN') %}true{% else %}false{% endif %}),
             formLine('team', '{{ equipe.nom }}'),
             formLine('id_team', '{{ equipe.id }}'),
-            formLine('role','{{ role.nom }}')
+            formLine('role','{{ role.nom }}'),
+            formLine('appName','{{ module.nom }}')
         );
         $actionForm.appendTo($('body')).submit();
     });
