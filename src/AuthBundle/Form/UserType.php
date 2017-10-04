@@ -42,9 +42,17 @@ class UserType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
         $builder
-                ->add('prenom', TextType::class, array('label' => "Prénom",))
-                ->add('nom')
-                ->add('email', EmailType::class)
+                ->add('prenom', TextType::class, array(
+                    'label' => "Prénom",
+                    'required' => true,
+                        )
+                )
+                ->add('nom', TextType::class, array(
+                    'required' => true,
+                ))
+                ->add('email', EmailType::class, array(
+                    'required' => true,
+                ))
                 ->add('bornDate', DateType::class, [
                     'widget' => 'single_text',
                     'html5' => false,
@@ -56,10 +64,9 @@ class UserType extends AbstractType {
                     ]
                 ])
                 ->add('jobName', ChoiceType::class, array(
-                    'choices' => User::getJobChoice()
-                            
-                    
-                    
+                    'choices' => User::getJobChoice(),
+                    'label' => 'Métier',
+                    'required' => false
                 ))
 
         ;
