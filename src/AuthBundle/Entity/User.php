@@ -92,6 +92,18 @@ class User extends BaseUser
      * @ORM\Column(type="string", nullable=true, length = 10)
      */
     protected $confirmationStatus;
+    /**
+     * @var Assert\Date
+     * @ORM\Column(type="date", nullable=true)
+     */
+    protected $bornDate;
+    /**
+     * @var string
+     * @Assert\Choice(callback= "getJobChoice" ,message="Choisir un métier valide")
+     * @ORM\Column(type="string", nullable=true)
+     * 
+     */
+    protected $jobName;
 
     /**
      * User constructor.
@@ -195,7 +207,44 @@ class User extends BaseUser
     {
         $this->prenom = $prenom;
     }
+    /**
+     * 
+     * @return Assert\Date
+     */
+    function getBornDate() {
+        return $this->bornDate;
+    }
+    
+    function getJobChoice() {
+        return [
+            'développeur' => 'développeur',
+            'commercial' => 'commercial',
+            'chef de projet' => 'chef de projet',
+            'testeur' => 'testeur'
+        ];
+    }
+    /*
+     * @return string
+     */
+    function getJobName() {
+        return $this->jobName;
+    }
 
+    
+    
+    function setBornDate($bornDate) {
+        $this->bornDate = $bornDate;
+    }
+
+    /**
+     * 
+     * @param string $jobName
+     */
+    function setJobName($jobName) {
+        $this->jobName = $jobName;
+    }
+
+    
 
     /**
      * Set createdBy
