@@ -14,7 +14,7 @@
 
             <div class="navbar-brand">
                 {% if inAdmin %}
-                <b>IHNI</b>Gestion des utilisateurs
+                <b>IHNI</b>&nbsp;Gestion des utilisateurs
                 {% else %}
                 <b>Quality</b>BOX
                 {% endif %}
@@ -66,7 +66,7 @@
                             <li class="user-footer">
 
                                 <div class="pull-right">
-                                    <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">Déconnection</a>
+                                   <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">Déconnexion</a>
                                 </div>
                                 {% if inAdmin %}
                                     <div class="pull-right"><a href="{{ path('team_table') }}" class="btn btn-default btn-flat">QualityBox</a>

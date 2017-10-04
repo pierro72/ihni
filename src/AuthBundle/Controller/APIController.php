@@ -102,7 +102,12 @@ class APIController extends Controller
                 "user" => $teamRole->getUser()->toArray(),
                 "role" => $teamRole->getRole()->getNom(),
             );
+            
         }
+        $users[] = array(
+            "user" => $equipe->getPilote()->toArray(),
+            "role" => "pilote",
+        );
         $response = array(
             'info' => $equipe->toArray(),
             'users' => $users,
@@ -137,7 +142,7 @@ class APIController extends Controller
             $usersJson[] = array(
                 'user' => $user->toArray(),
             );
-        };
+        }
 
         return new JsonResponse($usersJson, 200, array('Access-Control-Allow-Origin' => '*'));
     }

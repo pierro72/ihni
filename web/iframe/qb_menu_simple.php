@@ -39,8 +39,8 @@
                 </div>
 
                 <ol class="p_breadcrumb">
-                    <li><a href="/qub" target="_top">IHNI</a></li>
-                    <li><a href="/qub/team_table/" target="_top">Choix d'équipe</a></li>
+                    <li><a href="/" target="_top">IHNI</a></li>
+                    <li><a href="/team_table/" target="_top">Choix d'équipe</a></li>
                     <li><a href="#" target="_top">Choix module</a></li>
                 </ol>
 

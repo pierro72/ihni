@@ -8,11 +8,12 @@
 {% block innertable %}
                                         <thead>
                                         <tr>
-                                            <th>Prenom</th>
+                                            <th>Prénom</th>
                                             <th>Nom</th>
                                             <th>Adresse e-mail</th>
                                             <th>Etat</th>
                                             <th>Equipe</th>
+                                            <th>Métier</th>
                                             <th>Actions</th>
                                         </tr>
                                         </thead>
@@ -46,14 +47,16 @@
 
 
                                             </td>
-                                            <td style="width: 162px">
-                                                <a href="{{ path('user_show', {'id': user.id }) }}"
+                                            <td>{{ user.jobName }}</td>
+                                            <td style="width: 128px">
+                                                <a title="Voir toutes les informations utilisateur" href="{{ path('user_show', {'id': user.id }) }}"
                                                    class="btn btn-default"><i class="fa fa-info"></i></a>
-                                                <a href="{{ path('user_edit', {'id': user.id }) }}"
+                                                <a title="Modifier l'utilisateur" href="{{ path('user_edit', {'id': user.id }) }}"
                                                    class="btn btn-default"><i class="fa fa-pencil"></i></a>
-                                                <a href="#" class="btn btn-default"><i class="fa fa-lock"></i></a>
+                                                <a title="Verrouiller la session utilisateur" href="#" class="btn btn-default disabled"><i class="fa fa-lock"></i></a>
+                                                <!-- Fonctionnalitée non demandée ATM
+                                                <a title="Supprimer l'utilisateur" href="{{ path('user_delete', {'id': user.id}) }}" class="btn btn-default"><i class="fa fa-trash"></i></a>-->
 
-                                                <a href="{{ path('user_delete', {'id': user.id}) }}" class="btn btn-default"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -70,7 +73,9 @@
                 $('#example1').DataTable({
                     "paging": false,
                     "info": false,
-
+                    "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+                },
                     columnDefs: [{
                         targets: [5],
                         "orderable": false,
