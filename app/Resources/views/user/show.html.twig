@@ -15,11 +15,11 @@
                                 <h3 class="profile-username text-center">{{ user }}</h3>
                                 <p class="text-muted text-center">{{ user.jobName }}</p>
                                 <ul class="list-group list-group-unbordered">
-                                    <li class="list-group-item"><i class="fa fa-calendar"></i><strong> Né le</strong><p class="class">{{ user.bornDate|date('d M, Y') }}</p></li>
+                                    <li class="list-group-item"><i class="fa fa-calendar"></i><strong> Né le</strong><p class="class">{% if user.activeAt %}{{ user.bornDate|date('d M, Y') }}{% endif %}</p></li>
                                     <li class="list-group-item"><i class="fa fa-envelope"></i><strong>
                                             Email</strong><p class="">{{ user.email }}</p></li>
                                     <li class="list-group-item"><i class="fa fa-calendar"></i><strong> Créé le </strong><p
-                                                class="">{{ user.createdAt|date('d M, Y') }}</p></li>
+                                            class="">{{ user.createdAt|date('d M, Y') }}</p></li>
                                     <li class="list-group-item"><i class="fa fa-wrench"></i><strong> Créé
                                             par</strong><p
                                                 class="">{{ user.createdBy }}</p></li>
