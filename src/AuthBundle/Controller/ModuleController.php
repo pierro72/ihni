@@ -90,13 +90,13 @@ class ModuleController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('module_edit', array('id' => $module->getId()));
+            return $this->redirectToRoute('reglage');
         }
 
-        return $this->render('module/edit.html.twig', array(
+        return $this->render(':module:edit.html.twig', array(
             'module' => $module,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form' => $editForm->createView(),
+            'inAdmin' => true,
         ));
     }
 

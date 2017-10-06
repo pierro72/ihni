@@ -65,6 +65,7 @@ class EquipeController extends Controller
         return $this->render('equipe/new.html.twig', array(
             'equipe' => $equipe,
             'form' => $form->createView(),
+            'action' => 'Ajouter'
         ));
     }
 
@@ -115,6 +116,7 @@ class EquipeController extends Controller
             'equipe' => $equipe,
             'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'action' => 'Éditer'
         ));
     }
 
