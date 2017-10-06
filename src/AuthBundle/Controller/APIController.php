@@ -35,10 +35,11 @@ class APIController extends Controller
             ->getQuery()
             ->getResult();
 
+       
 
         $apiKey = $request->get('apikey');
 
-        if ($apiKey == null || array_search($apiKey, array_column($keyManager, 'apiKey')) == false) {
+        if ($apiKey == null || in_array($apiKey, array_column($keyManager, 'apiKey')) == false) {
             return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_NOT_FOUND);
         }
         if ($user == null) {
@@ -89,7 +90,7 @@ class APIController extends Controller
 
         $apiKey = $request->get('apikey');
 
-        if ($apiKey == null || array_search($apiKey, array_column($keyManager, 'apiKey')) == false) {
+        if ($apiKey == null || in_array($apiKey, array_column($keyManager, 'apiKey')) == false) {
             return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_NOT_FOUND);
         }
         if ($equipe == null) {
@@ -130,7 +131,7 @@ class APIController extends Controller
             ->getQuery()
             ->getResult();
 
-        if ($apiKey == null || array_search($apiKey, array_column($keyManager, 'apiKey')) == false) {
+        if ($apiKey == null || in_array($apiKey, array_column($keyManager, 'apiKey')) == false) {
             return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_NOT_FOUND);
         }
 
