@@ -90,34 +90,29 @@ class ModuleController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('module_edit', array('id' => $module->getId()));
+            return $this->redirectToRoute('reglage');
         }
 
-        return $this->render('module/edit.html.twig', array(
+        return $this->render(':module:edit.html.twig', array(
             'module' => $module,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form' => $editForm->createView(),
+            'inAdmin' => true,
         ));
     }
 
     /**
      * Deletes a module entity.
      *
-     * @Route("/{id}", name="module_delete")
-     * @Method("DELETE")
+     * @Route("/{id}/delete", name="module_delete")
+     * @Method("GET")
      */
     public function deleteAction(Request $request, Module $module)
     {
-        $form = $this->createDeleteForm($module);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($module);
+        $em->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($module);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('module_index');
+        return $this->redirectToRoute('reglage');
     }
 
     /**
