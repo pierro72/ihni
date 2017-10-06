@@ -103,21 +103,16 @@ class ModuleController extends Controller
     /**
      * Deletes a module entity.
      *
-     * @Route("/{id}", name="module_delete")
-     * @Method("DELETE")
+     * @Route("/{id}/delete", name="module_delete")
+     * @Method("GET")
      */
     public function deleteAction(Request $request, Module $module)
     {
-        $form = $this->createDeleteForm($module);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($module);
+        $em->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($module);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('module_index');
+        return $this->redirectToRoute('reglage');
     }
 
     /**

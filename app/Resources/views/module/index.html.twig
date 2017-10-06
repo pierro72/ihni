@@ -14,7 +14,7 @@
                 <td>{{ module.nom }}</td>
                 <td>
                     <a href="{{ path('module_edit', { 'id': module.id }) }}" class="btn btn-default" ><i class="fa fa-pencil"></i></a>
-                    <a href="{{ path('module_edit', { 'id': module.id }) }}" class="btn btn-default" ><i class="fa fa-trash"></i></a>
+                    <a href="{{ path('module_delete', { 'id': module.id }) }}" class="btn btn-default" ><i class="fa fa-trash"></i></a>
                 </td>
             </tr>
         {% endfor %}

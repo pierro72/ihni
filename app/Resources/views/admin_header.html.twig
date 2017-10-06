@@ -7,7 +7,7 @@
             <li class="{{ route starts with 'equipe' ? 'active' }}"><a href="{{ path('equipe_index') }}">Gestion des
                     équipes</a></li>
             {% if is_granted('ROLE_ADMIN') %}
-            <li class="{{ route starts with 'securite' ? 'active' }}"><a href="{{ path('reglage') }}">Sécurité</a></li>
+            <li class="{{ route starts with 'securi' ? 'active' }}"><a href="{{ path('reglage') }}">Sécurité</a></li>
             {% endif %}
         </ul>
 
