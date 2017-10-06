@@ -23,17 +23,17 @@
                                 <div class="tab-pane active" id="administration">
                                     <div class="">
                                         {#<form class="form" method="post">#}
-                                            {#<div class="form-group">#}
-                                                {#<label for="id_label_multiple">Administrateurs</label>#}
-                                                {#<select class="select2 form-control" id="id_label_multiple" multiple="multiple">#}
-                                                    {#{% for user in users %}#}
-                                                        {#<option {% if user in admins %}selected="selected"{% endif %}>{{ user }}</option>#}
-                                                    {#{% endfor %}#}
-                                                {#</select>#}
-                                            {#</div>#}
-                                            {#<div class="">#}
-                                                {#<button type="submit" class="btn btn-primary">Enregistrer</button>#}
-                                            {#</div>#}
+                                        {#<div class="form-group">#}
+                                        {#<label for="id_label_multiple">Administrateurs</label>#}
+                                        {#<select class="select2 form-control" id="id_label_multiple" multiple="multiple">#}
+                                        {#{% for user in users %}#}
+                                        {#<option {% if user in admins %}selected="selected"{% endif %}>{{ user }}</option>#}
+                                        {#{% endfor %}#}
+                                        {#</select>#}
+                                        {#</div>#}
+                                        {#<div class="">#}
+                                        {#<button type="submit" class="btn btn-primary">Enregistrer</button>#}
+                                        {#</div>#}
                                         {#</form>#}
                                         {{ form_start(adminForm) }}
 
@@ -91,7 +91,7 @@
 {% endblock %}
 {% block javascripts %}
     <script type="text/javascript"
-            src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
+    src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
     <script type="text/javascript">
         $('#auth_bundle_reglage_admin').select2();
         $('#authbundle_module_equipes').select2({
@@ -109,15 +109,31 @@
         $(document).ready(function () {
             $('#example1').DataTable({
                 "paging": false,
-                "searching":false,
+                "searching": false,
 
                 columnDefs: [{
-                    targets: [1],
-                    "orderable": false
-                }]
+                        targets: [1],
+                        "orderable": false
+                    }]
 
             });
+            $('a[data-toggle="tab"]').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+
+            $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {
+                var id = $(e.target).attr("href");
+                localStorage.setItem('selectedTab', id),
+            });
+
+            var selectedTab = localStorage.getItem('selectedTab');
+            if (selectedTab !== null) {
+                $('a[data-toggle="tab"][href="' + selectedTab + '"]').tab('show');
+            }
         });
+
+
 
     </script>
 {% endblock %}
