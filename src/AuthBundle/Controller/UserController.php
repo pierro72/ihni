@@ -21,16 +21,15 @@ use Symfony\Component\HttpFoundation\Response;
  * @Security("is_granted('TEAM_PILOT') or has_role('ROLE_ADMIN')")
  * @Route("qub/ihni/user")
  */
-class UserController extends Controller
-{
+class UserController extends Controller {
+
     /**
      * Lists all user entities if Role_Admin is granted else list users in theam where the user is Pilote
      *
      * @Route("/", name="user_index")
      * @Method("GET")
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
@@ -53,10 +52,9 @@ class UserController extends Controller
         }
 
         return $this->render(
-            'user/index.html.twig',
-            array(
-                'users' => $users,
-            )
+                        'user/index.html.twig', array(
+                    'users' => $users,
+                        )
         );
     }
 
@@ -66,8 +64,7 @@ class UserController extends Controller
      * @Route("/new", name="user_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
-    {
+    public function newAction(Request $request) {
         $user = new User();
 
 
@@ -81,7 +78,7 @@ class UserController extends Controller
             //injecte la classe GenerateUsername
             $formater = $this->get('app.generateUsername');
 
-            $username = $formater->generateUsername($user->getPrenom(),$user->getNom());
+            $username = $formater->generateUsername($user->getPrenom(), $user->getNom());
             $user->setUsername($username);
             $user->setCreatedBy($this->getUser());
 
@@ -101,12 +98,12 @@ class UserController extends Controller
         }
 
         return $this->render(
-            'user/new.html.twig',
-            array(
-                'user' => $user,
-                'intention' => 'create',
-                'form' => $form->createView(),
-            )
+                        'user/new.html.twig', array(
+                    'user' => $user,
+                    'intention' => 'create',
+                    'form' => $form->createView(),
+                    'action' => 'Ajouter'
+                        )
         );
     }
 
@@ -116,15 +113,12 @@ class UserController extends Controller
      * @Route("/{id}", name="user_show")
      * @Method("GET")
      */
-    public function showAction(User $user)
-    {
+    public function showAction(User $user) {
 
         return $this->render(
-            'user/show.html.twig',
-            array(
-                'user' => $user,
-
-            )
+                        'user/show.html.twig', array(
+                    'user' => $user,
+                        )
         );
     }
 
@@ -134,8 +128,7 @@ class UserController extends Controller
      * @Route("/{id}/edit", name="user_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, User $user)
-    {
+    public function editAction(Request $request, User $user) {
 
         $editForm = $this->createForm('AuthBundle\Form\UserType', $user);
         $editForm->handleRequest($request);
@@ -144,7 +137,7 @@ class UserController extends Controller
             //injecte la classe GenerateUsername
             $formater = $this->get('app.generateUsername');
 
-            $username = $formater->generateUsername($user->getPrenom(),$user->getNom());
+            $username = $formater->generateUsername($user->getPrenom(), $user->getNom());
             $user->setUsername($username);
 
 
@@ -157,13 +150,12 @@ class UserController extends Controller
 
 
         return $this->render(
-            ':user:new.html.twig',
-            array(
-                'user' => $user,
-                'intention' => 'edit',
-                'form' => $editForm->createView(),
-
-            )
+                        ':user:new.html.twig', array(
+                    'user' => $user,
+                    'intention' => 'edit',
+                    'form' => $editForm->createView(),
+                    'action' => 'Éditer'
+                        )
         );
     }
 
@@ -173,8 +165,7 @@ class UserController extends Controller
      * @Route("/{id}/delete", name="user_delete")
      * @Method("GET")
      */
-    public function deleteAction(Request $request, User $user)
-    {
+    public function deleteAction(Request $request, User $user) {
 
 
         $em = $this->getDoctrine()->getManager();
@@ -192,8 +183,7 @@ class UserController extends Controller
      * @Method("POST")
      * @return Response
      */
-    public function sendrequestAction(User $user, Request $request = null)
-    {
+    public function sendrequestAction(User $user, Request $request = null) {
         $tokenGenerator = $this->get('fos_user.util.token_generator');
         $user->setConfirmationToken($tokenGenerator->generateToken());
         $this->getDoctrine()->getManager()->flush();
@@ -207,12 +197,11 @@ class UserController extends Controller
         $result = $this->get('app.sendinvitation')->sendInvitation($user);
 
         return new Response(
-            json_encode(
-                [
-                    'success' => $result,
-
-                ]
-            )
+                json_encode(
+                        [
+                            'success' => $result,
+                        ]
+                )
         );
     }
 
@@ -245,7 +234,4 @@ class UserController extends Controller
 //        return $this->get('mailer')->send($invitation);
 //
 //    }
-
-
-
 }
