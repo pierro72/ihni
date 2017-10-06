@@ -1,0 +1,9 @@
+*v1.114 06/10/2017
+Modification du titre des pages Edition/Creation selon l'action
+Ajout fonctionnalité d'édition/suppression sur les modules
+---------------------------------------------------------------------
+*v1.113 05/10/2017
+Ajout champ date de naissance et métier pour l'objet User
+Propagation dans les interfaces
+Ajout champ date de naissance et métier pour l'objet USer dans l'API
+Ajout du nom de l'app dans le POST de lancement de l'application
