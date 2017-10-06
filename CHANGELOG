@@ -1,0 +1,4 @@
+Ajout champ date de naissance et métier pour l'objet User
+Propagation dans les interfaces
+Ajout champ date de naissance et métier pour l'objet USer dans l'API
+Ajout du nom de l'app dans le POST de lancement de l'application
