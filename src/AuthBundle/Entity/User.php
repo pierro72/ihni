@@ -118,13 +118,10 @@ class User extends BaseUser {
     static private $jobChoices = [
         "Conseil" => [
             'Manager' => 'Manager',
-            'Consultant(e) Confirmé(e)' => 'Consultant(e) Confirmé(e)',
-            'Consultant(e)' => 'Consultant(e)',
-            'Consultant  Junior' => 'Consultant  Junior'
+            'Consultant(e)' => 'Consultant(e)'
         ],
         "Architecture" => [
             'Architecte SI' => 'Architecte SI',
-            'Architecte Technique Confirmé(e)' => 'Architecte Technique Confirmé(e)',
             'Architecte Technique' => 'Architecte Technique'
         ],
         "Études et Développement" => [
@@ -138,8 +135,6 @@ class User extends BaseUser {
             'Resp. Exploitation' => 'Resp. Exploitation',
             'Ingénieur(e) Infra.' => 'Ingénieur(e) Infra.',
             'Ingénieur(e) d’exploitation' => 'Ingénieur(e) d’exploitation',
-            'Analyste d’exploitation' => 'Analyste d’exploitation',
-            'Administrateur infrastructure' => 'Administrateur infrastructure',
             'Analyste d’exploitation' => 'Analyste d’exploitation',
             'Administrateur(trice) infrastructure' => 'Administrateur(trice) infrastructure',
             'Technicien(ne) Infra.' => 'Technicien(ne) Infra.',
