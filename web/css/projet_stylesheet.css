@@ -44,3 +44,9 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+.dt-center {
+    text-align: center;
+}
+.dt-center >span {
+    padding: 4px;
+}
