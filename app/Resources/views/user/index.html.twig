@@ -25,9 +25,9 @@
                                             <td>{{ user.nom }}</td>
                                             <td>{{ user.email }}</td>
                                             <td>{% if user.enabled %}
-                                                    <span class="label label-success"><i class="fa fa-check"></i></span> Actif
+                                                <span class="label label-success" data-toggle="tooltip" title="Actif"><i class="fa fa-check"></i></span>
                                                 {% else %}
-                                                    <span class="label label-danger"><i class="fa fa-ban"></i></span> Inactif
+                                                <span class="label label-danger" data-toggle="tooltip" title="Inactif"><i class="fa fa-ban"></i></span>
                                                 {% endif %}
                                             </td>
                                             <td>
