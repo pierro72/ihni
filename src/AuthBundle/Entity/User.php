@@ -139,7 +139,12 @@ class User extends BaseUser {
             'Administrateur(trice) infrastructure' => 'Administrateur(trice) infrastructure',
             'Technicien(ne) Infra.' => 'Technicien(ne) Infra.',
             'Pilote/Technicien(ne) d’exploitation' => 'Pilote/Technicien(ne) d’exploitation'
+        ],
+        "Gestion de Projet" => [
+            'Directeur(trice) de Projet' => 'Directeur(trice) de Projet',
+            'Chef de Projet' => 'Chef de Projet'
         ]
+        
     ];
 
     /**
