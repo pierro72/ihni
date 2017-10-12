@@ -254,7 +254,7 @@ class User extends BaseUser {
         foreach (User::$jobChoices as $jobType){
             $jobConstraints = array_merge($jobType, $jobConstraints);
         }
-        dump($jobConstraints);
+//        dump($jobConstraints);
         return $jobConstraints;
     }
     /*
