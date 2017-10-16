@@ -123,8 +123,8 @@ class EquipeController extends Controller
     /**
      * Deletes a equipe entity.
      *
-     * @Route("/{id}", name="equipe_delete")
-     * @Method("DELETE")
+     * @Route("/delete/{id}", name="equipe_delete")
+     * @Method("GET")
      */
     public function deleteAction(
         Equipe $equipe)

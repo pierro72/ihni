@@ -4,86 +4,96 @@
 {% block addButton %}
     <a class="btn btn-default" href="{{ path('user_new') }}">
         <i class="fa fa-plus"></i> Ajouter un utilisateur</a>
-{% endblock %}
-{% block innertable %}
-                                        <thead>
-                                        <tr>
-                                            <th>Prénom</th>
-                                            <th>Nom</th>
-                                            <th>Adresse e-mail</th>
-                                            <th>Etat</th>
-                                            <th>Equipe</th>
-                                            <th>Métier</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        {% for user in users %}
-                                        <tr>
-                                            <td>{{ user.prenom }}</td>
-                                            <td>{{ user.nom }}</td>
-                                            <td>{{ user.email }}</td>
-                                            <td>{% if user.enabled %}
-                                                    <span class="label label-success"><i class="fa fa-check"></i></span> Actif
-                                                {% else %}
-                                                    <span class="label label-danger"><i class="fa fa-ban"></i></span> Inactif
-                                                {% endif %}
-                                            </td>
-                                            <td>
-                                                {% for equipe in user.pilote %}
-                                                    <div>
-                                                        {{ equipe }} / Pilote
-                                                    </div>
-                                                {% endfor %}
-
-                                            {% for teamRole in user.teamRoles %}
-
-
-                                                <div>
-                                                {{ teamRole.equipe }} / {{ teamRole.role }}
-                                                </div>
-                                            {% endfor %}
-
-
-                                            </td>
-                                            <td>{{ user.jobName }}</td>
-                                            <td style="width: 128px">
-                                                <a title="Voir toutes les informations utilisateur" href="{{ path('user_show', {'id': user.id }) }}"
-                                                   class="btn btn-default"><i class="fa fa-info"></i></a>
-                                                <a title="Modifier l'utilisateur" href="{{ path('user_edit', {'id': user.id }) }}"
-                                                   class="btn btn-default"><i class="fa fa-pencil"></i></a>
-                                                <a title="Verrouiller la session utilisateur" href="#" class="btn btn-default disabled"><i class="fa fa-lock"></i></a>
-                                                <!-- Fonctionnalitée non demandée ATM
-                                                <a title="Supprimer l'utilisateur" href="{{ path('user_delete', {'id': user.id}) }}" class="btn btn-default"><i class="fa fa-trash"></i></a>-->
-
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                        </tbody>
-{% endblock %}
-    {% block javascripts %}
-        <!-- DataTables -->
-        <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
-
-        <!-- page script -->
-        <script>
-            $(document).ready(function () {
-                $('#example1').DataTable({
-                    "paging": false,
-                    "info": false,
-                    "language": {
-                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
-                },
-                    columnDefs: [{
-                        targets: [5],
-                        "orderable": false,
-
-                    }]
-
-                });
-            });
-
-        </script>
     {% endblock %}
+    {% block innertable %}
+    <thead>
+        <tr>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Adresse e-mail</th>
+            <th>Etat</th>
+            <th>Equipe</th>
+            <th>Métier</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for user in users %}
+            <tr>
+                <td>{{ user.prenom }}</td>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.email }}</td>
+                <td>{% if user.enabled %}
+                    <span class="label label-success" data-toggle="tooltip" title="Actif"><i class="fa fa-check"><i style="display: none">a</i></i></span>
+                    {% else %}
+                    <span class="label label-danger text-center" data-toggle="tooltip" title="Inactif"><i class="fa fa-ban"><i style="display: none">b</i></i></span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% for equipe in user.pilote %}
+                            <div>
+                                {{ equipe }} / Pilote
+                            </div>
+                        {% endfor %}
+
+                        {% for teamRole in user.teamRoles %}
+
+
+                            <div>
+                                {{ teamRole.equipe }} / {{ teamRole.role }}
+                            </div>
+                        {% endfor %}
+
+
+                    </td>
+                    <td>{{ user.jobName }}</td>
+                    <td style="width: 128px">
+                        <a title="Voir toutes les informations utilisateur" href="{{ path('user_show', {'id': user.id }) }}"
+                           class="btn btn-default"><i class="fa fa-info"></i></a>
+                        <a title="Modifier l'utilisateur" href="{{ path('user_edit', {'id': user.id }) }}"
+                           class="btn btn-default"><i class="fa fa-pencil"></i></a>
+                        <a title="Verrouiller la session utilisateur" href="#" class="btn btn-default disabled"><i class="fa fa-lock"></i></a>
+                        <!-- Fonctionnalitée non demandée ATM
+                        <a title="Supprimer l'utilisateur" href="{{ path('user_delete', {'id': user.id}) }}" class="btn btn-default"><i class="fa fa-trash"></i></a>-->
+
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+                {% endblock %}
+                    {% block javascripts %}
+                        <!-- DataTables -->
+                        <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+                        <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+
+                        <!-- page script -->
+                        <script>
+                            $(document).ready(function () {
+                                $('#example1').DataTable({
+                                    "paging": false,
+                                    "info": false,
+                                    "language": {
+                                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+                                    },
+                                    columnDefs: [
+                                        {
+                                            targets: [6],
+                                            "orderable": false
+
+                                        },
+                                        {
+                                            className: "dt-center",
+                                            targets: [3]
+                                        }
+                                    ]
+                                    
+                                    
+
+
+                                },
+                                        );
+                            });
+
+                        </script>
+                    {% endblock %}
