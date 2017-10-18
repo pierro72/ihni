@@ -30,6 +30,7 @@
                     <li><a href="#team">api/team/{id}</a></li>
                     <li><a href="#user">api/user/{id}</a></li>
                     <li><a href="#alluser">api/alluser</a></li>
+                    <li><a href="#allteam">api/team</a></li>
                 </ul>
             </li>
 
@@ -54,6 +55,7 @@
             <li><a href="#team">api/team/{id}</a> Retourne les infos d'une équipe  </li>
             <li><a href="#user">api/user/{id}</a> Retourne les infos d'un utilisateur</li>
             <li><a href="#alluser">api/alluser</a> Retourne la liste de tous les utilisateurs</li>
+            <li><a href="$allteam">api/team</a> Retourne la liste de toutes les équipes</li>
         </ul>
         <h5>Dictionnaire</h5>
         <ul>
@@ -234,6 +236,41 @@
             </ul>
             <h4>Exemple :</h4>
             <div class="well">/api/alluser?apikey=f3a7da7e66b0</div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 id="allteam">api/team
+                <small> Retourne la liste de toutes les équipes</small>
+            </h3>
+        </div>
+        <div class="panel-body">
+
+            <h4>Paramètre :</h4>
+            <ul>
+                <li>Methode : GET
+                    <h5>apikey
+                        <small> string: clé d'accès au service</small>
+                    </h5>
+                </li>
+            </ul>
+            <h4>Return :
+                <small>format JSON</small>
+            </h4>
+
+            <ul>
+                <li>
+                    [
+                    <ul>{
+                        <li> "team" : <a href="#obj_equipe">obj Equipe {}</a>
+                        </li>
+                        }</ul>
+                    ]
+
+                </li>
+            </ul>
+            <h4>Exemple :</h4>
+            <div class="well">/api/team?apikey=f3a7da7e66b0</div>
         </div>
     </div>
     <div>

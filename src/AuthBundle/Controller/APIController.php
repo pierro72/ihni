@@ -40,10 +40,10 @@ class APIController extends Controller
         $apiKey = $request->get('apikey');
 
         if ($apiKey == null || in_array($apiKey, array_column($keyManager, 'apiKey')) == false) {
-            return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_FORBIDDEN);
         }
         if ($user == null) {
-            return new JsonResponse(['message' => 'Aucun utilisateur avec cette id'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'Aucun utilisateur avec cette id'], Response::HTTP_FORBIDDEN);
         }
 
         $teamRoles = $user->getTeamRoles();
@@ -72,6 +72,33 @@ class APIController extends Controller
         return new JsonResponse($response, 200, array('Access-Control-Allow-Origin' => '*'));
 
     }
+    /**
+     * @Route("api/team")
+     * @Method("GET")
+     * @return JsonResponse 
+     */
+    public function getAllTeams(Request $request)
+    {
+        $apiKey = $request->get('apikey');
+        $em = $this->getDoctrine()->getManager();
+        $keyManager = $em->getRepository("AuthBundle:Module")->createQueryBuilder('m')
+                ->select('m.apiKey')
+                ->getQuery()
+                ->getResult();
+
+        if ($apiKey == null || in_array($apiKey, array_column($keyManager, 'apiKey')) == false) {
+            return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_FORBIDDEN);
+        }
+        
+        $teams  = $em->getRepository("AuthBundle:Equipe")->findAll();
+        $teamsJSON = [];
+        foreach ($teams as $team){
+            $teamsJSON [] = array(
+                "team" => $team->toArray()
+            );
+        }
+        return new JsonResponse($teamsJSON, 200, array('Access-Control-Allow-Origin' => '*'));
+    }
 
     /**
      * @param Equipe $equipe
@@ -91,10 +118,10 @@ class APIController extends Controller
         $apiKey = $request->get('apikey');
 
         if ($apiKey == null || in_array($apiKey, array_column($keyManager, 'apiKey')) == false) {
-            return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_FORBIDDEN);
         }
         if ($equipe == null) {
-            return new JsonResponse(['message' => 'Aucun utilisateur avec cette id'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'Aucun utilisateur avec cette id'], Response::HTTP_FORBIDDEN);
         }
         $teamRoles = $equipe->getTeamRoles();
         $users = [];
@@ -132,7 +159,7 @@ class APIController extends Controller
             ->getResult();
 
         if ($apiKey == null || in_array($apiKey, array_column($keyManager, 'apiKey')) == false) {
-            return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_FORBIDDEN);
         }
 
 
