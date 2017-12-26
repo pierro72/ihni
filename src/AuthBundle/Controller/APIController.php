@@ -174,4 +174,17 @@ class APIController extends Controller
 
         return new JsonResponse($usersJson, 200, array('Access-Control-Allow-Origin' => '*'));
     }
+    
+    /**
+     * @Route("api/authme")
+     * @Method({"GET"})
+     * @return JsonResponse
+     */
+    public function authMe(Request $request)
+    {
+        $session = $this->container->get('session');
+        $sessionL = var_dump($session);
+        
+        return new JsonResponse($sessionL, 200, array('Access-Control-Allow-Origin' => '*'));
+    }
 }
