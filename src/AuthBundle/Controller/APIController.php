@@ -180,11 +180,38 @@ class APIController extends Controller
      * @Method({"GET"})
      * @return JsonResponse
      */
-    public function authMe(Request $request)
+    public function authMe()
     {
-        $session = $this->container->get('session');
-        $sessionL = var_dump($session);
+        $session = $this;
+        $user = $session->getUser();
+        if ($user == null) {
+            return new JsonResponse(['message' => 'pas authentifié'], Response::HTTP_FORBIDDEN);
+        }
+        $userJson = $user->toArray();
         
-        return new JsonResponse($sessionL, 200, array('Access-Control-Allow-Origin' => '*'));
+        
+        return new JsonResponse( $userJson, 200);
     }
+    /**
+     * @Route("api/auth/allteam")
+     * @Method("GET")
+     * @return JsonResponse
+     */
+    public function getAuthAllTeam() {
+        $session = $this;
+        $user = $session->getUser();
+        if ($user == null) {
+            return new JsonResponse(['message' => 'pas authentifié'], Response::HTTP_FORBIDDEN);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $teams = $em->getRepository("AuthBundle:Equipe")->findAll();
+        $teamsJSON = [];
+        foreach ($teams as $team) {
+            $teamsJSON [] = array(
+                "team" => $team->toArray()
+            );
+        }
+        return new JsonResponse($teamsJSON, 200);
+    }
+
 }
