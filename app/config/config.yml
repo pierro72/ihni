@@ -94,5 +94,14 @@ fos_user:
         form:
             type: AuthBundle\Form\UserType
 
+nelmio_cors:
+    paths:
+        '^/api/':
+           origin_regex: true
+           allow_origin: ['^http://localhost:[0-9]+']
+           allow_headers: ['X-Custom-Auth']
+           allow_methods: ['GET'] 
+           allow_credentials : true
+
 
 

@@ -4,11 +4,9 @@ namespace AuthBundle\Controller;
 
 use AuthBundle\Entity\Equipe;
 use AuthBundle\Entity\User;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,35 +15,20 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * API Controller
  */
-class APIController extends Controller
-{
+class APIController extends Controller {
+
     /**
      * @param User $user
      * @Route("api/user/{id}")
      * @Method("GET")
      * @return JsonResponse
      */
-    public function getTeamsByUserAction(User $user, Request $request)
-    {
-
-
-        $er = $this->getDoctrine()->getManager()->getRepository("AuthBundle:Module");
-        $keyManager = $er->createQueryBuilder('m')
-            ->select('m.apiKey')
-            ->getQuery()
-            ->getResult();
-
-       
-
-        $apiKey = $request->get('apikey');
-
-        if ($apiKey == null || in_array($apiKey, array_column($keyManager, 'apiKey')) == false) {
-            return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_FORBIDDEN);
+    public function getUserById(User $user, Request $request) {
+        $authUser = $this->getUser();
+        $noAuthMessage = $this->noAuthMessage($authUser, $request);
+        if ($noAuthMessage !== null) {
+            return $noAuthMessage;
         }
-        if ($user == null) {
-            return new JsonResponse(['message' => 'Aucun utilisateur avec cette id'], Response::HTTP_FORBIDDEN);
-        }
-
         $teamRoles = $user->getTeamRoles();
         $formatTeam = [];
         foreach ($teamRoles as $teamRole) {
@@ -66,38 +49,31 @@ class APIController extends Controller
         $response = array(
             'info' => $user->toArray(),
             'equipes_role' => $formatTeam,
-
         );
 
-        return new JsonResponse($response, 200, array('Access-Control-Allow-Origin' => '*'));
-
+        return new JsonResponse($response, 200);
     }
+
     /**
      * @Route("api/team")
      * @Method("GET")
      * @return JsonResponse 
      */
-    public function getAllTeams(Request $request)
-    {
-        $apiKey = $request->get('apikey');
-        $em = $this->getDoctrine()->getManager();
-        $keyManager = $em->getRepository("AuthBundle:Module")->createQueryBuilder('m')
-                ->select('m.apiKey')
-                ->getQuery()
-                ->getResult();
-
-        if ($apiKey == null || in_array($apiKey, array_column($keyManager, 'apiKey')) == false) {
-            return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_FORBIDDEN);
+    public function getAllTeams(Request $request) {
+        $authUser = $this->getUser();
+        $noAuthMessage = $this->noAuthMessage($authUser, $request);
+        if ($noAuthMessage !== null) {
+            return $noAuthMessage;
         }
-        
-        $teams  = $em->getRepository("AuthBundle:Equipe")->findAll();
+        $em = $this->getDoctrine()->getManager();       
+        $teams = $em->getRepository("AuthBundle:Equipe")->findAll();
         $teamsJSON = [];
-        foreach ($teams as $team){
+        foreach ($teams as $team) {
             $teamsJSON [] = array(
                 "team" => $team->toArray()
             );
         }
-        return new JsonResponse($teamsJSON, 200, array('Access-Control-Allow-Origin' => '*'));
+        return new JsonResponse($teamsJSON, 200);
     }
 
     /**
@@ -106,22 +82,11 @@ class APIController extends Controller
      * @Method("GET")
      * @return JsonResponse
      */
-    public function getUsersbyTeam(Request $request, Equipe $equipe)
-    {
-        $er = $this->getDoctrine()->getManager()->getRepository("AuthBundle:Module");
-        $keyManager = $er->createQueryBuilder('m')
-            ->select('m.apiKey')
-            ->getQuery()
-            ->getResult();
-
-
-        $apiKey = $request->get('apikey');
-
-        if ($apiKey == null || in_array($apiKey, array_column($keyManager, 'apiKey')) == false) {
-            return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_FORBIDDEN);
-        }
-        if ($equipe == null) {
-            return new JsonResponse(['message' => 'Aucun utilisateur avec cette id'], Response::HTTP_FORBIDDEN);
+    public function getUsersbyTeam(Request $request, Equipe $equipe) {
+        $authUser = $this->getUser();
+        $noAuthMessage = $this->noAuthMessage($authUser, $request);
+        if ($noAuthMessage !== null) {
+            return $noAuthMessage;
         }
         $teamRoles = $equipe->getTeamRoles();
         $users = [];
@@ -130,7 +95,6 @@ class APIController extends Controller
                 "user" => $teamRole->getUser()->toArray(),
                 "role" => $teamRole->getRole()->getNom(),
             );
-            
         }
         $users[] = array(
             "user" => $equipe->getPilote()->toArray(),
@@ -141,7 +105,7 @@ class APIController extends Controller
             'users' => $users,
         );
 
-        return new JsonResponse($response, 200, array('Access-Control-Allow-Origin' => '*'));
+        return new JsonResponse($response, 200);
     }
 
     /**
@@ -149,20 +113,14 @@ class APIController extends Controller
      * @Method("GET")
      * @return JsonResponse
      */
-    public function getAllUser(Request $request)
-    {
-        $apiKey = $request->get('apikey');
-        $em = $this->getDoctrine()->getManager();
-        $keyManager = $em->getRepository("AuthBundle:Module")->createQueryBuilder('m')
-            ->select('m.apiKey')
-            ->getQuery()
-            ->getResult();
-
-        if ($apiKey == null || in_array($apiKey, array_column($keyManager, 'apiKey')) == false) {
-            return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_FORBIDDEN);
+    public function getAllUser(Request $request) {
+        $authUser = $this->getUser();
+        $noAuthMessage = $this->noAuthMessage($authUser, $request);
+        if ($noAuthMessage !== null) {
+            return $noAuthMessage;
         }
-
-
+        $em = $this->getDoctrine()->getManager();
+        
         $users = $em->getRepository("AuthBundle:User")->findAll();
 
         $usersJson = [];
@@ -172,19 +130,46 @@ class APIController extends Controller
             );
         }
 
-        return new JsonResponse($usersJson, 200, array('Access-Control-Allow-Origin' => '*'));
+        return new JsonResponse($usersJson, 200);
     }
-    
+
     /**
      * @Route("api/authme")
      * @Method({"GET"})
      * @return JsonResponse
      */
-    public function authMe(Request $request)
-    {
-        $session = $this->container->get('session');
-        $sessionL = var_dump($session);
-        
-        return new JsonResponse($sessionL, 200, array('Access-Control-Allow-Origin' => '*'));
+    public function authMe() {
+        $authUser = $this->getUser();
+        $noAuthMessage = $this->noAuthMessage($authUser, null);
+        if ($noAuthMessage !== null) {
+            return $noAuthMessage;
+        }
+        $userJson = $authUser->toArray();
+
+
+        return new JsonResponse($userJson, 200);
     }
+
+    private function noAuthMessage($authUser, $request) {
+
+        if ($authUser !== null) {
+            return;
+        } elseif ($request !== null) {
+            $er = $this->getDoctrine()->getManager()->getRepository("AuthBundle:Module");
+            $keyManager = $er->createQueryBuilder('m')
+                    ->select('m.apiKey')
+                    ->getQuery()
+                    ->getResult();
+
+            $apiKey = $request->get('apikey');
+            if ($apiKey !== null && in_array($apiKey, array_column($keyManager, 'apiKey')) == true) {
+                return;
+            }
+
+            return new JsonResponse(['message' => 'clé API valide nécessaire'], Response::HTTP_FORBIDDEN);
+        } else {
+            return new JsonResponse(['message' => 'pas authentifié'], Response::HTTP_FORBIDDEN);
+        }
+    }
+
 }
