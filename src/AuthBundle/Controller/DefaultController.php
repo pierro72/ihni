@@ -89,6 +89,7 @@ class DefaultController extends Controller
         $role = (!$teamrole == null) ? $teamrole->getRole() :$piloteRole;
 
         $response = new Response();
+        
         $response->headers->setCookie(new Cookie('ihni_context', $equipe->getId()));
 
         return $this->render('goout.html.twig', array(

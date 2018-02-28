@@ -17,7 +17,11 @@
     </div>
 {% endblock %}
 {% block javascripts %}
+    
 <script>
+    {% if module.authSys %}
+       window.location.href = '{{ module.url }}';       
+    {% else %}
     $(function () {
         var $actionForm = $('<form>', {'action': '{{ module.url }}', 'method': 'post'}).append(
             formLine('apiKey','{{ module.apiKey }}'),
@@ -34,5 +38,6 @@
     function formLine(name, value) {
         return $('<input>', {'name': name, 'value': value, 'type': 'hidden'})
     }
+    {% endif %}
 </script>
 {% endblock %}

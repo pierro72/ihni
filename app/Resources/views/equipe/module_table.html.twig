@@ -19,7 +19,7 @@
                                     <div class="icon">
                                         <i class="ion ion-stats-bars"></i>
                                     </div>
-                                    <a href="{% if module.authSys %}{{ module.url }}{% else %}{{ path('goout', {'equipe': equipe.id, 'module': module.id}) }}{% endif %}" class="small-box-footer">
+                                    <a href="{{ path('goout', {'equipe': equipe.id, 'module': module.id}) }}" class="small-box-footer">
                                         Choisir <i class="fa fa-arrow-circle-right"></i>
                                     </a>
                                 </div>
