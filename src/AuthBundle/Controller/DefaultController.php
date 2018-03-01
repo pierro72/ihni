@@ -90,7 +90,7 @@ class DefaultController extends Controller
 
         $response = new Response();
         
-        $response->headers->setCookie(new Cookie('ihni_context', $equipe->getId()));
+        $response->headers->setCookie(new Cookie('ihni_context', $equipe->getId(),0,'/',NULL,false,false));
 
         return $this->render('goout.html.twig', array(
             "module" =>$module,
