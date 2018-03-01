@@ -4,9 +4,12 @@ namespace AuthBundle\Controller;
 
 use AuthBundle\Entity\Equipe;
 use AuthBundle\Entity\Module;
+use AuthBundle\Entity\User;
+use AuthBundle\Entity\Role;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Cookie;
 
 /**
  * @Route("/qub/")
@@ -69,6 +72,7 @@ class DefaultController extends Controller
      */
     public function goOut(Equipe $equipe, Module $module)
     {
+        /* @var $user User */
         $user = $this->getUser();
         $admin = $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN');
 
@@ -79,9 +83,14 @@ class DefaultController extends Controller
             "equipe"=>$equipe
         ));
 
-        $role = (!$teamrole == null) ? $teamrole->getRole() : array('nom' => 'pilote');
+        /* @var $piloteRole Role */
+        $piloteRole = new Role();
+        $piloteRole->setNom('pilote');
+        $role = (!$teamrole == null) ? $teamrole->getRole() :$piloteRole;
 
-
+        $response = new Response();
+        
+        $response->headers->setCookie(new Cookie('ihni_context', $equipe->getId(),0,'/',NULL,false,false));
 
         return $this->render('goout.html.twig', array(
             "module" =>$module,
@@ -89,7 +98,7 @@ class DefaultController extends Controller
             "user" =>$user,
             "role" =>$role,
             "admin"=>$admin
-        ));
+        ), $response);
 
     }
     /**
