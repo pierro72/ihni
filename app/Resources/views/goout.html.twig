@@ -44,17 +44,34 @@
 {% block javascripts %}
 <script>
     $(function () {
-        var $actionForm = $('<form>', {'action': '{{ module.url }}', 'method': 'post'}).append(
-            formLine('apiKey','{{ module.apiKey }}'),
-            formLine('user','{{ app.user }}'),
-            formLine('id_user','{{ app.user.id }}'),
-            formLine('admin',{% if is_granted('ROLE_ADMIN') %}true{% else %}false{% endif %}),
-            formLine('team', '{{ equipe.nom }}'),
-            formLine('id_team', '{{ equipe.id }}'),
-            formLine('role','{{ role.nom }}'),
-            formLine('appName','{{ module.nom }}')
-        );
-        $actionForm.appendTo($('body')).submit();
+        var url = '{{ module.url}}';
+        if ( url == '/skillex' ){
+            var $actionForm = $('<form>', {'action': 'http://localhost:8080', 'method': 'get'}).append(
+                formLine('apiKey','{{ module.apiKey }}'),
+                formLine('user','{{ app.user }}'),
+                formLine('id_user','{{ app.user.id }}'),
+                formLine('admin',{% if is_granted('ROLE_ADMIN') %}true{% else %}false{% endif %}),
+                formLine('team', '{{ equipe.nom }}'),
+                formLine('id_team', '{{ equipe.id }}'),
+                formLine('role','{{ role.nom }}'),
+                formLine('appName','{{ module.nom }}')
+            );
+            $actionForm.appendTo($('body')).submit();
+
+        } else {
+            var $actionForm = $('<form>', {'action': url, 'method': 'post'}).append(
+                formLine('apiKey','{{ module.apiKey }}'),
+                formLine('user','{{ app.user }}'),
+                formLine('id_user','{{ app.user.id }}'),
+                formLine('admin',{% if is_granted('ROLE_ADMIN') %}true{% else %}false{% endif %}),
+                formLine('team', '{{ equipe.nom }}'),
+                formLine('id_team', '{{ equipe.id }}'),
+                formLine('role','{{ role.nom }}'),
+                formLine('appName','{{ module.nom }}')
+            );
+            $actionForm.appendTo($('body')).submit();
+        }
+
     });
     function formLine(name, value) {
         return $('<input>', {'name': name, 'value': value, 'type': 'hidden'})
