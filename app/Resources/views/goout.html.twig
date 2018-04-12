@@ -45,7 +45,7 @@
 <script>
     $(function () {
         var url = '{{ module.url}}';
-        if ( url == '/skillex' ){
+        if (url.indexOf('skillex') !== -1) {
             var $actionForm = $('<form>', {'action': url , 'method': 'get'}).append(
                 formLine('apiKey','{{ module.apiKey }}'),
                 formLine('user','{{ app.user }}'),
