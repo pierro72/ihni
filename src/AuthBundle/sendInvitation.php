@@ -50,7 +50,7 @@ class sendInvitation
         $invitation = \Swift_Message::newInstance()
             ->setFrom('IHNI@sodifrance.fr')
             ->setTo($user->getEmail())
-            ->setSubject('Confirmation de votre compte QualityBox')
+            ->setSubject('Confirmation de votre compte Cube')
             ->setBody(
                 $this->templating->render(
                     ':email:invitation.html.twig',

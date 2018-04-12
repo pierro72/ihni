@@ -218,7 +218,7 @@ class UserController extends Controller {
 //        $invitation = \Swift_Message::newInstance()
 //            ->setFrom('IHNI@sodifrance.fr')
 //            ->setTo($user->getEmail())
-//            ->setSubject('Confirmation de votre compte QualityBox')
+//            ->setSubject('Confirmation de votre compte Cube')
 //            ->setBody(
 //                $this->renderView(
 //                    ':email:invitation.html.twig',

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Menu QualityBox</title>
+    <title>Menu Cube</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
@@ -34,7 +34,7 @@
 
                 <div class="navbar-brand">
 
-                    <b>Quality</b>BOX
+                    <b>Cube</b>
 
                 </div>
 
