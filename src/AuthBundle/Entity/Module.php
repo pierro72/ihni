@@ -43,6 +43,11 @@ class Module
      * @ORM\Column(unique=true,type="string",nullable=false, length=13)
      */
     private $apiKey;
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    private $authSys;
 
 
 
@@ -95,7 +100,18 @@ class Module
     {
         $this->url = $url;
     }
+    function getAuthSys() {
+        return $this->authSys;
+    }
+    /**
+     * 
+     * @param boolean $authSys
+     */
+    function setAuthSys($authSys) {
+        $this->authSys = $authSys;
+    }
 
+    
     /**
      * Constructor
      */
