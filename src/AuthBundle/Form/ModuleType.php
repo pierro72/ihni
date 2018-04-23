@@ -19,7 +19,8 @@ class ModuleType extends AbstractType
                 ->add('url')
                 ->add('equipes')
                 ->add('authSys', CheckboxType::class, [
-                    'label' => 'Authentification par cookie'
+                    'label' => 'Authentification par cookie',
+                    'required' => false
                 ]);
     }
     
