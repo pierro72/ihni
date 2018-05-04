@@ -1,14 +1,26 @@
 
-    .logo {
+.login-page, .register-page {
+    background: #FFF;
+}
+.login-box-body, .register-box-body {
+    background: #f4f4f4;
+}
 
+#logo-cube{
+    height: 220px;
+    width: auto;
+}
+
+
+.logo {
       height: 6rem;
       position: absolute;
     left:45.5%;
       padding-left: 4.6rem;
       -webkit-transform: translate(-50%, -50%);
               transform: translate(-50%, -50%);
-
     }
+
     .alert {
       display: none;
     }

@@ -24,11 +24,11 @@
 
         <div class="row" style="height: 75px">
             <div class="col-xs-8">
-                <div class="checkbox icheck">
+{#                <div class="checkbox icheck">
                     <label>
                         <input type="checkbox" id="remember_me" name="_remember_me" value="on"> {{ 'Se souvenir de moi'|trans }}
                     </label>
-                </div>
+                </div>#}
 
                     {#<input type="checkbox" id="remember_me" name="_remember_me" value="on"/>#}
                     {#<label for="remember_me">{{ 'Se souvenir de moi'|trans }}</label>#}
@@ -42,7 +42,7 @@
         </div>
         </div>
         <div class="row text-center">
-            <a href="{{ path('fos_user_resetting_request') }}" class="btn btn-danger btn-flat">J'ai oublié mon mot de passe</a>
+            <a href="{{ path('fos_user_resetting_request') }}">J'ai oublié mon mot de passe</a>
         </div>
     </form>
 {% endblock %}
