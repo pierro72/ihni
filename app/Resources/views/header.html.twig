@@ -1,6 +1,7 @@
 <header class="main-header">
     <nav class="navbar navbar-static-top">
-        <div class="container">
+
+
 
             {#<!-- Navbar Titre -->#}
             {#<div class="navbar-header">#}
@@ -11,13 +12,15 @@
             {#<li class="active">Top Navigation</li>#}
             {#</ol>#}
             {#</div>#}
-
+        <div class="container">
             <div class="navbar-brand">
-                {% if inAdmin %}
-                <b>IHNI</b>&nbsp;Gestion des utilisateurs
-                {% else %}
-                <b>Cube</b>
-                {% endif %}
+                <span>
+                                    <img id="logo-cube-small" src="{{ asset('assets/cube-m.png') }}"/>
+                    {% if inAdmin %}<b>IHNI</b>&nbsp;Gestion des utilisateurs
+                {% else %}<b>Cube</b>
+                    {% endif %}
+                </span>
+
             </div>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"
                     aria-expanded="false">
