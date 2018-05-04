@@ -5,6 +5,7 @@ namespace AuthBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class ModuleType extends AbstractType
 {
@@ -13,7 +14,14 @@ class ModuleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom')->add('url')->add('equipes');
+        $builder
+                ->add('nom')
+                ->add('url')
+                ->add('equipes')
+                ->add('authSys', CheckboxType::class, [
+                    'label' => 'Authentification par cookie',
+                    'required' => false
+                ]);
     }
     
     /**
